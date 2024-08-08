@@ -4,8 +4,9 @@ from deck import deck
 
 def convert(face: str):
     """
+    Convert string faces into integer value
     :param face: str
-    :return: int, integer value of the input face
+    :return: int
     """
     val = face[1:]
     if val == 'A':
@@ -18,8 +19,9 @@ def convert(face: str):
 
 def calc_pts(faces: list):
     """
+    Calculate sum all values of the faces
     :param faces: list
-    :return: s: int, sum values of the faces
+    :return: s: int
     """
     s = 0
     for i in faces:
