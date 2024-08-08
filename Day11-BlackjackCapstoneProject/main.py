@@ -2,7 +2,7 @@
 # Aug 06-08, 2024
 # Day 11 - Blackjack Capstone Project
 # Created by me
-# Version 1: no graphic
+# Version 1: no graphic, using dictionary
 
 from run import run
 
