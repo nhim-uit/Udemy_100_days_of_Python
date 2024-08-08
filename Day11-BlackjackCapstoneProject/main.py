@@ -7,6 +7,7 @@
 from run import run
 
 if __name__ == '__main__':
+    # Driver of multiple Black Jack games
     play = input("Do you want to play a game of BlackJack? Type 'y' or 'n': ")
 
     while play == 'y':

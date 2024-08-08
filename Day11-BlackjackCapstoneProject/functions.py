@@ -3,6 +3,10 @@ from deck import deck
 
 
 def convert(face: str):
+    """
+    :param face: str
+    :return: int, integer value of the input face
+    """
     val = face[1:]
     if val == 'A':
         return 11
@@ -13,6 +17,10 @@ def convert(face: str):
 
 
 def calc_pts(faces: list):
+    """
+    :param faces: list
+    :return: s: int, sum values of the faces
+    """
     s = 0
     for i in faces:
         s += convert(i)
@@ -21,6 +29,11 @@ def calc_pts(faces: list):
 
 
 def create(player: list, computer: list):
+    """
+    :param player: list of faces created randomly (2 faces)
+    :param computer: list of faces created randomly (2 faces)
+    :return: dict, containing dict player and dict computer
+    """
     return {
         'player':
             {
@@ -36,21 +49,40 @@ def create(player: list, computer: list):
 
 
 def update_board(board: dict, player: str):
+    """
+    Randomly choose a card from the deck
+    Update 'board' dict with new calculated points
+    :param board: a dict player's faces and points
+    :param player: 'player' or 'computer'
+    :return: void
+    """
+    # Choose 1 card
     chosen_card = random.sample(deck, 1)
-    #chosen_card = ['SA']
 
+    # Remove chosen card from the deck
     deck.remove(chosen_card[0])
+
+    # Add the chosen card into the board
     board[player]['faces'].extend(chosen_card)
 
+    # Calculate points
     new_pts = calc_pts(chosen_card)
-    cur_pts = board[player]['points']
-
     board[player]['points'] += new_pts
 
+    # Check if there are aces in the list of cards of player
+    # and update the board
     update_aces(board, player)
 
 
 def update_aces(board: dict, player: str):
+    """
+    Change 'A' into '1' to calculate points
+    if all points initially went over 21
+
+    :param board: a dict player's faces and points
+    :param player: 'player' or 'computer'
+    :return: void
+    """
     faces = board[player]['faces']
     aces = [i[1:] for i in faces]
 
@@ -59,15 +91,27 @@ def update_aces(board: dict, player: str):
             if aces[i] == 'A':
                 board[player]['faces'][i] = board[player]['faces'][i].replace('A', '1')
 
+    # recalculate after change all 'A' into '1'
     board[player]['points'] = calc_pts(faces)
 
 
 def update_deck(cards: list):
+    """
+    Remove chosen cards from the deck
+
+    :param cards: list of cards
+    :return: void
+    """
     for card in cards:
         deck.remove(card)
 
 
 def check_win(board: dict):
+    """
+    Check and compare points between player and computer
+    :param board: dict, player and computer info
+    :return: str, states of winning
+    """
     player_pts = board['player']['points']
     cmpt_pts = board['computer']['points']
 
@@ -87,6 +131,12 @@ def check_win(board: dict):
 
 
 def check_over(board: dict, player: str):
+    """
+    Check if points went over 21
+    :param board: dict
+    :param player: str
+    :return: boolean
+    """
     if board[player]['points'] > 21:
         return True
 
@@ -94,13 +144,25 @@ def check_over(board: dict, player: str):
 
 
 def check_bj(board: dict, player: str):
+    """
+    Check if BlackJack (21)
+    :param board: dict
+    :param player: str
+    :return: boolean
+    """
     if board[player]['points'] == 21:
         return True
 
     return False
 
 
-def computer_continue(board):
+def computer_continue(board: dict):
+    """
+    Computer continues to randomly pick cards
+    until going over 21, winning over player's points or still under 16
+    :param board: dict
+    :return: void
+    """
     while board['computer']['points'] <= 21 \
             and board['computer']['points'] < board['player']['points'] \
             or board['computer']['points'] < 16:
@@ -108,8 +170,16 @@ def computer_continue(board):
         print(board)
 
 
-def print_res(board):
+def print_res(board: dict):
+    """
+    Print the results
+    :param board: dict
+    :return: void
+    """
+    # Compare to get the resulted string
     res = check_win(board)
+
+    # Print the results
     if res == 'win':
         print(f"Player wins with {board['player']['points']} points.")
     elif res == 'lose':
@@ -122,7 +192,12 @@ def print_res(board):
     print(f"Computer's faces: {board['computer']['faces']}. ")
 
 
-def drive(board):
+def drive(board: dict):
+    """
+    While loop of 1 BlackJack game
+    :param board: dict
+    :return: void
+    """
     done = False
 
     while not done:

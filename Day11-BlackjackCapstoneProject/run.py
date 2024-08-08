@@ -3,6 +3,10 @@ from deck import deck
 
 
 def run():
+    """
+    Driver of 1 Black Jack game
+    :return: void
+    """
     chosen_cards = random.sample(deck, 4)
     update_deck(chosen_cards)
 
