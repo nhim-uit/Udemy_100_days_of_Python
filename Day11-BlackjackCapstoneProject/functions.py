@@ -1,5 +1,6 @@
 import random
 from deck import deck
+from CONSTANTS import *
 
 
 def convert(face: str):
@@ -10,9 +11,9 @@ def convert(face: str):
     """
     val = face[1:]
     if val == 'A':
-        return 11
+        return A
     elif val == 'J' or val == 'Q' or val == 'K':
-        return 10
+        return LETTER
     else:
         return int(val)
 
@@ -88,13 +89,17 @@ def update_aces(board: dict, player: str):
     faces = board[player]['faces']
     aces = [i[1:] for i in faces]
 
-    if 'A' in aces and board[player]['points'] > 21:
-        for i in range(len(faces)):
+    if 'A' in aces and board[player]['points'] > BJ:
+        for i in range(len(faces) - 1):
             if aces[i] == 'A':
                 board[player]['faces'][i] = board[player]['faces'][i].replace('A', '1')
 
-    # recalculate after change all 'A' into '1'
-    board[player]['points'] = calc_pts(faces)
+        # recalculate after change all 'A' into '1'
+        board[player]['points'] = calc_pts(faces)
+
+        if faces[-1] == 'A' and board[player]['points'] > BJ:
+            board[player]['faces'][-1] = board[player]['faces'][i].replace('A', '1')
+            board[player]['points'] = calc_pts(faces)
 
 
 def update_deck(cards: list):
@@ -117,11 +122,11 @@ def check_win(board: dict):
     player_pts = board['player']['points']
     cmpt_pts = board['computer']['points']
 
-    if cmpt_pts > 21 and player_pts > 21:
+    if cmpt_pts > BJ and player_pts > BJ:
         return 'draw'
-    elif cmpt_pts > 21:
+    elif cmpt_pts > BJ:
         return 'win'
-    elif player_pts > 21:
+    elif player_pts > BJ:
         return 'lose'
     else:
         if cmpt_pts < player_pts:
@@ -139,7 +144,7 @@ def check_over(board: dict, player: str):
     :param player: str
     :return: boolean
     """
-    if board[player]['points'] > 21:
+    if board[player]['points'] > BJ:
         return True
 
     return False
@@ -152,7 +157,7 @@ def check_bj(board: dict, player: str):
     :param player: str
     :return: boolean
     """
-    if board[player]['points'] == 21:
+    if board[player]['points'] == BJ:
         return True
 
     return False
@@ -165,9 +170,9 @@ def computer_continue(board: dict):
     :param board: dict
     :return: void
     """
-    while board['computer']['points'] <= 21 \
+    while board['computer']['points'] <= BJ \
             and board['computer']['points'] < board['player']['points'] \
-            or board['computer']['points'] < 16:
+            or board['computer']['points'] < AGE:
         update_board(board, 'computer')
         print(board)
 
@@ -203,16 +208,18 @@ def drive(board: dict):
     done = False
 
     while not done:
+        update_aces(board, 'player')
+        update_aces(board, 'computer')
+
         # Check if player's points or computer's points equal 21
         if check_bj(board, 'player') or check_bj(board, 'computer'):
             return
 
         # Check if player went over 21
         if check_over(board, 'player'):
-
             # If player's points went over 21,
             # computer continue to pick cards if initial point under 16
-            while board['computer']['points'] < 16:
+            while board['computer']['points'] < AGE:
                 update_board(board, 'computer')
                 print(board)
             return

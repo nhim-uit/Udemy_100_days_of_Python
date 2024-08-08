@@ -15,9 +15,9 @@ def run():
     computer_cards = chosen_cards[1:4:2]
     board = create(player_cards, computer_cards)
 
-    print(board)
     print(f"Your cards: {player_cards}, current points: {board['player']['points']}.")
     print(f"Computer's first card: {computer_cards[0]}.")
+    print(board)
 
     # Driver
     drive(board)
