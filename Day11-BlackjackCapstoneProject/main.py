@@ -7,5 +7,15 @@
 from run import run
 
 if __name__ == '__main__':
-    run()
+    play = input("Do you want to play a game of BlackJack? Type 'y' or 'n': ")
+
+    while play == 'y':
+        run()
+
+        print('-' * 50)
+        play = input("Do you want to play a game of BlackJack? Type 'y' or 'n': ")
+        print('-' * 50)
+
+    print('Bye!!!')
+
 
