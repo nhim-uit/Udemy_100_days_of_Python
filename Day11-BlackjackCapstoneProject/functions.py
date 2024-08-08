@@ -203,23 +203,32 @@ def drive(board: dict):
     done = False
 
     while not done:
+        # Check if player's points or computer's points equal 21
         if check_bj(board, 'player') or check_bj(board, 'computer'):
             return
+
+        # Check if player went over 21
         if check_over(board, 'player'):
+
+            # If player's points went over 21,
+            # computer continue to pick cards if initial point under 16
             while board['computer']['points'] < 16:
                 update_board(board, 'computer')
                 print(board)
             return
+
+        # Check if computer went over 21
         if check_over(board, 'computer'):
             return
 
+        # Ask the player if player want to pick another card
         deal = input("Type 'y' to get another card, or  type 'n' to pass: ")
 
         if deal == 'y':
             update_board(board, 'player')
             print(f"Your cards: {board['player']['faces']}, current points: {board['player']['points']}.")
 
-        else:
+        else:  # deal == 'n'
             computer_continue(board)
             return
 
