@@ -2,7 +2,7 @@ import random
 from CONSTANTS import *
 
 
-def start():
+def set_difficulty():
     """
     Print welcome and return number of attempts
     :return: int, number of attempts
@@ -38,7 +38,7 @@ def run():
     :return: void
     """
     number = random.randint(1, 100)
-    attempt = start()
+    attempt = set_difficulty()
 
     while attempt > 0:
         print(f'You have {attempt} attempts remaining to guess the number.')
