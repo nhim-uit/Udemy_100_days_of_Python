@@ -17,18 +17,15 @@ def command(storage: dict, coffee: str):
             coins = calc_coins(storage, coffee)
 
             while coins - MENU[coffee]['cost'] < 0:
+                print('Sorry, there\'s not enough coins. Refunded.')
                 coins = calc_coins(storage, coffee)
 
             charge = coins - MENU[coffee]['cost']
 
-            if charge >= 0:
-                storage['money'] += MENU[coffee]['cost']
-                print(f'Here is ${charge: .2f} in charge.')
-                print(f'Here is your {coffee}. Enjoy!')
-                return
-
-        else:
-            return
+            storage['money'] += MENU[coffee]['cost']
+            print(f'Here is ${charge: .2f} in charge.')
+            print(f'Here is your {coffee}. Enjoy!')
+        return
 
 
 def report(storage: dict):
