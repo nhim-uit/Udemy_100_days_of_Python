@@ -21,7 +21,6 @@ def command(coffee_maker: CoffeeMaker, money_machine: MoneyMachine, menu: Menu, 
                 pass
 
             coffee_maker.make_coffee(item)
-        return
 
 
 def run():
