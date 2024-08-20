@@ -111,7 +111,7 @@ def run():
         if storage['water'] == 0 \
             or storage['milk'] == 0 \
             or storage['coffee'] == 0:
-            print('*' * 20)
+            print('*' * 50)
             report(storage)
             return
 
