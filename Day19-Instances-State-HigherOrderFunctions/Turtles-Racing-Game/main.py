@@ -1,7 +1,8 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Aug 27, 2024
 # Day 19 - Turtles Racing Game
-# Created by me: using oop - encapsulation
+# Created by me
+# Use oop - encapsulation
 
 from turtle import Screen
 from Turtles import *
