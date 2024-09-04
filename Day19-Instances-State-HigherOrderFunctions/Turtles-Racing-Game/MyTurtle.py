@@ -2,15 +2,12 @@ from turtle import Turtle
 import random
 
 
-class MyTurtle:
+class MyTurtle(Turtle):
     def __init__(self, y, color, x=-230):
-        self.__t = Turtle('turtle')
-        self.__t.color(color)
-        self.__t.penup()
-        self.__t.setposition(x, y)
-
-    def get_turtle(self) -> Turtle:
-        return self.__t
+        super().__init__()
+        self.color(color)
+        self.penup()
+        self.setposition(x, y)
 
     def move(self):
-        self.__t.forward(random.randint(0, 11))
+        self.forward(random.randint(0, 11))

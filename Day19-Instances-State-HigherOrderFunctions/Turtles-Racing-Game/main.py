@@ -3,6 +3,7 @@
 # Day 19 - Turtles Racing Game
 # Created by me
 # Use oop - encapsulation
+# Add inheritance (Sep 4, 2024)
 
 from turtle import Screen
 from Turtles import *
