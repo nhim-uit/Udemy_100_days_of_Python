@@ -11,10 +11,12 @@
 # Move the snake
 # Control the snake
 # Detect collision with food
+# Scoreboard
 
 from snake.mySnake import Snake
 from myScreen import *
 from food import Food
+from scoreboard import ScoreBoard
 import time
 
 # Create Screen
@@ -25,6 +27,9 @@ snake = Snake()
 
 # Create food
 food = Food()
+
+# Create score board
+scoreboard = ScoreBoard()
 
 # Snake's controls
 screen.listen()
@@ -42,6 +47,8 @@ while True:
     # Detect collision with food
     if snake.get_head().distance(food) <= 10:
         food.set_random_position()
+        scoreboard.increase()
+
 
 # exit on click
 screen.exitonclick()
