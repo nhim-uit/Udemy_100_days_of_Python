@@ -16,10 +16,9 @@
 # Detect collision with tail
 
 from snake.mySnake import Snake
-from myScreen import *
+from functions import *
 from food import Food
 from scoreboard import ScoreBoard
-from CONSTANTS import EDGE
 import time
 
 # Create Screen
@@ -50,24 +49,17 @@ while game_on:
     snake.move()
 
     # Detect collision with food
-    if snake.get_head().distance(food) <= 10:
-        snake.extend()
-        food.set_random_position()
-        scoreboard.increase()
+    detect_food(snake, food, scoreboard)
 
     # Detect collision with wall
-    if snake.get_head().xcor() > EDGE \
-            or snake.get_head().xcor() < -EDGE \
-            or snake.get_head().ycor() > EDGE \
-            or snake.get_head().ycor() < -EDGE:
-        game_on = False
-        scoreboard.game_over()
+    game_on = detect_wall(snake, scoreboard)
+    if not game_on:
+        break
 
     # Detect collision with tail
-    for s in (snake.get_snake())[1:]:
-        if snake.get_head().distance(s) <= 10:
-            game_on = False
-            scoreboard.game_over()
+    game_on = detect_tail(snake, scoreboard)
+    if not game_on:
+        break
 
 # exit on click
 screen.exitonclick()
