@@ -5,18 +5,20 @@
 # Modified by me
 # Version 1
 # OOP - encapsulation, inheritance
-# no docstrings
+# no docstrings, no try catch
 # ---------------------------------------------------------
 # Create a snake body
 # Move the snake
 # Control the snake
 # Detect collision with food
-# Scoreboard
+# Scoreboard, game-over
+# Detect collision with wall
 
 from snake.mySnake import Snake
 from myScreen import *
 from food import Food
 from scoreboard import ScoreBoard
+from CONSTANTS import EDGE
 import time
 
 # Create Screen
@@ -38,17 +40,29 @@ screen.onkey(snake.down, 'Down')
 screen.onkey(snake.left, 'Left')
 screen.onkey(snake.right, 'Right')
 
+game_on = True
+
 # Move
-while True:
+while game_on:
     screen.update()
     time.sleep(0.1)
     snake.move()
 
     # Detect collision with food
     if snake.get_head().distance(food) <= 10:
+        snake.extend()
         food.set_random_position()
         scoreboard.increase()
 
+    # Detect collision with wall
+    if snake.get_head().xcor() > EDGE \
+            or snake.get_head().xcor() < -EDGE \
+            or snake.get_head().ycor() > EDGE \
+            or snake.get_head().ycor() < -EDGE:
+        game_on = False
+        scoreboard.game_over()
+
+    # Detect collision with tail
 
 # exit on click
 screen.exitonclick()

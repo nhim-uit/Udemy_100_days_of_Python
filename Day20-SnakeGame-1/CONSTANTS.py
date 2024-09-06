@@ -1,5 +1,5 @@
 # Screen settings
-SCREEN_SIZE = 660
+SCREEN_SIZE = 600
 PIXEL_SIZE = 1
 PIXEL = 20 * PIXEL_SIZE
 EDGE = int(SCREEN_SIZE / 2 - PIXEL)
@@ -14,7 +14,7 @@ LEFT = 180
 RIGHT = 0
 
 # POSITION SETTING
-TOP_Y = 270
+TOP_Y = 260
 TOP_X = 0
 
 # Scoreboard settings

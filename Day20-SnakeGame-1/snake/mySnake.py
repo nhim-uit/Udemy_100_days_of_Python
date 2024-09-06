@@ -9,14 +9,14 @@ class Snake:
         self.__head = self.__snake[0]
 
     def create(self, size=PIXEL):
-        # set colors to differentiate 3 pixels
-        colors = ['red', 'green', 'blue']
-        j = 0
         for i in range(0, -(size * 2 + 1), -size):
             t = MyTurtle(x=i)
-            t.color(colors[j])
-            j += 1
             self.__snake.append(t)
+
+    def extend(self):
+        last_x = self.__snake[-1].xcor()
+        last_y = self.__snake[-1].ycor()
+        self.__snake.append(MyTurtle(last_x, last_y))
 
     def get_head(self):
         return self.__head

@@ -7,6 +7,7 @@ class MyTurtle(Turtle):
         super().__init__()
 
         self.shape('square')
+        self.color('white')
         self.penup()
         self.setposition(x, y)
         self.shapesize(PIXEL_SIZE, PIXEL_SIZE, 1)
