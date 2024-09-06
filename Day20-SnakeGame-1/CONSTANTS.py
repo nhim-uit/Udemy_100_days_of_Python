@@ -13,7 +13,7 @@ DOWN = 270
 LEFT = 180
 RIGHT = 0
 
-# POSITION SETTING
+# Position settings
 TOP_Y = 260
 TOP_X = 0
 
