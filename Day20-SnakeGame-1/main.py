@@ -15,7 +15,6 @@
 # Detect collision with wall
 # Detect collision with tail
 
-from snake.mySnake import Snake
 from functions import *
 from food import Food
 from scoreboard import ScoreBoard
