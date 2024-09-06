@@ -21,6 +21,9 @@ class Snake:
     def get_head(self):
         return self.__head
 
+    def get_snake(self):
+        return self.__snake
+
     def move(self):
         for i in range(len(self.__snake) - 1, 0, -1):
             new_x = self.__snake[i - 1].xcor()

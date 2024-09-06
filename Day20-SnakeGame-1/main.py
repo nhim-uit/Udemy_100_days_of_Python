@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Aug 28 - Sep 3, 2024
+# Aug 28 - Sep 6, 2024
 # Day 20 - Snake Game
 # Created based on Udemy course
 # Modified by me
@@ -13,6 +13,7 @@
 # Detect collision with food
 # Scoreboard, game-over
 # Detect collision with wall
+# Detect collision with tail
 
 from snake.mySnake import Snake
 from myScreen import *
@@ -63,6 +64,10 @@ while game_on:
         scoreboard.game_over()
 
     # Detect collision with tail
+    for s in (snake.get_snake())[1:]:
+        if snake.get_head().distance(s) <= 10:
+            game_on = False
+            scoreboard.game_over()
 
 # exit on click
 screen.exitonclick()
