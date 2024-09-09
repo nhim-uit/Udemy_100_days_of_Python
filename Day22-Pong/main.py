@@ -4,20 +4,27 @@
 # Created based on Udemy course
 # Modified by me
 # Create the screen
-# Create paddles
+# Create and move paddles
 from functions import *
 from paddle import Paddle
 from CONSTANTS import *
+import time
 
 if __name__ == '__main__':
     # Create screen
     screen = create_screen()
 
     # Create paddles
-    paddle1 = Paddle(side=LEFT)
-    paddle2 = Paddle(side=RIGHT)
+    paddle1 = Paddle(side=LEFT_SIDE, direction=UP)
+    paddle2 = Paddle(side=RIGHT_SIDE, direction=DOWN)
 
-    while True:
+    game_on = True
+
+    # Game on
+    while game_on:
         screen.update()
+        time.sleep(0.1)
+        paddle1.move()
+        paddle2.move()
 
     # screen.exitonclick()
