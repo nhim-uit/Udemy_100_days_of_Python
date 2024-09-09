@@ -8,4 +8,4 @@ class MyTurtle(Turtle):
         self.color('white')
         self.penup()
         self.setposition(x, y)
-        self.turtlesize(1, 1, 1)
+        self.shapesize(stretch_wid=1, stretch_len=5)

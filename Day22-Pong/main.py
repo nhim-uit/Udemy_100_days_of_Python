@@ -3,8 +3,8 @@
 # Day 22 - Pong
 # Created based on Udemy course
 # Modified by me
-# Create the screen
-# Create and move paddles
+# Create paddles
+# Add auto moving paddles
 from functions import *
 from paddle import Paddle
 from CONSTANTS import *
@@ -18,13 +18,21 @@ if __name__ == '__main__':
     paddle1 = Paddle(side=LEFT_SIDE, direction=UP)
     paddle2 = Paddle(side=RIGHT_SIDE, direction=DOWN)
 
+    # Control
+    screen.listen()
+    screen.onkey(paddle1.up, 'w')
+    screen.onkey(paddle1.down, 's')
+    screen.onkey(paddle2.up, 'Up')
+    screen.onkey(paddle2.down, 'Down')
+
     game_on = True
 
     # Game on
     while game_on:
         screen.update()
         time.sleep(0.1)
-        paddle1.move()
-        paddle2.move()
+        paddle1.auto_move()
+        paddle2.auto_move()
+
 
     # screen.exitonclick()

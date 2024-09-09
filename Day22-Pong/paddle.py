@@ -10,25 +10,30 @@ class Paddle:
         self.__head.setheading(direction)
 
     def create(self, start_x=0, size=PIXEL):
-        for i in range(size, -(size * 2), -size):
-            t = MyTurtle(start_x, i)
-            self.__paddle.append(t)
+        self.__paddle.append(MyTurtle(start_x, 0))
 
     def get_head(self):
         return self.__head
 
     def move(self):
-        self.set_head_pos()
-        for i in range(len(self.__paddle) - 1, 0, -1):
-            new_x = self.__paddle[i - 1].xcor()
-            new_y = self.__paddle[i - 1].ycor()
-            self.__paddle[i].setposition(new_x, new_y)
+        # Move forward by 1 pixel
         self.__head.forward(MOVE_DISTANCE)
 
-    def set_head_pos(self):
-        if self.__head.ycor() < -EDGE:
-            self.__head.setheading(UP)
+    def auto_move(self):
         if self.__head.ycor() > EDGE:
             self.__head.setheading(DOWN)
+        if self.__head.ycor() < -EDGE + PIXEL:
+            self.__head.setheading(UP)
+        self.move()
+
+    def up(self):
+        if self.__head.ycor() <= EDGE:
+            self.__head.setheading(UP)
+            self.move()
+
+    def down(self):
+        if self.__head.ycor() >= -EDGE + PIXEL:
+            self.__head.setheading(DOWN)
+            self.move()
 
 
