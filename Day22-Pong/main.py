@@ -1,12 +1,13 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Aug 28 - Sep 6, 2024
+# Sep 14, 2024
 # Day 22 - Pong
-# Created based on Udemy course
-# Modified by me
+# Created by me
 # Create paddles
 # Add auto moving paddles
+# Add a ball and bouncing
 from functions import *
 from paddle import Paddle
+from ball import Ball
 from CONSTANTS import *
 import time
 
@@ -17,6 +18,9 @@ if __name__ == '__main__':
     # Create paddles
     paddle1 = Paddle(side=LEFT_SIDE, direction=UP)
     paddle2 = Paddle(side=RIGHT_SIDE, direction=DOWN)
+
+    # Create a ball
+    ball = Ball()
 
     # Control
     screen.listen()
@@ -31,8 +35,10 @@ if __name__ == '__main__':
     while game_on:
         screen.update()
         time.sleep(0.1)
+        ball.move()
         paddle1.auto_move()
         paddle2.auto_move()
+
 
 
     # screen.exitonclick()
