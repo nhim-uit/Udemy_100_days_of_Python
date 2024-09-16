@@ -6,6 +6,8 @@
 # Add auto moving paddles
 # Add a ball and bouncing
 # Detect walls and bouncing on paddles
+# Add ball's moving speed
+# Add scoreboard, game-over screen
 from functions import *
 from paddle import Paddle
 from ball import Ball
@@ -25,7 +27,7 @@ if __name__ == '__main__':
     ball = Ball()
 
     # Create a scoreboard
-    score = ScoreBoard()
+    scoreboard = ScoreBoard()
 
     # Control
     screen.listen()
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     # Game on
     while game_on:
         screen.update()
-        time.sleep(0.1)
+        time.sleep(ball.move_speed)
 
         # Paddles move
         paddle_l.auto_move()
@@ -50,9 +52,12 @@ if __name__ == '__main__':
         ball.detect_paddle(paddle_r)
 
         # Detect wall
-        ball.detect_wall()
+        ball.detect_wall(scoreboard)
 
         # move
         ball.move()
+
+        # game over
+        game_on = scoreboard.game_over()
 
     screen.exitonclick()
