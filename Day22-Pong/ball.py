@@ -31,7 +31,8 @@ class Ball(Turtle):
         """
         if self.xcor() > WALL_WIDTH \
                 or self.xcor() < -WALL_WIDTH:
-            return False
+            self.goto(0, 0)
+            self.bounce_x()
         if self.ycor() > WALL_HEIGHT \
                 or self.ycor() < -WALL_HEIGHT:
             self.bounce_y()
@@ -47,6 +48,7 @@ class Ball(Turtle):
         self.y_move *= -1
 
     def detect_paddle(self, paddle: Paddle):
-        if self.distance(paddle.get_head()) < 30 and self.xcor() > WALL_WIDTH - PIXEL \
+        if self.distance(paddle.get_head()) < 50 and self.xcor() > WALL_WIDTH - PIXEL \
                 or self.distance(paddle.get_head()) < 50 and self.xcor() < - WALL_WIDTH + PIXEL:
             self.bounce_x()
+

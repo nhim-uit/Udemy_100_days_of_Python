@@ -46,18 +46,13 @@ if __name__ == '__main__':
         paddle_r.auto_move()
 
         # Detect collision with paddles
-        ball.detect_paddle(paddle_r)
         ball.detect_paddle(paddle_l)
+        ball.detect_paddle(paddle_r)
 
         # Detect wall
-        flag = ball.detect_wall()
+        ball.detect_wall()
 
         # move
         ball.move()
-
-        if not flag:
-            score.game_over()
-            game_on = False
-            break
 
     screen.exitonclick()
