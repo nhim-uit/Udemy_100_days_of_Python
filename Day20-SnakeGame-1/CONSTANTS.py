@@ -18,5 +18,5 @@ TOP_Y = 260
 TOP_X = 0
 
 # Scoreboard settings
-ALIGHTMENT = 'center'
+ALIGNMENT = 'center'
 FONT = ('Arial', 24, 'normal')

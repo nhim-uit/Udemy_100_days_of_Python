@@ -1,5 +1,5 @@
 from turtle import Turtle
-from CONSTANTS import ALIGHTMENT, FONT, TOP_X, TOP_Y
+from CONSTANTS import ALIGNMENT, FONT, TOP_X, TOP_Y
 
 
 class ScoreBoard(Turtle):
@@ -15,7 +15,7 @@ class ScoreBoard(Turtle):
     def update(self):
         self.write(f'Score: {self.score}',
                    move=False,
-                   align=ALIGHTMENT,
+                   align=ALIGNMENT,
                    font=FONT)
 
     def game_over(self):
@@ -23,7 +23,7 @@ class ScoreBoard(Turtle):
         self.goto(0, 0)
         self.write('GAME OVER',
                    move=False,
-                   align=ALIGHTMENT,
+                   align=ALIGNMENT,
                    font=FONT)
 
     def increase(self):
