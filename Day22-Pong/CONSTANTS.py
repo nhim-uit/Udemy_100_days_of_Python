@@ -20,7 +20,5 @@ RIGHT = 0
 # Scoreboard settings
 ALIGNMENT = 'center'
 FONT = ('Arial', 24, 'normal')
-
-# Position settings
-TOP_Y = 260
-TOP_X = 0
+TOP_X = 100
+TOP_Y = 250

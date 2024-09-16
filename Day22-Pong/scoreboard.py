@@ -1,13 +1,13 @@
 from turtle import Turtle
 from score import Score
-from CONSTANTS import ALIGNMENT, FONT
+from CONSTANTS import *
 
 
 class ScoreBoard(Turtle):
     def __init__(self):
         super().__init__()
-        self.score1 = Score(-100, 250)
-        self.score2 = Score(100, 250)
+        self.score1 = Score(-TOP_X, TOP_Y)
+        self.score2 = Score(TOP_X, TOP_Y)
         # self.score1.update()
         # self.score2.update()
 
@@ -20,7 +20,7 @@ class ScoreBoard(Turtle):
         self.score2.update()
 
     def game_over(self):
-        if abs(self.score1.get_score() - self.score2.get_score()) == 1:
+        if abs(self.score1.get_score() - self.score2.get_score()) == 3:
             self.score1.clear()
             self.score2.clear()
 
