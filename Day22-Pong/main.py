@@ -1,7 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Sep 14-16, 2024
 # Day 22 - Pong
-# Created by me
+# Created by me, based on Udemy's tutorial
 # Create paddles
 # Add auto moving paddles
 # Add a ball and bouncing
