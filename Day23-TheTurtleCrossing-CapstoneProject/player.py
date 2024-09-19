@@ -12,12 +12,11 @@ class Player(Turtle):
         self.start_pos()
 
     def move(self):
-        self.detect_top()
-        self.forward(MOVE_DISTANCE)
-
-    def detect_top(self):
+        # detect_top
         if self.ycor() > SIZE // 2:
             self.start_pos()
+
+        self.forward(MOVE_DISTANCE)
 
     def start_pos(self):
         self.setposition(0, -SIZE // 2 + PIXEL)
