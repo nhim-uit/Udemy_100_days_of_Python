@@ -3,6 +3,7 @@ from turtle import Screen
 from CONSTANTS import *
 from player import Player
 from cars import Cars
+from scoreboard import Scoreboard
 
 
 def create_screen():
@@ -20,6 +21,13 @@ def level_up(player: Player, cars: Cars):
             car.speed_up()
 
 
+def detect_collide(player: Player, cars: Cars):
+    for car in cars.get_cars():
+        if player.distance(car) < PIXEL:
+            return False
+    return True
+
+
 def run():
     # Create Screen
     screen = create_screen()
@@ -34,6 +42,9 @@ def run():
     # Create cars
     cars = Cars()
 
+    # Create scoreboard
+    scoreboard = Scoreboard()
+
     game_on = True
 
     while game_on:
@@ -43,6 +54,9 @@ def run():
         cars.move()
         level_up(player, cars)
 
+        game_on = detect_collide(player, cars)
 
+        if not game_on:
+            scoreboard.game_over()
 
     screen.exitonclick()
