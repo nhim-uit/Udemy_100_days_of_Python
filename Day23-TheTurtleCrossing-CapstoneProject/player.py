@@ -13,10 +13,6 @@ class Player(Turtle):
         self.start_pos()
 
     def move(self):
-        # detect_top
-        if self.ycor() > EDGE:
-            self.start_pos()
-
         self.forward(MOVE_DISTANCE)
 
     def start_pos(self):

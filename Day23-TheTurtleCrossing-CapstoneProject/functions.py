@@ -19,6 +19,8 @@ def level_up(player: Player, cars: Cars, scoreboard: Scoreboard):
     if player.ycor() > EDGE:
         for car in cars.get_cars():
             car.speed_up()
+
+        player.start_pos()
         scoreboard.increase()
 
 
