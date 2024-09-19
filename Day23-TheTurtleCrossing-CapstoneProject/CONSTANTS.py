@@ -12,7 +12,7 @@ TOP_X = 100
 TOP_Y = 250
 
 # Player settings
-MOVE_DISTANCE = PIXEL // 2
+MOVE_DISTANCE = PIXEL
 
 # Car settings
 COLORS = ['black',
