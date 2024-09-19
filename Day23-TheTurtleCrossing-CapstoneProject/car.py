@@ -15,7 +15,7 @@ class Car(Turtle):
         self.move_speed = 2
 
     def move(self):
-        if self.xcor() < -SIZE // 2:
+        if self.xcor() < -SIZE // 2 + PIXEL:
             self.setposition(SIZE // 2 - PIXEL, randint(-SIZE // 2 + PIXEL, SIZE // 2 - PIXEL))
 
         self.forward(self.move_speed)
