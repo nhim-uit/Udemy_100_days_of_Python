@@ -12,7 +12,7 @@ class Car(Turtle):
         self.shapesize(stretch_wid=1, stretch_len=2)
         self.setheading(WEST)
         self.start_pos()
-        self.move_speed = 5
+        self.move_speed = 2
 
     def move(self):
         if self.xcor() < -SIZE // 2:
