@@ -1,5 +1,6 @@
 from turtle import Turtle
 from CONSTANTS import *
+from scoreboard import Scoreboard
 
 
 class Player(Turtle):
@@ -19,4 +20,4 @@ class Player(Turtle):
         self.forward(MOVE_DISTANCE)
 
     def start_pos(self):
-        self.goto(0, -EDGE)
+        self.goto(0, -SIZE // 2)
