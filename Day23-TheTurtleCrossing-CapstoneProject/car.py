@@ -12,11 +12,11 @@ class Car(Turtle):
         self.shapesize(stretch_wid=1, stretch_len=2)
         self.setheading(WEST)
         self.start_pos()
-        self.move_speed = 2
+        self.move_speed = STARTING_MOVE_SPEED
 
     def move(self):
         if self.xcor() < -SIZE // 2:
-            self.setposition(EDGE + PIXEL, randint(-EDGE, EDGE))
+            self.setposition(SIZE // 2, randint(-EDGE, EDGE))
 
         self.forward(self.move_speed)
 
@@ -25,4 +25,4 @@ class Car(Turtle):
                          randint(-EDGE, EDGE))
 
     def speed_up(self):
-        self.move_speed += 5
+        self.move_speed += MOVE_INCREMENT

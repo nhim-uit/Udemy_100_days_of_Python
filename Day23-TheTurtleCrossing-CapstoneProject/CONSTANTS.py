@@ -22,5 +22,8 @@ COLORS = ['black',
           'green',
           ]
 
+STARTING_MOVE_SPEED = 2
+MOVE_INCREMENT = 5
+
 # Cars settings
 NO_OF_CARS = 20
