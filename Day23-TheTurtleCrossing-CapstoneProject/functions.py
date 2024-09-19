@@ -15,15 +15,16 @@ def create_screen():
     return screen
 
 
-def level_up(player: Player, cars: Cars):
+def level_up(player: Player, cars: Cars, scoreboard: Scoreboard):
     if player.ycor() > EDGE:
         for car in cars.get_cars():
             car.speed_up()
+        scoreboard.increase()
 
 
 def detect_collision(player: Player, cars: Cars):
     for car in cars.get_cars():
-        if player.distance(car) < PIXEL:
+        if car.distance(player) < PIXEL:
             return False
     return True
 
@@ -52,7 +53,7 @@ def run():
         screen.update()
 
         cars.move()
-        level_up(player, cars)
+        level_up(player, cars, scoreboard)
 
         game_on = detect_collision(player, cars)
 
