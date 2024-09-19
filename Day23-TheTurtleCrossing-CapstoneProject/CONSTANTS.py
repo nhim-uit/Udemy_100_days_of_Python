@@ -23,4 +23,4 @@ COLORS = ['black',
           ]
 
 # Cars settings
-NO_OF_CARS = 15
+NO_OF_CARS = 20
