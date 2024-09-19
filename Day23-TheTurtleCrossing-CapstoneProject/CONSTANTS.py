@@ -3,6 +3,7 @@ PIXEL = 20
 
 # degree - direction
 NORTH = 90
+WEST = 180
 
 # Scoreboard settings
 ALIGNMENT = 'center'
@@ -12,3 +13,13 @@ TOP_Y = 250
 
 # Player settings
 MOVE_DISTANCE = PIXEL // 2
+
+# Car settings
+COLORS = ['black',
+          'blue',
+          'red',
+          'purple',
+          'yellow',
+          'pink',
+          'green',
+          ]
