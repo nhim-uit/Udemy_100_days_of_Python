@@ -14,12 +14,20 @@ def create_screen():
     return screen
 
 
+def level_up(player: Player, cars: Cars):
+    if player.ycor() > SIZE // 2:
+        for car in cars.get_cars():
+            car.speed_up()
+
+
 def run():
     # Create Screen
     screen = create_screen()
 
     # Create player
     player = Player()
+
+    # Create cars
     cars = Cars()
 
     game_on = True
@@ -30,6 +38,7 @@ def run():
 
         player.move()
         cars.move()
+        level_up(player, cars)
 
 
 
