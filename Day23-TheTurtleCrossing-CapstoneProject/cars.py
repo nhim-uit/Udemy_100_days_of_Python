@@ -4,11 +4,14 @@ import random
 
 class Cars:
     def __init__(self):
-        self.cars = []
+        self.__cars = []
 
         for _ in range(random.randint(5, 9)):
-            self.cars.append(Car())
+            self.__cars.append(Car())
 
     def move(self):
-        for car in self.cars:
+        for car in self.__cars:
             car.move()
+
+    def get_cars(self):
+        return self.__cars
