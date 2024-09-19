@@ -12,13 +12,17 @@ class Car(Turtle):
         self.shapesize(stretch_wid=1, stretch_len=2)
         self.setheading(WEST)
         self.start_pos()
+        self.move_speed = 5
 
     def move(self):
         if self.xcor() < -SIZE // 2:
-            self.start_pos()
+            self.setposition(SIZE // 2 - PIXEL, randint(-SIZE // 2 + PIXEL, SIZE // 2 - PIXEL))
 
-        move_speed = randint(5, 20)
-        self.forward(move_speed)
+        self.forward(self.move_speed)
 
     def start_pos(self):
-        self.setposition(SIZE // 2 - PIXEL, randint(-SIZE // 2 + PIXEL, SIZE // 2 - PIXEL))
+        self.setposition(randint(-SIZE // 2 + PIXEL, SIZE // 2 - PIXEL),
+                         randint(-SIZE // 2 + PIXEL, SIZE // 2 - PIXEL))
+
+    def speed_up(self):
+        self.move_speed += 5
