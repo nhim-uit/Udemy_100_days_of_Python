@@ -15,6 +15,14 @@ class Scoreboard(Turtle):
                    align='left',
                    font=FONT)
 
+    def increase(self):
+        self.level += 1
+        self.clear()
+        self.write(f'Level: {self.level}',
+                   move=False,
+                   align='left',
+                   font=FONT)
+
     def game_over(self):
         self.clear()
         self.goto(0, 0)
