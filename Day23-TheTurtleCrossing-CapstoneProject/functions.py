@@ -26,6 +26,8 @@ def run():
         time.sleep(0.1)
         screen.update()
 
+        player.move()
+
 
 
     screen.exitonclick()
