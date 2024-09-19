@@ -13,10 +13,10 @@ class Player(Turtle):
 
     def move(self):
         # detect_top
-        if self.ycor() > SIZE // 2 - PIXEL:
+        if self.ycor() > EDGE:
             self.start_pos()
 
         self.forward(MOVE_DISTANCE)
 
     def start_pos(self):
-        self.setposition(0, -SIZE // 2 + PIXEL)
+        self.goto(0, -EDGE)
