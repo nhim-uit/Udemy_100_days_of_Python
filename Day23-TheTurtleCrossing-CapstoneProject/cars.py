@@ -1,12 +1,12 @@
 from car import Car
-import random
+from CONSTANTS import NO_OF_CARS
 
 
 class Cars:
     def __init__(self):
         self.__cars = []
 
-        for _ in range(random.randint(5, 9)):
+        for _ in range(NO_OF_CARS):
             self.__cars.append(Car())
 
     def move(self):

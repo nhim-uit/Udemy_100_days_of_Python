@@ -23,3 +23,6 @@ COLORS = ['black',
           'pink',
           'green',
           ]
+
+# Cars settings
+NO_OF_CARS = 15
