@@ -2,6 +2,7 @@ import time
 from turtle import Screen
 from CONSTANTS import *
 from player import Player
+from cars import Cars
 
 
 def create_screen():
@@ -19,6 +20,7 @@ def run():
 
     # Create player
     player = Player()
+    cars = Cars()
 
     game_on = True
 
@@ -27,6 +29,7 @@ def run():
         screen.update()
 
         player.move()
+        cars.move()
 
 
 
