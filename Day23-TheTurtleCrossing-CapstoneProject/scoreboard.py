@@ -8,7 +8,7 @@ class Scoreboard(Turtle):
         self.hideturtle()
         self.penup()
         self.color('black')
-        self.setposition(-EDGE, EDGE - PIXEL)
+        self.goto(-EDGE, EDGE - PIXEL)
         self.level = 1
         self.write(f'Level: {self.level}',
                    move=False,
