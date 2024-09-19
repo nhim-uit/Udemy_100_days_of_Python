@@ -15,7 +15,7 @@ def create_screen():
 
 
 def level_up(player: Player, cars: Cars):
-    if player.ycor() > SIZE // 2:
+    if player.ycor() > SIZE // 2 - PIXEL:
         for car in cars.get_cars():
             car.speed_up()
 
@@ -27,6 +27,10 @@ def run():
     # Create player
     player = Player()
 
+    # key listen
+    screen.listen()
+    screen.onkey(player.move, 'Up')
+
     # Create cars
     cars = Cars()
 
@@ -36,7 +40,6 @@ def run():
         time.sleep(0.1)
         screen.update()
 
-        player.move()
         cars.move()
         level_up(player, cars)
 
