@@ -7,7 +7,7 @@ NORTH = 90
 WEST = 180
 
 # Scoreboard settings
-FONT = ('Arial', 20, 'normal')
+FONT = ('Courier', 20, 'normal')
 
 # Player settings
 MOVE_DISTANCE = PIXEL
