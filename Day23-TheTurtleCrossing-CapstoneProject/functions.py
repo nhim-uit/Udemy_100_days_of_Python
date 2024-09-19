@@ -21,7 +21,7 @@ def level_up(player: Player, cars: Cars):
             car.speed_up()
 
 
-def detect_collide(player: Player, cars: Cars):
+def detect_collision(player: Player, cars: Cars):
     for car in cars.get_cars():
         if player.distance(car) < PIXEL:
             return False
@@ -54,7 +54,7 @@ def run():
         cars.move()
         level_up(player, cars)
 
-        game_on = detect_collide(player, cars)
+        game_on = detect_collision(player, cars)
 
         if not game_on:
             scoreboard.game_over()
