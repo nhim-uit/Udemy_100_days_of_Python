@@ -5,8 +5,8 @@ from CONSTANTS import ALIGNMENT, FONT, TOP_X, TOP_Y
 class ScoreBoard(Turtle):
     def __init__(self):
         super().__init__()
-        self.score = 0
-        self.get_high_score()
+        self.__score = 0
+        self.__high_score = self.get_high_score()
         self.color('white')
         self.hideturtle()
         self.penup()
@@ -15,7 +15,7 @@ class ScoreBoard(Turtle):
 
     def update(self):
         self.clear()
-        self.write(f'Score: {self.score} - High Score: {self.high_score}',
+        self.write(f'Score: {self.__score} - High Score: {self.__high_score}',
                    move=False,
                    align=ALIGNMENT,
                    font=FONT)
@@ -29,28 +29,27 @@ class ScoreBoard(Turtle):
                    font=FONT)
 
     def reset(self):
-        self.get_high_score()
+        if self.__score > self.__high_score:
+            self.__high_score = self.__score
 
-        if self.score > self.high_score:
-            self.high_score = self.score
-            self.write_file()
+            with open('score.txt', 'w') as file:
+                file.write(f'{self.__high_score}')
 
-        self.score = 0
+        self.__score = 0
         self.update()
 
     def increase(self):
-        self.score += 1
+        self.__score += 1
         self.clear()
         self.update()
-
-    def write_file(self):
-        with open('score.txt', 'w') as file:
-            file.write(f'{self.high_score}')
 
     def get_high_score(self):
         try:
             with open('score.txt', 'r') as file:
-                self.high_score = int(file.read())
+                high_score = int(file.read())
         except FileNotFoundError:
-            self.high_score = 0
-            self.write_file()
+            high_score = 0
+            with open('score.txt', 'w') as file:
+                file.write(f'{high_score}')
+
+        return high_score
