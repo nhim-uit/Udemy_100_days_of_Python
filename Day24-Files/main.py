@@ -17,15 +17,13 @@
 
 if __name__ == '__main__':
     with open('./Input/Names/invited_names.txt', 'r') as file:
-        for name in file.readlines():
-            name = name.strip()
+        names = file.readlines()
 
-            with open('./Input/Letters/starting_letter.txt', 'r') as letter:
-                lines = letter.readlines()
+    with open('./Input/Letters/starting_letter.txt', 'r') as letter:
+        letter_content = letter.read()
 
-            with open(f'./Output/letter_for_{name}.txt', 'w') as output:
-                for line in lines:
-                    if '[name]' in line:
-                        line = line.replace('[name]', name)
+    for name in names:
+        new_letter = letter_content.replace('[name]', name.strip())
 
-                    output.write(line)
+        with open(f'./Output/letter_for_{name.strip()}.txt', 'w') as output:
+            output.write(new_letter)
