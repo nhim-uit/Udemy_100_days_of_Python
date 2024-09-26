@@ -29,8 +29,6 @@ class ScoreBoard(Turtle):
                    font=FONT)
 
     def reset(self):
-        filename = 'score.txt'
-
         self.get_high_score()
 
         if self.score > self.high_score:
@@ -50,9 +48,8 @@ class ScoreBoard(Turtle):
             file.write(f'{self.high_score}')
 
     def get_high_score(self):
-        filename = 'score.txt'
         try:
-            with open(filename, 'r') as file:
+            with open('score.txt', 'r') as file:
                 self.high_score = int(file.read())
         except FileNotFoundError:
             self.high_score = 0
