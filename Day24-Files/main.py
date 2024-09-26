@@ -22,10 +22,10 @@ if __name__ == '__main__':
 
             with open('./Input/Letters/starting_letter.txt', 'r') as letter:
                 lines = letter.readlines()
-                paragraph = ''.join(lines).split('\n')
 
-                with open(f'./Output/letter_for_{name}', 'w') as output:
-                    for line in lines:
-                        if '[name]' in line:
-                            line = line.replace('[name]', name)
-                        output.write(line)
+            with open(f'./Output/letter_for_{name}', 'w') as output:
+                for line in lines:
+                    if '[name]' in line:
+                        line = line.replace('[name]', name)
+
+                    output.write(line)
