@@ -14,6 +14,7 @@
 # Scoreboard, game-over
 # Detect collision with wall
 # Detect collision with tail
+# Add high score
 
 from functions import *
 from food import Food
