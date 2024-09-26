@@ -26,14 +26,16 @@ def detect_wall(snake: Snake, scoreboard: ScoreBoard):
             or snake.get_head().xcor() < -EDGE \
             or snake.get_head().ycor() > EDGE \
             or snake.get_head().ycor() < -EDGE:
-        scoreboard.game_over()
-        return False
+        scoreboard.reset()
+        snake.reset()
+        # return False
     return True
 
 
 def detect_tail(snake: Snake, scoreboard: ScoreBoard):
     for s in (snake.get_snake())[1:]:
         if snake.get_head().distance(s) <= 10:
-            scoreboard.game_over()
-            return False
+            scoreboard.reset()
+            snake.reset()
+            # return False
     return True
