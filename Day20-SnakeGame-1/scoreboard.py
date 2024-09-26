@@ -35,9 +35,9 @@ class ScoreBoard(Turtle):
 
         if self.score > self.high_score:
             self.high_score = self.score
+            self.write_file()
 
         self.score = 0
-        self.write_file()
         self.update()
 
     def increase(self):

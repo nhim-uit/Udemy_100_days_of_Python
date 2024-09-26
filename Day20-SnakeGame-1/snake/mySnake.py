@@ -52,5 +52,4 @@ class Snake:
         for t in self.__snake:
             t.hideturtle()
         self.__snake.clear()
-        self.create()
-        self.__head = self.__snake[0]
+        self.__init__()
