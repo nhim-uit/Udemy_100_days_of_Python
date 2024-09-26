@@ -1,2 +1,1 @@
-New text
-New text 1
+Hello, my name is Alex.
