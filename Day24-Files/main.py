@@ -23,7 +23,7 @@ if __name__ == '__main__':
             with open('./Input/Letters/starting_letter.txt', 'r') as letter:
                 lines = letter.readlines()
 
-            with open(f'./Output/letter_for_{name}', 'w') as output:
+            with open(f'./Output/letter_for_{name}.txt', 'w') as output:
                 for line in lines:
                     if '[name]' in line:
                         line = line.replace('[name]', name)
