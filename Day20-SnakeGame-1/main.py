@@ -15,6 +15,7 @@
 # Detect collision with wall
 # Detect collision with tail
 # Add high score
+# Add all time high score
 
 from functions import *
 from food import Food
