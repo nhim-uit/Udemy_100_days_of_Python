@@ -51,5 +51,4 @@ class Snake:
     def reset(self):
         for t in self.__snake:
             t.hideturtle()
-        self.__snake.clear()
         self.__init__()
