@@ -2,11 +2,24 @@ from turtle import Turtle
 from CONSTANTS import ALIGNMENT, FONT, TOP_X, TOP_Y
 
 
+# noinspection PyArgumentList
+def retrieve_high_score():
+    try:
+        with open('score.txt', 'r') as file:
+            high_score = int(file.read())
+    except FileNotFoundError:
+        high_score = 0
+        with open('score.txt', 'w') as file:
+            file.write(f'{high_score}')
+
+    return high_score
+
+
 class ScoreBoard(Turtle):
     def __init__(self):
         super().__init__()
         self.__score = 0
-        self.__high_score = self.get_high_score()
+        self.__high_score = retrieve_high_score()
         self.color('white')
         self.hideturtle()
         self.penup()
@@ -43,13 +56,14 @@ class ScoreBoard(Turtle):
         self.clear()
         self.update()
 
-    def get_high_score(self):
-        try:
-            with open('score.txt', 'r') as file:
-                high_score = int(file.read())
-        except FileNotFoundError:
-            high_score = 0
-            with open('score.txt', 'w') as file:
-                file.write(f'{high_score}')
+    @property
+    def high_score(self):
+        return self.__high_score
 
-        return high_score
+    @high_score.setter
+    def high_score(self, h_score):
+        self.__high_score = h_score
+
+    @property
+    def score(self):
+        return self.__score
