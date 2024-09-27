@@ -39,7 +39,7 @@ if __name__ == '__main__':
     print(f"{data['temp'].mean():.2f}")
     print(data['temp'].max())
 
-    # get data
+    # get data in columns
     print(data['condition'])    # get a list
     # same as
     print(data.condition)       # get an object
@@ -48,3 +48,14 @@ if __name__ == '__main__':
     # Series is 1-d, equivalent to a list, single column
     # DataFrame is 2-d, equivalent to a table
     # pandas.pypanda.org
+
+    # get data in row
+    monday = data[data.day == 'Monday']
+    print(monday)
+    print(monday.condition)
+
+    # which day has the highest temperature in a week
+    print(data[data.temp == data.temp.max()])
+
+    # convert monday temperature C into F
+    print(monday.temp * 9/5 + 32)
