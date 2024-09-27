@@ -59,3 +59,13 @@ if __name__ == '__main__':
 
     # convert monday temperature C into F
     print(monday.temp * 9/5 + 32)
+
+    # Create a dataframe from scratch
+    data_dict = {
+        'student': ['Amy', 'James', 'Angela'],
+        'scores': [76, 56, 65],
+    }
+    data = pandas.DataFrame(data_dict)
+    # print(data)
+
+    data.to_csv('new_data.csv')
