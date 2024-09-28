@@ -4,7 +4,6 @@
 import turtle
 from turtle import Screen
 from state import State
-from scoreboard import Scoreboard
 
 import pandas
 
@@ -12,21 +11,26 @@ if __name__ == '__main__':
     screen = Screen()
     screen.bgpic('blank_states_img.gif')
     states = pandas.read_csv('50_states.csv')
+    missing_states = states
 
-    user_input = screen.textinput('Guess the State', 'Enter a state\'s name: ')
-    count = 50
-    score = Scoreboard()
+    user_input = screen.textinput('Guess the State', 'Enter a state\'s name: ').title()
 
-    while count > 48:
-        if states.state.str.lower().str.contains(user_input.lower()).any():
-            score.increase()
-            state_name = states[states.state.str.lower() == user_input.lower()]
-            s = State(state_name.state.iloc[0], state_name.x.iloc[0], state_name.y.iloc[0])
-            user_input = screen.textinput(f'{score.score}/50 States Correct', 'Enter another state: ')
-        else:
-            user_input = screen.textinput('Guess the State', 'Re-enter a state: ')
+    correct_guess = []
+    states_names = states.state.to_list()
 
-        count -= 1
+    while len(correct_guess) <= 50 and user_input != 'Exit':
+        if user_input in states_names \
+                and user_input not in correct_guess:
+            state_name = states[states.state == user_input]
+            correct_guess.append(state_name.state.item())
+            s = State(state_name.state.item(), state_name.x.item(), state_name.y.item())
+            missing_states = missing_states[missing_states.state != state_name.state.item()]
 
-    score.game_over()
+        if len(correct_guess) == 50:
+            break
+
+        user_input = screen.textinput(f'{len(correct_guess)}/50 States Correct', 'Enter another state: ').title()
+
+    missing_states.state.to_csv('missing_states.csv')
+
     screen.exitonclick()
