@@ -1,7 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Sep 28, 2024
 # Day 25 - US States Game
-import turtle
+
 from turtle import Screen
 from state import State
 
