@@ -10,8 +10,8 @@ data = pandas.read_csv('nato_phonetic_alphabet.csv')
 df = pandas.DataFrame(data)
 
 # get input from user
-name = input('Enter a name: ').upper()
-list_ch = list(name.replace(' ', '')) # split string into characters, ignore space character
+name = input('Enter a name: ').upper().replace(' ', '')
+list_ch = list(name)  # split string into characters, ignore space character
 
 # create a list of codes matching characters in input string
 result = [df.query('letter == @ch').code.to_string(index=False, header=False) for ch in list_ch]
