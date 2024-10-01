@@ -2,7 +2,8 @@
 # Oct 1st, 2024
 # Day 26 - List and Dictionary Comprehensions
 
-import pandas, random
+import pandas
+import random
 
 # list comprehension
 ls = [1, 2, 3, 4, 5]
