@@ -17,4 +17,3 @@ list_ch = list(name.replace(' ', '')) # split string into characters, ignore spa
 result = [df.query('letter == @ch').code.to_string(index=False, header=False) for ch in list_ch]
 
 print(result)
-
