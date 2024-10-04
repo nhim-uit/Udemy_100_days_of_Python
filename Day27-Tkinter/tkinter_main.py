@@ -23,7 +23,7 @@ label.config(text='New text 1')
 # button
 def button_clicked():
     print('I got clicked')
-    new_text = input.get()
+    new_text = input1.get()
     label.config(text=new_text)
 
 
@@ -32,8 +32,8 @@ button.pack()
 
 
 # entry
-input = Entry(width=10)
-input.pack()
+input1 = Entry(width=10)
+input1.pack()
 
 
 window.mainloop()
