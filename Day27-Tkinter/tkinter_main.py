@@ -1,10 +1,8 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Oct 2nd, 2024
+# Oct 2-4, 2024
 # Day 27 - Tkinter
 
 from tkinter import *
-
-from sqlalchemy import column
 
 window = Tk()
 window.title('My First GUI Program')
