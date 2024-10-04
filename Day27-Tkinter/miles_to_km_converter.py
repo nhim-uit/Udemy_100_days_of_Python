@@ -10,24 +10,27 @@ window.title('Miles to Km Converter')
 # window.minsize(width=100, height=100)
 window.config(padx=5, pady=20)
 
+# Constants
+FONT = ('Arial', 12, 'normal')
+
 # Entry
 text_box = Entry(window, width=10)
 text_box.grid(column=1, row=0)
 
 # label: miles
-miles_lb = Label(text='Miles', font=('Arial', 12, 'normal'))
+miles_lb = Label(text='Miles', font=FONT)
 miles_lb.grid(column=2, row=0)
 
 # label: is equal to
-is_equal_to_lb = Label(text='is equal to', font=('Arial', 12, 'normal'))
+is_equal_to_lb = Label(text='is equal to', font=FONT)
 is_equal_to_lb.grid(column=0, row=1)
 
 # label: zero
-zero_lb = Label(text='0', font=('Arial', 12, 'normal'))
+zero_lb = Label(text='0', font=FONT)
 zero_lb.grid(column=1, row=1)
 
 # label: km
-km_lb = Label(text='Km', font=('Arial', 12, 'normal'))
+km_lb = Label(text='Km', font=FONT)
 km_lb.grid(column=2, row=1)
 
 
