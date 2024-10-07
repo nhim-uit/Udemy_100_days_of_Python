@@ -9,10 +9,6 @@ class Timer:
         self.text_id = text_id
         self.window = window
 
-    @property
-    def check_mark(self):
-        return self.__check_mark
-
     def update_timer(self, check_mark_lb):
         if self.__running:
             self.__second += 1
@@ -58,12 +54,13 @@ class Timer:
     def break_time(self):
         if self.__reps % 7 == 0:
             if self.__minute == 20 and self.__second == 0:
-                self.__minute = 0
-                self.__second = 0
-                self.__reps += 1
+                self.reset_minute_second()
 
         elif self.__minute == 5 and self.__second == 0:
-            self.__minute = 0
-            self.__second = 0
-            self.__reps += 1
+            self.reset_minute_second()
+
+    def reset_minute_second(self):
+        self.__minute = 0
+        self.__second = 0
+        self.__reps += 1
 
