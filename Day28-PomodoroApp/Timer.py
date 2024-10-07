@@ -24,7 +24,7 @@ class Timer:
             self.canvas.itemconfig(self.text_id, text=f'{self.__minute:02}:{self.__second:02}')
 
             if self.__reps % 2 == 0:
-                self.pomodoro(title_lb)
+                self.work(title_lb)
 
                 # config label
                 check_mark_lb.config(text=self.__check_mark * '✔')
@@ -46,7 +46,7 @@ class Timer:
         self.__second = 0
         canvas.itemconfig(text_id, text='00:00')
 
-    def pomodoro(self, title_lb):
+    def work(self, title_lb):
         title_lb.config(text='Work', fg=GREEN)
 
         if self.__minute == WORK_MIN and self.__second == 0:
@@ -70,4 +70,3 @@ class Timer:
         self.__minute = 0
         self.__second = 0
         self.__reps += 1
-
