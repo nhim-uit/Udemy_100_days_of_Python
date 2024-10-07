@@ -1,3 +1,6 @@
+from CONSTANTS import *
+
+
 class Timer:
     def __init__(self, canvas, text_id, window):
         self.__minute = 0
@@ -13,7 +16,7 @@ class Timer:
         if self.__running:
             self.__second += 1
 
-            if self.__second == 60:
+            if self.__second == SECOND_PER_MINUTE:
                 self.__second = 0
                 self.__minute += 1
 
@@ -44,7 +47,7 @@ class Timer:
         canvas.itemconfig(text_id, text='00:00')
 
     def pomodoro(self):
-        if self.__minute == 25 and self.__second == 0:
+        if self.__minute == WORK_MIN and self.__second == 0:
             self.__check_mark += 1
 
             self.__minute = 0
@@ -52,11 +55,11 @@ class Timer:
             self.__reps += 1
 
     def break_time(self):
-        if self.__reps % 7 == 0:
-            if self.__minute == 20 and self.__second == 0:
+        if self.__reps % LONG_BREAK_REPS == 0:
+            if self.__minute == LONG_BREAK_MIN and self.__second == 0:
                 self.reset_minute_second()
 
-        elif self.__minute == 5 and self.__second == 0:
+        elif self.__minute == SHORT_BREAK_MIN and self.__second == 0:
             self.reset_minute_second()
 
     def reset_minute_second(self):
