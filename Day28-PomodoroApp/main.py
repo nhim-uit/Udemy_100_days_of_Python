@@ -5,13 +5,7 @@
 
 from tkinter import *
 from Timer import *
-
-# ---------------------------- CONSTANTS ------------------------------- #
-PINK = "#e2979c"
-RED = "#e7305b"
-GREEN = "#9bdeac"
-YELLOW = "#f7f5dd"
-FONT_NAME = "Courier"
+from CONSTANTS import *
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
@@ -21,7 +15,7 @@ def reset():
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def start():
-    timer.start(check_mark_lb)
+    timer.start(check_mark_lb, title_lb)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -35,28 +29,28 @@ canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
 tomato_img = PhotoImage(file='tomato.png')
 canvas.create_image(100, 112, image=tomato_img)
 text_id = canvas.create_text(100, 130, text='00:00', fill='white', font=(FONT_NAME, 35, 'bold'))
-canvas.pack()
+canvas.grid(column=1, row=1)
 
-# label - Timer
-timer_lb = Label(text='Timer', font=(FONT_NAME, 30, 'normal'))
-timer_lb.config(bg=YELLOW, fg=GREEN)
-timer_lb.place(x=40, y=-40)
+# label - title
+title_lb = Label(text='Timer', font=(FONT_NAME, 30, 'normal'))
+title_lb.config(bg=YELLOW, fg=GREEN)
+title_lb.grid(column=1, row=0)
 
 # label - check_mark
 # ✔
 check_mark_lb = Label(text='', font=(FONT_NAME, 15, 'bold'))
 check_mark_lb.config(bg=YELLOW, fg=GREEN)
-check_mark_lb.place(x=40, y=230)
+check_mark_lb.grid(column=1, row=2)
 
 # button - Start
 start_btn = Button(text='Start', command=start)
 start_btn.config(bg='white')
-start_btn.place(x=-40, y=200)
+start_btn.grid(column=0, row=2)
 
 # button - Reset
 reset_btn = Button(text='Reset', command=reset)
 reset_btn.config(bg='white')
-reset_btn.place(x=200, y=200)
+reset_btn.grid(column=2, row=2)
 
 # timer
 timer = Timer(canvas, text_id, window)
