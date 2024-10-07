@@ -2,6 +2,7 @@
 # Oct 7, 2024
 # Day 28 - Pomodoro App
 # Created by me
+# version 1: timer counting forward, start at 00:00 to 25:00
 
 from tkinter import *
 from Timer import *
