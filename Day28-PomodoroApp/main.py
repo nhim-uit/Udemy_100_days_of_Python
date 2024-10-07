@@ -23,17 +23,9 @@ def reset():
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
-def add_check_mark():
-    new_check_mark = timer.check_mark * '✔'
-    check_mark_lb.config(text=new_check_mark)
-    window.update()
-
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def start():
-    if timer.check_mark > 0:
-        add_check_mark()
-
     timer.start(check_mark_lb)
 
 
