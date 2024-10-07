@@ -5,9 +5,11 @@ class Timer:
     def __init__(self, canvas, text_id, window):
         self.__minute = 0
         self.__second = 0
-        self.__running = False
         self.__check_mark = 0
         self.__reps = 0
+
+        self.__running = False
+
         self.canvas = canvas
         self.text_id = text_id
         self.window = window
@@ -55,15 +57,14 @@ class Timer:
 
         if self.__minute == WORK_MIN and self.__second == 0:
             self.__check_mark += 1
-
-            self.__minute = 0
-            self.__second = 0
-            self.__reps += 1
+            self.reset_minute_second()
 
     def break_time(self, title_lb):
         title_lb.config(text='Break', fg=PINK)
+
         if self.__reps % LONG_BREAK_REPS == 0:
             title_lb.config(fg=BLUE)
+
             if self.__minute == LONG_BREAK_MIN and self.__second == 0:
                 self.reset_minute_second()
 
