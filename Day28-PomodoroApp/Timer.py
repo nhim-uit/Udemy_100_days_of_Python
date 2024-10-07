@@ -40,11 +40,15 @@ class Timer:
             self.__running = True
             self.update_timer(check_mark_lb, title_lb)
 
-    def reset(self, canvas, text_id):
+    def reset(self, canvas, text_id, check_mark_lb, title_lb):
         self.__running = False
         self.__minute = 0
         self.__second = 0
         canvas.itemconfig(text_id, text='00:00')
+
+        self.__check_mark = 0
+        check_mark_lb.config(text=self.__check_mark * '✔')
+        title_lb.config(text='Timer', fg=GREEN, bg=YELLOW)
 
     def work(self, title_lb):
         title_lb.config(text='Work', fg=GREEN)
