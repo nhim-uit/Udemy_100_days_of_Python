@@ -1,7 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Oct 7, 2024
 # Day 28 - Pomodoro App
-# UI, timer reset, timer mechanism created by me
+# Created by me
 
 from tkinter import *
 from Timer import *
