@@ -1,6 +1,3 @@
-from tkinter import Canvas, Tk
-
-
 class Timer:
     def __init__(self, canvas, text_id, window):
         self.__minute = 0
