@@ -10,7 +10,7 @@ from CONSTANTS import *
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset():
-    timer.reset(canvas, text_id)
+    timer.reset(canvas, text_id, check_mark_lb, title_lb)
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
