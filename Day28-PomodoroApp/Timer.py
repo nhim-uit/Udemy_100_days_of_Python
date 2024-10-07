@@ -33,7 +33,7 @@ class Timer:
                 self.break_time(title_lb)
 
             # update after every 1000ms (1 second)
-            self.window.after(1, self.update_timer, check_mark_lb, title_lb)
+            self.window.after(1000, self.update_timer, check_mark_lb, title_lb)
 
     def start(self, check_mark_lb, title_lb):
         if not self.__running:
