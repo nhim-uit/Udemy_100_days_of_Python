@@ -4,7 +4,6 @@
 # UI, timer reset, timer mechanism created by me
 
 from tkinter import *
-
 from Timer import *
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -20,7 +19,7 @@ LONG_BREAK_MIN = 20
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset():
-    timer.reset(canvas, text_id, window)
+    timer.reset(canvas, text_id)
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
@@ -35,7 +34,7 @@ def start():
     if timer.check_mark > 0:
         add_check_mark()
 
-    timer.start(canvas, text_id, window)
+    timer.start(check_mark_lb)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -61,7 +60,6 @@ timer_lb.place(x=40, y=-40)
 check_mark_lb = Label(text='', font=(FONT_NAME, 15, 'bold'))
 check_mark_lb.config(bg=YELLOW, fg=GREEN)
 check_mark_lb.place(x=40, y=230)
-
 
 # button - Start
 start_btn = Button(text='Start', command=start)
