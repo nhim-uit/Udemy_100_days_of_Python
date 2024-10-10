@@ -35,20 +35,20 @@ def save():
                                                            f"Is it ok to save?")
         if is_ok:
             filename = 'data.csv'
-
-            try:
-                df = pandas.read_csv(filename)
-            except FileNotFoundError:
-                df = pandas.DataFrame(columns=['website', 'email', 'password'])
-
             new_row = {'website': website,
                        'email': email,
                        'password': password,
                        }
             new_row_df = pandas.DataFrame([new_row])
-            new_row_df.to_csv(filename, mode='a', header=False, index=False)
 
-            messagebox.showinfo(title='Success', message=f'Added {website} to the datastore.')
+            try:
+                df = pandas.read_csv(filename)
+                new_row_df.to_csv(filename, mode='a', index=False, header=False)
+            except FileNotFoundError:
+                df = pandas.DataFrame(columns=['website', 'email', 'password'])
+                new_row_df.to_csv(filename, mode='a', index=False)
+
+            # messagebox.showinfo(title='Success', message=f'Added {website} to the datastore.')
 
             website_entry.delete(0, END)
             email_entry.delete(0, END)
@@ -57,7 +57,19 @@ def save():
 
 
 def search():
-    pass
+    filename = 'data.csv'
+
+    df = pandas.read_csv(filename)
+
+    search_website = website_entry.get()
+    search_email = email_entry.get()
+
+    result = df[(df['website'] == search_website) & (df['email'] == search_email)]
+
+    if result.empty:
+        messagebox.showinfo(title='Oops!', message=f'No found password for {search_website} and {search_email}')
+    else:
+        messagebox.showinfo(title='Found!', message=f'Email: {search_email}\nPassword: {result.password.item()}')
 
 
 # window
