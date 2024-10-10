@@ -8,12 +8,13 @@ from tkinter import *
 from tkinter import messagebox
 
 from CONSTANTS import *
+from random_password import generate_random_password
 
 
 # functions
 def generate_password():
     password_entry.delete(0, END)
-    password_entry.insert(0, str(random.randint(100000, 999999)))
+    password_entry.insert(0, generate_random_password())
 
 
 def save():
@@ -27,7 +28,7 @@ def save():
         is_ok = messagebox.showinfo(title=website, message=f"These are the details entered:\n"
                                                            f"Website: {website}\n"
                                                            f"Email: {email}\n"
-                                                           f"Password: {len(password) * '*'}\n"
+                                                           f"Password: {password}\n"
                                                            f"Is it ok to save?")
         if is_ok:
             with open('data.txt', 'a') as file:
