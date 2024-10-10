@@ -1,6 +1,6 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Oct 10, 2024
-# Day 29 - Password Manager App with Tkinter
+# Day 29-30 - Password Manager App with Tkinter
 # Created by me
 
 import pandas
@@ -48,10 +48,16 @@ def save():
             new_row_df = pandas.DataFrame([new_row])
             new_row_df.to_csv(filename, mode='a', header=False, index=False)
 
+            messagebox.showinfo(title='Success', message=f'Added {website} to the datastore.')
+
             website_entry.delete(0, END)
             email_entry.delete(0, END)
             email_entry.insert(0, 'alex@gmail.com')
             password_entry.delete(0, END)
+
+
+def search():
+    pass
 
 
 # window
@@ -77,16 +83,19 @@ password_lb.grid(column=0, row=3)
 
 # button
 gen_pass_btn = Button(text='Generate Password', command=generate_password)
-gen_pass_btn.grid(column=2, row=3, padx=(50, 0))
+gen_pass_btn.grid(column=2, row=3, padx=(10, 0))
 
 add_btn = Button(text='Add', command=save)
 add_btn.grid(column=1, row=4, columnspan=2, sticky='ew', pady=2)
 # use sticky='ew' to span all its grid cell
 
+search_btn = Button(text='Search', command=search)
+search_btn.grid(column=2, row=1, sticky='ew', pady=2, padx=(10, 0))
+
 # entry
 website_entry = Entry(window, font=FONT)
 website_entry.focus()
-website_entry.grid(column=1, row=1, columnspan=2, sticky='ew', pady=2)
+website_entry.grid(column=1, row=1, sticky='ew', pady=2)
 
 email_entry = Entry(window, font=FONT)
 email_entry.grid(column=1, row=2, columnspan=2, sticky='ew', pady=2)
