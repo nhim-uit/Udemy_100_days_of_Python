@@ -4,6 +4,7 @@
 # Created by me
 
 import pandas
+import pyperclip    # to copy and paste to clipboard
 from tkinter import *
 from tkinter import messagebox
 
@@ -14,7 +15,9 @@ from random_password import generate_random_password
 # functions
 def generate_password():
     password_entry.delete(0, END)
-    password_entry.insert(0, generate_random_password())
+    password = generate_random_password()
+    password_entry.insert(0, password)
+    pyperclip.copy(password)    # copy generated password to clipboard
 
 
 def save():
