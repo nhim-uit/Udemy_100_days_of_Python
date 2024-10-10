@@ -1,0 +1,1 @@
+FONT = ('Arial', 10, 'normal')
