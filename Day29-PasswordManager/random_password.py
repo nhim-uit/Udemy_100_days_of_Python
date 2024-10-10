@@ -12,14 +12,9 @@ def generate_random_password():
 
     password_list = []
 
-    for _ in range(no_letters):
-        password_list.append(random.choice(alphabets))
-
-    for _ in range(no_symbols):
-        password_list.append(random.choice(symbols))
-
-    for _ in range(no_numbers):
-        password_list.append(str(random.randint(0, 9)))
+    password_list += [random.choice(alphabets) for _ in range(no_letters)]
+    password_list += [random.choice(symbols) for _ in range(no_symbols)]
+    password_list += [str(random.randint(0, 9)) for _ in range(no_numbers)]
 
     random.shuffle(password_list)
 
