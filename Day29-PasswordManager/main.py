@@ -3,7 +3,7 @@
 # Day 29 - Password Manager App with Tkinter
 # Created by me
 
-import random
+import pandas
 from tkinter import *
 from tkinter import messagebox
 
@@ -31,8 +31,19 @@ def save():
                                                            f"Password: {password}\n"
                                                            f"Is it ok to save?")
         if is_ok:
-            with open('data.txt', 'a') as file:
-                file.write(f'{website} | {email} | {password}\n')
+            filename = 'data.csv'
+
+            try:
+                df = pandas.read_csv(filename)
+            except FileNotFoundError:
+                df = pandas.DataFrame(columns=['website', 'email', 'password'])
+
+            new_row = {'website': website,
+                       'email': email,
+                       'password': password,
+                       }
+            new_row_df = pandas.DataFrame([new_row])
+            new_row_df.to_csv(filename, mode='a', header=False, index=False)
 
             website_entry.delete(0, END)
             email_entry.delete(0, END)
