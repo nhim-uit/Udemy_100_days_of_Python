@@ -42,10 +42,10 @@ def save():
             new_row_df = pandas.DataFrame([new_row])
 
             try:
-                df = pandas.read_csv(filename)
+                pandas.read_csv(filename)
                 new_row_df.to_csv(filename, mode='a', index=False, header=False)
             except FileNotFoundError:
-                df = pandas.DataFrame(columns=['website', 'email', 'password'])
+                pandas.DataFrame(columns=['website', 'email', 'password'])
                 new_row_df.to_csv(filename, mode='a', index=False)
 
             # messagebox.showinfo(title='Success', message=f'Added {website} to the datastore.')
