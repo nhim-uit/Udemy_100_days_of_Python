@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Oct 10, 2024
+# Oct 10-12, 2024
 # Day 29-30 - Password Manager App with Tkinter
 # Created by me
 
@@ -150,7 +150,6 @@ def search_using_json():
             else:
                 messagebox.showinfo(title='Oops!',
                                     message=f'No details for {search_website} exists.')
-
 
 
 # window
