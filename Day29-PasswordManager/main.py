@@ -5,6 +5,8 @@
 
 import pandas
 import pyperclip    # to copy and paste to clipboard
+import json
+
 from tkinter import *
 from tkinter import messagebox
 
@@ -20,7 +22,7 @@ def generate_password():
     pyperclip.copy(password)    # copy generated password to clipboard
 
 
-def save():
+def save_using_csv():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
@@ -56,7 +58,49 @@ def save():
             password_entry.delete(0, END)
 
 
-def search():
+def save_using_json():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    if len(website) == 0 or len(email) == 0 or len(password) == 0:
+        messagebox.showinfo(title='Oops', message='Please don\'t leave any fields empty! ')
+    else:
+        filename = 'data.json'
+        new_data = {
+            website: {
+                'email': email,
+                'password': password,
+            }
+        }
+
+        try:
+            with open(filename, 'r') as file:
+                # write new json to file
+                # json.dump(new_data, file, indent=4)
+
+                # reading old data
+                data = json.load(file)
+
+                # updating old data with new data
+                data.update(new_data)
+
+            with open(filename, 'w') as file:
+                # save updated data
+                json.dump(data, file, indent=4)
+
+        except FileNotFoundError:
+            with open(filename, 'w') as file:
+                json.dump(new_data, file, indent=4)
+
+        # clear all entry
+        website_entry.delete(0, END)
+        email_entry.delete(0, END)
+        email_entry.insert(0, 'alex@gmail.com')
+        password_entry.delete(0, END)
+
+
+def search_using_csv():
     filename = 'data.csv'
 
     df = pandas.read_csv(filename)
@@ -64,12 +108,46 @@ def search():
     search_website = website_entry.get()
     search_email = email_entry.get()
 
-    result = df[(df['website'] == search_website) & (df['email'] == search_email)]
-
-    if result.empty:
-        messagebox.showinfo(title='Oops!', message=f'No found password for {search_website} and {search_email}')
+    if len(search_website) == 0 or len(search_email) == 0:
+        messagebox.showinfo(title='Oops', message='Please don\'t leave website or email field empty! ')
     else:
-        messagebox.showinfo(title='Found!', message=f'Email: {search_email}\nPassword: {result.password.item()}')
+        result = df[(df['website'] == search_website) & (df['email'] == search_email)]
+
+        if result.empty:
+            messagebox.showinfo(title='Oops!', message=f'No found password for {search_website} and {search_email}')
+        else:
+            messagebox.showinfo(title='Found!', message=f'Website: {search_website}\n'
+                                                        f'Email: {search_email}\n'
+                                                        f'Password: {result.password.item()}')
+
+
+def search_using_json():
+    filename = 'data.json'
+
+    search_website = website_entry.get()
+    search_email = email_entry.get()
+
+    if len(search_website) == 0 or len(search_email) == 0:
+        messagebox.showinfo(title='Oops', message='Please don\'t leave website or email field empty! ')
+    else:
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+
+                if search_website in data:
+                    if data[search_website].get('email') == search_email:
+                        messagebox.showinfo(title='Found!',
+                                            message=f'Website: {search_website}\n'
+                                                    f"Email: {search_email}\n"
+                                                    f"Password: {data[search_website]['password']}")
+                    else:
+                        messagebox.showinfo(title='Oops!',
+                                            message=f'No found password for {search_website} and {search_email}')
+                else:
+                    messagebox.showinfo(title='Oops!',
+                                        message=f'{search_website} has no password.')
+        except FileNotFoundError:
+            messagebox.showinfo(title='Oops!', message=f'Database is empty.')
 
 
 # window
@@ -97,11 +175,11 @@ password_lb.grid(column=0, row=3)
 gen_pass_btn = Button(text='Generate Password', command=generate_password)
 gen_pass_btn.grid(column=2, row=3, padx=(10, 0))
 
-add_btn = Button(text='Add', command=save)
+add_btn = Button(text='Add', command=save_using_json)
 add_btn.grid(column=1, row=4, columnspan=2, sticky='ew', pady=2)
 # use sticky='ew' to span all its grid cell
 
-search_btn = Button(text='Search', command=search)
+search_btn = Button(text='Search', command=search_using_json)
 search_btn.grid(column=2, row=1, sticky='ew', pady=2, padx=(10, 0))
 
 # entry
