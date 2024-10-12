@@ -147,9 +147,9 @@ def search_using_json():
                                             message=f'No found password for {search_website} and {search_email}')
                 else:
                     messagebox.showinfo(title='Oops!',
-                                        message=f'{search_website} has no password.')
+                                        message=f'No details for {search_website} exists.')
         except FileNotFoundError:
-            messagebox.showinfo(title='Oops!', message=f'Database is empty.')
+            messagebox.showinfo(title='Oops!', message=f'No data file found.')
 
 
 # window
