@@ -28,13 +28,32 @@
 #     Do this no matter what happens
 
 # FileNotFound
-try:
-    file = open('a_file.txt')
-    a_dict = {'key': 'value'}
-    print(a_dict['abc'])
-# except:  # using bare 'except' will ignore all errors
-except FileNotFoundError:
-    file = open('a_file.txt', 'w')
-    file.write('Something...')
-except KeyError as error_message:
-    print(f'The key {error_message} does not exist.')
+# try:
+#     file = open('a_file.txt')
+#     a_dict = {'key': 'value'}
+#     print(a_dict['key'])
+# # except:  # using bare 'except' will ignore all errors
+# except FileNotFoundError:
+#     file = open('a_file.txt', 'w')
+#     file.write('Something...')
+# except KeyError as error_message:
+#     print(f'The key {error_message} does not exist.')
+# else:
+#     content = file.read()
+#     print(content)
+# finally:  # will run no matter what happens
+    # file.close()
+    # print('File was closed.')
+
+    # raise own exceptions:
+    # raise TypeError('This is an error that I made up.')
+
+# raise ValueError
+height = float(input('Height: '))   # in meters
+weight = int(input('Weight: '))
+
+if height > 3:
+    raise ValueError('Human height should not over 3 meters.')
+
+bmi = weight / (height ** 2)
+print(bmi)
