@@ -4,16 +4,12 @@
 # Created by me
 
 import pandas
+from generate_phonetic import generate_phonetic
 
 # load data
 data = pandas.read_csv('nato_phonetic_alphabet.csv')
 df = pandas.DataFrame(data)
 
-# get input from user
-name = input('Enter a name: ').upper().replace(' ', '')
-list_ch = list(name)  # split string into characters, ignore space character
+generate_phonetic(df)
 
-# create a list of codes matching characters in input string
-result = [df.query('letter == @ch').code.to_string(index=False, header=False) for ch in list_ch]
 
-print(result)
