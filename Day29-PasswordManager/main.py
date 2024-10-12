@@ -82,9 +82,6 @@ def save_using_json():
                 # reading old data
                 data = json.load(file)
 
-                # updating old data with new data
-                data.update(new_data)
-
             with open(filename, 'w') as file:
                 # save updated data
                 json.dump(data, file, indent=4)
@@ -92,6 +89,10 @@ def save_using_json():
         except FileNotFoundError:
             with open(filename, 'w') as file:
                 json.dump(new_data, file, indent=4)
+
+        else:
+            # updating old data with new data
+            data.update(new_data)
 
         # clear all entry
         website_entry.delete(0, END)
