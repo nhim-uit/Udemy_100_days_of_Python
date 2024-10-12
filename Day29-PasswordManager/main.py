@@ -135,21 +135,22 @@ def search_using_json():
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
-
-                if search_website in data:
-                    if data[search_website].get('email') == search_email:
-                        messagebox.showinfo(title='Found!',
-                                            message=f'Website: {search_website}\n'
-                                                    f"Email: {search_email}\n"
-                                                    f"Password: {data[search_website]['password']}")
-                    else:
-                        messagebox.showinfo(title='Oops!',
-                                            message=f'No found password for {search_website} and {search_email}')
-                else:
-                    messagebox.showinfo(title='Oops!',
-                                        message=f'No details for {search_website} exists.')
         except FileNotFoundError:
             messagebox.showinfo(title='Oops!', message=f'No data file found.')
+        else:
+            if search_website in data:
+                if data[search_website].get('email') == search_email:
+                    messagebox.showinfo(title='Found!',
+                                        message=f'Website: {search_website}\n'
+                                                f"Email: {search_email}\n"
+                                                f"Password: {data[search_website]['password']}")
+                else:
+                    messagebox.showinfo(title='Oops!',
+                                        message=f'No found password for {search_website} and {search_email}')
+            else:
+                messagebox.showinfo(title='Oops!',
+                                    message=f'No details for {search_website} exists.')
+
 
 
 # window
