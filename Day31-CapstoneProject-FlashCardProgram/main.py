@@ -12,7 +12,7 @@ BACKGROUND_COLOR = "#B1DDC6"
 
 # load data
 # filename = 'cleaned_data.csv'
-filename = 'example_data.csv'
+filename = 'cleaned_data.csv'
 words_to_learn_file = 'words_to_learn.csv'
 
 
