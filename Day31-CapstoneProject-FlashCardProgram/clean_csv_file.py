@@ -1,3 +1,7 @@
+# Oct 16, 2024
+# Clean data csv file, which contains '?' in  Vietnamese word
+# Created by me
+
 import pandas
 
 df = pandas.read_csv('data1.csv')
