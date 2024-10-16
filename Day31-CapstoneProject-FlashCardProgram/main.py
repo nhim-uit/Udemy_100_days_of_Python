@@ -10,17 +10,16 @@ import random
 
 BACKGROUND_COLOR = "#B1DDC6"
 
+# load data
+filename = 'cleaned_file.csv'
+df = pandas.read_csv(filename, index_col=False)
+data_dict = df.to_dict(orient='records')    # list of dict, [{column->value}]
+
 
 # functions
 def get_word():
-    filename = 'cleaned_file.csv'
-    df = pandas.read_csv(filename, index_col=False)
-    data_dict = df.to_dict(orient='records')
     random_word = random.choice(data_dict).get('Vietnamese')
     canvas.itemconfig(text2, text=random_word)
-
-
-
 
 
 # window
