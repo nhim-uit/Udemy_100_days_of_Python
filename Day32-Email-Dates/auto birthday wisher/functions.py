@@ -51,4 +51,4 @@ def send_email(my_email, my_password, recipient_email, msg):
                             to_addrs=recipient_email,
                             msg=msg.as_string())
 
-    print('Email sent successfully')
+    # print('Email sent successfully')
