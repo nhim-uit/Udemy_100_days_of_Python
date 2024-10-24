@@ -6,6 +6,11 @@ import pandas
 
 
 def get_df(filename):
+    """
+    read a csv file (list of recipients) into dataframe df
+    :param filename:
+    :return: dataframe df
+    """
     # open file to read
     try:
         df = pandas.read_csv(filename)
@@ -17,10 +22,19 @@ def get_df(filename):
 
 
 def get_day_month():
+    """
+    get current day and month
+    :return: tuple of integers, day and month
+    """
     return dt.datetime.now().day, dt.datetime.now().month
 
 
 def get_letter_content(row):
+    """
+    get a randomly template letter, replace [NAME] with recipient name
+    :param row:
+    :return: letter content with new name
+    """
     # randomly choose a letter template
     letter_no = random.randint(1, 3)
     template_file = f'letter_{letter_no}.txt'
@@ -36,6 +50,13 @@ def get_letter_content(row):
 
 
 def create_email_msg(new_letter, my_email, recipient_email):
+    """
+
+    :param new_letter:
+    :param my_email:
+    :param recipient_email:
+    :return:
+    """
     msg = MIMEText(new_letter, 'plain', 'utf-8')
     msg['Subject'] = 'Happy Birthday!'
     msg['From'] = my_email
