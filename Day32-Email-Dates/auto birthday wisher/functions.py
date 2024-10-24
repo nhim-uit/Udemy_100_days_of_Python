@@ -11,6 +11,8 @@ def get_df(filename):
         df = pandas.read_csv(filename)
     except FileNotFoundError:
         print(f'{filename} file not found')
+        return
+
     return df
 
 
@@ -27,7 +29,7 @@ def get_letter_content(row):
     try:
         with open(template_file, 'r') as template:
             letter_content = template.read()
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         print(f'{template_file} not found')
 
     return letter_content.replace('[NAME]', row['name'])
