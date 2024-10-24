@@ -30,8 +30,8 @@ msg['Subject'] = 'Monday Motivational Quote'
 msg['From'] = my_email
 msg['To'] = recipient_email
 
-# if it's Monday, send the email
-if day_of_week == 0:    # 0 is Monday
+# if it's Wednesday, send the email
+if day_of_week == 3:    # 3 is Wednesday
     with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
         connection.starttls()
         connection.login(user=my_email, password=my_password)
