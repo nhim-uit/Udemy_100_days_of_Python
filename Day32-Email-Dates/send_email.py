@@ -1,6 +1,6 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Oct 23, 2024
-# Day 32 - Send Emails and Manage Dates
+# Oct 23-24, 2024
+# Day 32 - Send Emails
 
 import smtplib
 
