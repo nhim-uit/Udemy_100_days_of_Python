@@ -2,6 +2,7 @@
 # Oct 26, 2024
 # Day 33 - API
 # ISS Overhead Notifier Project
+import time
 
 from sunrise_sunset_api import *
 from send_email import *
@@ -24,8 +25,10 @@ iss_longitude = float(data['iss_position']['longitude'])
 # then send an email to tell me to look up
 # BONUS: run the code every 60 seconds -- use pythonanywhere
 
-if abs(iss_latitude - MY_LAT) <= 5 \
-        and abs(iss_longitude - MY_LONG) <= 5 \
-        and (time_now_hour <= sunrise_ict.hour
-             or time_now_hour >= sunset_ict.hour):
-    send_email()
+while True:
+    time.sleep(60)
+    if abs(iss_latitude - MY_LAT) <= 5 \
+            and abs(iss_longitude - MY_LONG) <= 5 \
+            and (time_now_hour <= sunrise_ict.hour
+                 or time_now_hour >= sunset_ict.hour):
+        send_email()
