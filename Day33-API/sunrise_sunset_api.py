@@ -35,4 +35,4 @@ sunset_ict = sunset_utc.astimezone(ict_timezone)
 
 # get current hour
 time_now_hour = datetime.now().hour
-print(time_now_hour)
+# print(time_now_hour)
