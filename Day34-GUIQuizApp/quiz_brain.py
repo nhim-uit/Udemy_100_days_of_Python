@@ -20,6 +20,10 @@ class QuizBrain:
     def question_list(self):
         return self.__question_list.question_bank
 
+    @property
+    def score(self):
+        return self.__score
+
     def update_question(self):
         self.__question_number += 1
 
@@ -29,8 +33,11 @@ class QuizBrain:
     def next_question(self):
         q = self.question
         self.update_question()
-        user_ans = input(f'Q.{self.__question_number}: {q.question} (True/False)?: ')
-        self.check_answer(user_ans, q.answer)
+
+        # user_ans = input(f'Q.{self.__question_number}: {q.question} (True/False)?: ')
+        # self.check_answer(user_ans, q.answer)
+
+        return q
 
     def still_has_questions(self):
         return self.__question_number < self.__question_list.len
