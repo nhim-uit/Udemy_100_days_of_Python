@@ -81,15 +81,11 @@ class QuizInterface:
 
             # canvas config
             self.question_id.config(text=question)
-            self.__quiz_brain.question_list.remove(q)
-
-            print(self.__quiz_brain.question_list)
 
             return answer
 
         except IndexError:
             self.question_id.config(text='END')
-            print('empty list')
             return 'The list is empty'
 
     def press(self, key):
