@@ -33,9 +33,9 @@ class QuizInterface:
         #                    font=('Arial', 12, 'italic'))
         # canvas.grid(column=0, row=1, columnspan=2, pady=20)
 
-        # message
-        self.question_id = Label(text='Question goes here', wraplength=200)
-        self.question_id.grid(column=0, row=1, columnspan=2, pady=20, sticky='nsew')
+        # question element
+        self.question_lb = Label(text='Question goes here', wraplength=200)
+        self.question_lb.grid(column=0, row=1, columnspan=2, pady=20, sticky='nsew')
 
         # images
         self.true_img = Image.open('./images/true.png')
@@ -64,8 +64,8 @@ class QuizInterface:
         # window.grid_columnconfigure(0, weight=1)
 
         # set fixed size for the row and column
-        self.question_id.grid_propagate(False)
-        self.question_id.config(width=30, height=10)
+        self.question_lb.grid_propagate(False)
+        self.question_lb.config(width=30, height=10)
 
         self.window.mainloop()
 
@@ -74,22 +74,39 @@ class QuizInterface:
         # print(q_bank.next_question())
 
         try:
+            global q
             q = self.__quiz_brain.next_question()
             question = q.question
             answer = q.answer
 
+            # print(f'{question}=={answer}\n')
+
             # canvas config
-            self.question_id.config(text=question)
+            self.question_lb.config(text=question)
 
             return answer
 
         except IndexError:
-            self.question_id.config(text='END')
+            self.question_lb.config(text='END')
             return 'The list is empty'
 
     def press(self, key):
-        answer_key = self.get_answer()
-        self.__quiz_brain.check_answer(key, answer_key)
+        answer_key = q.answer
+        is_right = self.__quiz_brain.check_answer(key, answer_key)
+        self.give_feedback(is_right)
+        self.update_score()
 
+        self.window.after(1000, lambda: self.question_lb.config(bg='white'))
+        self.window.after(1500, self.get_answer)
+
+    def update_score(self):
         # config score label
         self.score_lb.config(text=f'Score: {self.__quiz_brain.score}')
+
+    def give_feedback(self, is_right):
+        if is_right:
+            self.window.after(500, lambda: self.question_lb.config(bg='green'))
+        else:
+            self.window.after(500, lambda: self.question_lb.config(bg='red'))
+
+        # self.window.after(1000, self.get_answer)
