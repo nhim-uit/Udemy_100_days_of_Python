@@ -7,10 +7,12 @@ from quiz_brain import *
 from tkinter import *
 from PIL import Image, ImageTk
 import random
+# from ui import *
 
 #
 q_bank = QuizBrain()
 score = 0
+# quiz_ui = QuizInterface(q_bank)
 
 
 # functions
@@ -86,7 +88,7 @@ true_btn = Button(image=true_photo,
 true_btn.grid(column=0, row=2)
 
 false_btn = Button(image=false_photo,
-                  highlightthickness=0, 
+                  highlightthickness=0,
                   command=lambda: press('false'))
 false_btn.grid(column=1, row=2)
 
