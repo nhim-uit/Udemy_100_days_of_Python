@@ -1,9 +1,10 @@
 from data import *
+import html
 
 
 class Question:
     def __init__(self, question, answer):
-        self.__question = question
+        self.__question = html.unescape(question)
         self.__answer = answer
 
     @property
