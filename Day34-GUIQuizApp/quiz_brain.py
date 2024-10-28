@@ -45,12 +45,12 @@ class QuizBrain:
     def check_answer(self, user_ans, correct_ans):
         if user_ans.lower() == correct_ans.lower():
             self.update_score()
-            print('You got it right!')
-        else:
-            print('That\'s wrong.')
+            # print('You got it right!')
+        # else:
+        #     print('That\'s wrong.')
 
-        print(f'The correct answer was: {correct_ans}.')
-        print(f'Your current score is: {self.__score}/{self.__question_number}.\n')
+        # print(f'The correct answer was: {correct_ans}.')
+        # print(f'Your current score is: {self.__score}/{self.__question_number}.\n')
 
     def complete(self):
         print('*' * 27)
