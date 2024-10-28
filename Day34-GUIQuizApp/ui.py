@@ -1,8 +1,6 @@
-from tkinter import *
 from quiz_brain import *
 from tkinter import *
 from PIL import Image, ImageTk
-import random
 
 
 # CONSTANTS
