@@ -3,12 +3,9 @@
 # Day 34 - GUI Quiz App
 # Created by me
 
-from quiz_brain import *
+from ui import *
 
 if __name__ == '__main__':
     q_bank = QuizBrain()
+    quiz_ui = QuizInterface(q_bank)
 
-    while q_bank.still_has_questions():
-        q_bank.next_question()
-
-    q_bank.complete()
