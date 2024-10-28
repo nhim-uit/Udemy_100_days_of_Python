@@ -12,7 +12,6 @@ THEME_COLOR = "#375362"
 class QuizInterface:
     def __init__(self, quiz_brain: QuizBrain):
         self.__quiz_brain = quiz_brain
-        self.__score = 0
 
         # window
         self.window = Tk()
@@ -57,8 +56,8 @@ class QuizInterface:
                            command=lambda: self.press('false'))
         self.false_btn.grid(column=1, row=2)
 
-        # get question
-        self.get_question()
+        # get question/answer
+        self.get_answer()
 
         # fix the size of the row and column
         self.window.grid_rowconfigure(0, weight=0)
@@ -71,7 +70,7 @@ class QuizInterface:
         self.window.mainloop()
 
     # functions
-    def get_question(self):
+    def get_answer(self):
         # print(q_bank.next_question())
 
         try:
@@ -89,10 +88,8 @@ class QuizInterface:
             return 'The list is empty'
 
     def press(self, key):
-        answer_key = self.get_question()
+        answer_key = self.get_answer()
+        self.__quiz_brain.check_answer(key, answer_key)
 
-        if answer_key.lower() == key:
-            self.__score += 1
-
-            # config score label
-            self.score_lb.config(text=f'Score: {self.__score}')
+        # config score label
+        self.score_lb.config(text=f'Score: {self.__quiz_brain.score}')
