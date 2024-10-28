@@ -33,10 +33,10 @@ def get_question():
         return 'The list is empty'
 
 
-def press_true():
+def press(key):
     answer_key = get_question()
 
-    if answer_key.lower() == 'true':
+    if answer_key.lower() == key:
         global score
         score += 1
 
@@ -82,11 +82,12 @@ false_photo = ImageTk.PhotoImage(resized_false_img)
 # buttons
 true_btn = Button(image=true_photo,
                   highlightthickness=0,
-                  command=press_true)
+                  command=lambda: press('true'))
 true_btn.grid(column=0, row=2)
 
 false_btn = Button(image=false_photo,
-                  highlightthickness=0)
+                  highlightthickness=0, 
+                  command=lambda: press('false'))
 false_btn.grid(column=1, row=2)
 
 # get question
