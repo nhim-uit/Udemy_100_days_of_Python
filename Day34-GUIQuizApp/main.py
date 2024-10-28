@@ -8,4 +8,3 @@ from ui import *
 if __name__ == '__main__':
     q_bank = QuizBrain()
     quiz_ui = QuizInterface(q_bank)
-
