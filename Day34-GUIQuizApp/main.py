@@ -1,7 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Oct 28, 2024
 # Day 34 - GUI Quiz App
-# Created by me
+# Created by me - run this
 
 from ui import *
 
