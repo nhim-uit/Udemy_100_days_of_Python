@@ -4,8 +4,13 @@
 
 import smtplib
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 my_email = 'alex.test.app.7@gmail.com'
-my_password = 'dvhuulpnkkpfkwts'
+my_password = os.getenv('EMAIL_PASSWORD')
 
 
 def send_email():

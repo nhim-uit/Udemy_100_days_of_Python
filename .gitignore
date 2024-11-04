@@ -1,3 +1,4 @@
 
 /Day17-QuizProject/__pycache__
 *.pyc
+.env

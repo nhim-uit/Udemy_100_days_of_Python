@@ -3,9 +3,13 @@
 # Day 32 - Send Emails
 
 import smtplib
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 my_email = 'alex.test.app.7@gmail.com'
-my_password = 'dvhuulpnkkpfkwts'
+my_password = os.getenv('EMAIL_PASSWORD')
 
 with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
     connection.starttls()
