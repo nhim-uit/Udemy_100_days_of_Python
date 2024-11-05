@@ -26,7 +26,7 @@ weather_data = response.json()
 # check rain
 def check_rain():
     """
-    print 'Bring an Umbrella' if the weather will rain (id < 700)
+    Send 'Bring an Umbrella' sms to alert if it will rain (id < 700)
     :return: void
     """
     for i in range(4):
