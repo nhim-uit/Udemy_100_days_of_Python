@@ -4,8 +4,7 @@
 # Using API Keys to Authenticate and get the weather from OpenWeatherMap
 
 import requests
-from dotenv import load_dotenv
-import os
+from send_sms import *
 
 load_dotenv()
 
@@ -32,7 +31,14 @@ def check_rain():
     """
     for i in range(4):
         if weather_data['list'][i]['weather'][0]['id'] < 700:
-            print('Bring an Umbrella')
+            # print('Bring an Umbrella')
+            message = client.messages.create(
+                body="It's going to rain today. Bring an Umbrella :)) ",
+                from_=os.getenv('TWILIO_NUMBER'),
+                to=os.getenv('MY_VIRTUAL_PHONE_NUMBER'),
+            )
+
+            print(message.status)
             return
 
 
