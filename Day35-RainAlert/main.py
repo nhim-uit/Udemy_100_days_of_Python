@@ -30,7 +30,9 @@ def check_rain():
     :return: void
     """
     for i in range(4):
-        if weather_data['list'][i]['weather'][0]['id'] < 700:
+        rain_code = weather_data['list'][i]['weather'][0]['id']
+
+        if rain_code < 700:
             # print('Bring an Umbrella')
             message = client.messages.create(
                 body="It's going to rain today. Bring an Umbrella :)) ",
@@ -40,6 +42,8 @@ def check_rain():
 
             print(message.status)
             return
+        else:
+            print(f'No rain: {rain_code}')
 
 
 # call function
