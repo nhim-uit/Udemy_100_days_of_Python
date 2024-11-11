@@ -71,4 +71,4 @@ def get_news(stock):
     description = news_data['results'][0]['description']
     # print(description)
 
-    return description
+    return title, description
