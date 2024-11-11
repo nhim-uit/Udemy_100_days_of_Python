@@ -4,6 +4,7 @@
 # Created by me
 
 from stock_price import *
+from send_sms import *
 
 if __name__ == '__main__':
     stock = 'AAPL'  # Apple, Inc. stock
@@ -14,4 +15,13 @@ if __name__ == '__main__':
     change = calc_percent(prev_price, today_price)
 
     print(f'change: {change}%')
-    print(f'{get_news(stock)}')
+
+    title, description = get_news(stock)
+
+    message = client.messages.create(
+        body=description,
+        from_=os.getenv('TWILIO_NUMBER'),
+        to=os.getenv('MY_VIRTUAL_PHONE_NUMBER'),
+    )
+
+    print(message.status)
