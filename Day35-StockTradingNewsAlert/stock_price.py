@@ -18,3 +18,22 @@ data = response_previous_close.json()
 prev_closing_price = data['results'][0]['c']
 print(prev_closing_price)  # previous closing price
 
+# retrieve today closing price
+# today = date.today()
+today = '2024-11-08'
+
+response_daily_close = requests.get(f'https://api.polygon.io/v1/open-close/{stock}/{today}?adjusted=true&apiKey={api_key}')
+
+if response_daily_close.json()['status'] == 'OK':
+    data1 = response_daily_close.json()
+    date = data1['from']
+    closing_price = data1['close']
+    print(closing_price)
+
+
+try:
+    # closing_price = 210
+    percent = (closing_price - prev_closing_price) / prev_closing_price * 100
+    print(f'{percent:.2f}%')
+except NameError as e:
+    print(e)
