@@ -37,3 +37,10 @@ try:
     print(f'{percent:.2f}%')
 except NameError as e:
     print(e)
+
+# retrieve related news
+news = requests.get(f'https://api.polygon.io/v2/reference/news?ticker={stock}&limit=10&apiKey={api_key}')
+news_data = news.json()
+title = news_data['results'][0]['title']
+description = news_data['results'][0]['description']
+print(description)
