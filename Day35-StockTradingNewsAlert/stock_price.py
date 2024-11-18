@@ -4,7 +4,7 @@ import os
 import requests
 
 from dotenv import load_dotenv
-# from datetime import date
+from datetime import date, timedelta
 
 load_dotenv()
 
@@ -13,39 +13,61 @@ api_key = os.getenv('STOCK_PRICE_API')
 
 
 # retrieve previous closing price
-def get_prev_closing_price(stock):
+# def get_prev_closing_price(stock):
+#     """
+#     :param stock: string
+#     :return: previous closing price: float
+#     """
+#     response_previous_close = (
+#         requests.get(f'https://api.polygon.io/v2/aggs/ticker/{stock}/prev?adjusted=true&apiKey={api_key}'))
+#     response_previous_close.raise_for_status()
+#
+#     data = response_previous_close.json()
+#     prev_closing_price = data['results'][0]['c']
+#     # print(prev_closing_price)  # previous closing price
+#
+#     return prev_closing_price
+
+
+def get_closing_prices(stock):
     """
-    :param stock: string
-    :return: previous closing price: float
+    :param stock:
+    :return: closing price and previous closing price
     """
-    response_previous_close = (
-        requests.get(f'https://api.polygon.io/v2/aggs/ticker/{stock}/prev?adjusted=true&apiKey={api_key}'))
-    response_previous_close.raise_for_status()
+    today = date.today()
+    # today = '2024-11-14'
 
-    data = response_previous_close.json()
-    prev_closing_price = data['results'][0]['c']
-    # print(prev_closing_price)  # previous closing price
+    response_daily_close = requests.get(f'https://api.polygon.io/v1/open-close/'
+                                        f'{stock}/{today}?adjusted=true&apiKey={api_key}')
 
-    return prev_closing_price
+    if response_daily_close.json()['status'] == 'ERROR':
+        response_daily_close.raise_for_status()
+        return -1, -1
 
+    while response_daily_close.json()['status'] != 'OK':
+        today = today - timedelta(days=1)
+        response_daily_close = requests.get(f'https://api.polygon.io/v1/open-close/'
+                                            f'{stock}/{today}?adjusted=true&apiKey={api_key}')
 
-def get_today_closing_price(stock):
-    """
-    :param stock: string
-    :return: today's closing price of stock: float
-    """
-    # today = date.today()
-    today = '2024-11-08'
+        prevday = today - timedelta(days=1)
+        response_prev_close = requests.get(f'https://api.polygon.io/v1/open-close/'
+                                           f'{stock}/{prevday}?adjusted=true&apiKey={api_key}')
 
-    response_daily_close = requests.get(f'https://api.polygon.io/v1/open-close/{stock}/{today}?adjusted=true&apiKey={api_key}')
+        while response_prev_close.json()['status'] != 'OK':
+            prevday = prevday - timedelta(days=1)
+            response_prev_close = requests.get(f'https://api.polygon.io/v1/open-close/'
+                                               f'{stock}/{prevday}?adjusted=true&apiKey={api_key}')
 
-    if response_daily_close.json()['status'] == 'OK':
-        data1 = response_daily_close.json()
-        # date = data1['from']
-        closing_price = data1['close']
-        # print(closing_price)
+    data1 = response_daily_close.json()
+    # date = data1['from']
+    closing_price = data1['close']
+    # print(closing_price)
+    # print(today, prevday)
 
-        return closing_price
+    data2 = response_prev_close.json()
+    prev_closing_price = data2['close']
+
+    return prev_closing_price, closing_price
 
 
 def calc_percent(prev_price, today_price):
