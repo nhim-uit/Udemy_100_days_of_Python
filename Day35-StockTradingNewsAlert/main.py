@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Nov 11, 2024
+# Nov 11-18, 2024
 # Day 36 - Stock Trading News Alert
 # Created by me
 
@@ -14,15 +14,23 @@ if __name__ == '__main__':
     print(prev_price)
     print(today_price)
 
-    # change = calc_percent(prev_price, today_price)
-    # print(f'change: {change}%')
+    change = calc_percent(prev_price, today_price)
+    print(f'change: {change}%')
 
-    title, description = get_news(stock)
+    if change > 0:
+        emoji = '🔺'
+    else:
+        emoji = '🔻'
 
-    message = client.messages.create(
-        body=title,
-        from_=os.getenv('TWILIO_NUMBER'),
-        to=os.getenv('MY_VIRTUAL_PHONE_NUMBER'),
-    )
+    if abs(change) > 1:
+        title, description = get_news(stock)
 
-    print(message.status)
+        message = client.messages.create(
+            body=f'{stock}: {emoji}{change}%\n{title}\n{description}',
+            from_=os.getenv('TWILIO_NUMBER'),
+            to=os.getenv('MY_VIRTUAL_PHONE_NUMBER'),
+        )
+
+        print('Get News')
+        print(message.status)
+
