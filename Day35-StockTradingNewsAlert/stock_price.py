@@ -34,7 +34,7 @@ def get_closing_prices(stock):
     :param stock:
     :return: closing price and previous closing price
     """
-    today = date.today()
+    today = date.today() - timedelta(days=1)    # yesterday
     # today = '2024-11-14'
 
     response_daily_close = requests.get(f'https://api.polygon.io/v1/open-close/'
