@@ -50,11 +50,11 @@ today = datetime.now().strftime('%Y%m%d')
 
 pixel_config = {
     'date': today,
-    'quantity': '620',
+    'quantity': input('How many calories did you burn by swimming today? '),
 }
 
-# response_pixel = requests.post(url=pixel_endpoint, json=pixel_config, headers=headers)
-# print(response_pixel.text)
+response_pixel = requests.post(url=pixel_endpoint, json=pixel_config, headers=headers)
+print(response_pixel.text)
 
 # Update a pixel
 update_endpoint = f'{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}/{today}'
@@ -71,5 +71,5 @@ new_pixel_data = {
 del_day = '20241112'
 delete_endpoint = f'{pixela_endpoint}/{USERNAME}/graphs/{GRAPH_ID}/{del_day}'
 
-response_delete_pixel = requests.delete(url=delete_endpoint, headers=headers)
-print(response_delete_pixel.text)
+# response_delete_pixel = requests.delete(url=delete_endpoint, headers=headers)
+# print(response_delete_pixel.text)
