@@ -18,6 +18,7 @@ class FlightData:
         self.out_date = out_date
         self.return_date = return_date
 
+
 def find_cheapest_flight(data):
     """
     Parses flight data received from the Amadeus API to identify the cheapest flight option among
