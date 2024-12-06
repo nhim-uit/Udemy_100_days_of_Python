@@ -1,0 +1,41 @@
+.header {
+    background-color: lightblue;
+    color: white;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+nav ul {
+    /* text-align: left; */
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 20px;
+    gap: 20px;
+}
+
+.content {
+    /* text-align: center; */
+    /* float: clear; */
+    text-align: center;
+    color: black;
+}
+
+button {
+    background-color: lightblue;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+footer {
+    background-color: lightblue;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    padding: 50px;
+}
