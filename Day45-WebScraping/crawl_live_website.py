@@ -21,7 +21,7 @@ upvote = list(filter(None, [int(s.split()[0]) if 'points' in s else None for s i
 # print(upvote)
 
 # Zip the lists into a list of dictionaries
-articles = [{'text': text, 'link': link, 'upvote': up}\
+articles = [{'text': text, 'link': link, 'upvote': up}
             for text, link, up in zip(articles_texts, articles_links, upvote)]
 
 # Find the article with the maximum upvote
