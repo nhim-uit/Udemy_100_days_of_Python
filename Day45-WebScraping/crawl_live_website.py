@@ -32,3 +32,4 @@ print(max_upvote_article)
 # notes
 # https://news.ycombinator.com/robots.txt
 # to know what we can crawl from a website
+# recommend not to crawl more than 1 per minute
