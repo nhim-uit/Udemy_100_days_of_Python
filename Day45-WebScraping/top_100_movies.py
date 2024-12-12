@@ -7,17 +7,19 @@
 
 from bs4 import BeautifulSoup
 import requests
-import re
 
+# get data from the website
 response = requests.get('https://web.archive.org/web/20200518073855/'
                         'https://www.empireonline.com/movies/features/best-movies-2/')
 
 soup = BeautifulSoup(response.text, 'html.parser')
 
+# get titles
 titles = soup.find_all(name='h3', class_='title')
 titles = [title.getText() for title in titles]
 sorted_titles = titles[::-1]
 
+# write to file
 with open('titles.txt', 'w', encoding='utf-8') as file:
     for title in sorted_titles:
         file.write(title + '\n')
