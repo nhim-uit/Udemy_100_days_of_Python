@@ -16,9 +16,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 
 titles = soup.find_all(name='h3', class_='title')
 titles = [title.getText() for title in titles]
-
-sorted_titles = sorted(titles, key=lambda x: int(re.search(r'\d+', x).group()))
-# print(sorted_titles)
+sorted_titles = titles[::-1]
 
 with open('titles.txt', 'w', encoding='utf-8') as file:
     for title in sorted_titles:
