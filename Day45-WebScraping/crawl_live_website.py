@@ -28,3 +28,7 @@ articles = [{'text': text, 'link': link, 'upvote': up}
 max_upvote_article = max(articles, key=lambda x: x['upvote'])
 
 print(max_upvote_article)
+
+# notes
+# https://news.ycombinator.com/robots.txt
+# to know what we can crawl from a website
