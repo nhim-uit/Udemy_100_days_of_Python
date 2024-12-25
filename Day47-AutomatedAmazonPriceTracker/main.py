@@ -13,14 +13,19 @@ SENDER_EMAIL = os.getenv('SENDER_EMAIL')
 SENDER_PASSWORD = os.getenv('SENDER_PASSWORD')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
 
+BUY_PRICE = 100
+
 if __name__ == '__main__':
     url = 'https://appbrewery.github.io/instant_pot/'
     response_text = get_response(url)
     price = get_price(response_text)
+    title = get_title(response_text)
 
-    if price >= 100:
+    if price >= BUY_PRICE:
+        message = f'{title} is on sale for {price}'
+
         send_email(sender_email=SENDER_EMAIL,
                    sender_password=SENDER_PASSWORD,
                    recipient_email=RECIPIENT_EMAIL,
                    subject='PRICE DROP ALERT!!!',
-                   body=f'New price has been dropped to {price}. Check this out!')
+                   body=message)
