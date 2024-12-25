@@ -20,3 +20,21 @@ def get_price(text):
     return price
 
 
+def send_email(sender_email, sender_password, recipient_email, subject, body):
+    """
+        Sends an email using the specified SMTP server.
+
+        :param sender_email: (str) The sender's email address.
+        :param sender_password: (str) The sender's email password.
+        :param recipient_email: (str) The recipient's email address.
+        :param subject: (str) The subject of the email.
+        :param body: (str) The body of the email.
+        :return: void
+        """
+    # Create the email message
+    with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
+        connection.starttls()
+        connection.login(user=sender_email, password=sender_password)
+        connection.sendmail(from_addr=sender_email,
+                            to_addrs=recipient_email,
+                            msg=f'Subject:{subject}\n\n{body}')
