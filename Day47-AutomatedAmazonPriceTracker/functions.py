@@ -20,6 +20,11 @@ def get_price(text):
     return price
 
 
+def get_title(text):
+    soup = BeautifulSoup(text, 'html.parser')
+    return soup.find(id='productTitle').getText().strip()
+
+
 def send_email(sender_email, sender_password, recipient_email, subject, body):
     """
         Sends an email using the specified SMTP server.
@@ -37,4 +42,4 @@ def send_email(sender_email, sender_password, recipient_email, subject, body):
         connection.login(user=sender_email, password=sender_password)
         connection.sendmail(from_addr=sender_email,
                             to_addrs=recipient_email,
-                            msg=f'Subject:{subject}\n\n{body}')
+                            msg=f'Subject:{subject}\n\n{body}'.encode('utf-8'))
