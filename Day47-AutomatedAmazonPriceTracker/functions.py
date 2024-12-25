@@ -7,11 +7,29 @@ from email.mime.text import MIMEText
 
 
 def get_response(url):
+    """
+        Fetches the HTML content of the given URL.
+
+        Args:
+            url (str): The URL of the webpage to fetch.
+
+        Returns:
+            str: The HTML content of the webpage.
+    """
     response = requests.get(url)
     return response.text
 
 
 def get_price(text):
+    """
+        Extracts the price from the HTML content of a product page.
+
+        Args:
+            text (str): The HTML content of the product page.
+
+        Returns:
+            float: The price of the product.
+    """
     soup = BeautifulSoup(text, 'html.parser')
     price_whole = soup.find(name='span', class_='a-price-whole').getText()
     price_fraction = soup.find(name='span', class_='a-price-fraction').getText()
@@ -21,6 +39,15 @@ def get_price(text):
 
 
 def get_title(text):
+    """
+       Extracts the title from the HTML content of a product page.
+
+       Args:
+           text (str): The HTML content of the product page.
+
+       Returns:
+           str: The title of the product.
+    """
     soup = BeautifulSoup(text, 'html.parser')
     return soup.find(id='productTitle').getText().strip()
 
@@ -35,7 +62,7 @@ def send_email(sender_email, sender_password, recipient_email, subject, body):
         :param subject: (str) The subject of the email.
         :param body: (str) The body of the email.
         :return: void
-        """
+    """
     # Create the email message
     with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
         connection.starttls()
