@@ -2,6 +2,7 @@
 # Dec 25, 2024
 # Day 47 - an Automated Amazon Price Tracker
 # Created by me
+from dbm import error
 
 from functions import *
 import os
@@ -13,15 +14,23 @@ SENDER_EMAIL = os.getenv('SENDER_EMAIL')
 SENDER_PASSWORD = os.getenv('SENDER_PASSWORD')
 RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL')
 
-BUY_PRICE = 100
+BUY_PRICE = 70
 
 if __name__ == '__main__':
-    url = 'https://appbrewery.github.io/instant_pot/'
+    url = 'https://www.amazon.com/dp/B075CYMYK6?ref_=cm_sw_r_cp_ud_ct_FM9M699VKHTT47YD50Q6&th=1'
     response_text = get_response(url)
-    price = get_price(response_text)
-    title = get_title(response_text)
+    try:
+        price = get_price(response_text)
+    except Exception as e:
+        print(f'cannot get price: {e}')
+        price = None
+    try:
+        title = get_title(response_text)
+    except Exception as e:
+        print(f'cannot get title: {e}')
+        title = 'Unknown product'
 
-    if price >= BUY_PRICE:
+    if price is not None and price >= BUY_PRICE:
         message = f'{title} is on sale for {price}'
 
         send_email(sender_email=SENDER_EMAIL,
