@@ -48,7 +48,7 @@ def get_price(text):
             float: The price of the product.
     """
     soup = BeautifulSoup(text, 'html.parser')
-    print(soup.prettify())
+    # print(soup.prettify())
     price = soup.find(name='span', class_='a-offscreen')
     price = float(price[1:])
 
