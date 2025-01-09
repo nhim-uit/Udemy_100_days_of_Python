@@ -39,6 +39,10 @@ try:
     # By.CSS_SELECTOR
     documentation_link = driver.find_element(By.CSS_SELECTOR, value='.documentation-widget a')
     print(documentation_link.text)
+
+    # find element by XPATH
+    bug_link = driver.find_element(By.XPATH, value='//*[@id="site-map"]/div[2]/div/ul/li[3]/a')
+    print(bug_link.text)
 except Exception as e:
     print(e)
 
