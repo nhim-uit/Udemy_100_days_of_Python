@@ -35,3 +35,12 @@ while time.time() < end_time:
     cookie.click()
 
     # time.sleep(SECONDS)
+
+store_ids = ['buyCursor', 'buyGrandma', 'buyFactory', 'buyMine', 'buyShipment', 'buyAlchemy lab', 'buyPortal', 'buyTime machine', 'buyElder Pledge']
+available_element = []
+
+for store_id in store_ids:
+    element = driver.find_element(By.ID, value=store_id)
+    class_attribute = element.get_attribute('class')
+    if 'grayed' not in class_attribute:
+        available_element.append(element.get_attribute('id'))
