@@ -21,4 +21,3 @@ except Exception as e:
     print(e)
 finally:
     driver.close()
-
