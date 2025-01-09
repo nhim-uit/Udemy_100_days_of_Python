@@ -1,6 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Dec 27, 2024
 # Day 48 - Selenium Webdriver browser
+# https://www.selenium.dev/documentation/webdriver/elements/locators
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
