@@ -1,24 +1,26 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Jan 09, 2025
-# Get a dictionary of number of articles based on languages on Wikipedia
+# interaction
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
-chrome_option = webdriver.ChromeOptions()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option('detach', True)
 
-driver = webdriver.Chrome(options=chrome_option)
-driver.get('https://www.wikipedia.org')
+driver = webdriver.Chrome(options=chrome_options)
+driver.get('https://en.wikipedia.org/wiki/Main_Page')
 
-try:
-    languages = driver.find_elements(By.CSS_SELECTOR, value='.central-featured-lang strong')
-    articles = driver.find_elements(By.CSS_SELECTOR, value='.central-featured-lang small')
+# Hone in on anchor tag using CSS selectors
+article_count = driver.find_element(By.CSS_SELECTOR, value='#articlecount a')
+# article_count.click()
 
-    no_of_articles = [{'language': language.text, 'article': article.text}
-                      for language, article in zip(languages, articles)]
-    print(no_of_articles)
-except Exception as e:
-    print(e)
-finally:
-    driver.close()
+# Find element by Link Text
+all_portals = driver.find_element(By.LINK_TEXT, value='Content portals')
+all_portals.click()
 
+# Find the 'Search' <input> by Name
+search = driver.find_element(By.NAME, value='search')
+
+search.send_keys('Python', Keys.ENTER)
