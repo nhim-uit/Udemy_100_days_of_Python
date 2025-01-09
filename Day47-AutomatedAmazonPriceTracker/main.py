@@ -2,7 +2,6 @@
 # Dec 25, 2024
 # Day 47 - an Automated Amazon Price Tracker
 # Created by me
-from dbm import error
 
 from functions import *
 import os
