@@ -28,10 +28,17 @@ driver = webdriver.Chrome(options=chrome_options)
 driver.get('https://www.python.org')
 
 try:
+    # By.NAME
     search_bar = driver.find_element(By.NAME, value='q')
     print(search_bar.get_attribute('placeholder'))
+
+    # By.ID
     button = driver.find_element(By.ID, value='submit')
     print(button.size)
+
+    # By.CSS_SELECTOR
+    documentation_link = driver.find_element(By.CSS_SELECTOR, value='.documentation-widget a')
+    print(documentation_link.text)
 except Exception as e:
     print(e)
 
