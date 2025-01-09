@@ -29,3 +29,9 @@ for element in stores[:-1]:
         element_price = int(re.search(r'\d+', element_text).group())
         store_info[element_name] = element_price
 
+end_time = time.time() + MINUTES * SECOND_PER_MINUTE
+
+while time.time() < end_time:
+    cookie.click()
+
+    # time.sleep(SECONDS)
