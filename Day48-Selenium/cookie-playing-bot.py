@@ -44,3 +44,13 @@ for store_id in store_ids:
     class_attribute = element.get_attribute('class')
     if 'grayed' not in class_attribute:
         available_element.append(element.get_attribute('id'))
+
+money = int(driver.find_element(By.ID, value='money').text)
+print(money)
+
+# while money >= 0:
+#     money -= store_info.get(available_element[-1])
+#     print(money)
+
+print(store_info.get(available_element[-1]))
+# print(available_element[-1])
