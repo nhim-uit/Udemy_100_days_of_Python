@@ -2,9 +2,10 @@
 # Jan 09, 2025
 # Cookie Clicker Automated Game Playing Bot
 import re
+from threading import Thread
 
 SECONDS = 5
-MINUTES = 0.125
+MINUTES = 1
 SECOND_PER_MINUTE = 60
 
 import time
@@ -20,37 +21,102 @@ driver.get('http://orteil.dashnet.org/experiments/cookie/')
 cookie = driver.find_element(By.ID, value='cookie')
 
 stores = driver.find_elements(By.CSS_SELECTOR, value='.grayed')
-store_info = {}
 
-for element in stores[:-1]:
-    if element is not None:
-        element_text = element.text
-        element_name = element.get_attribute('id')
-        element_price = int(re.search(r'\d+', element_text).group())
-        store_info[element_name] = element_price
 
 end_time = time.time() + MINUTES * SECOND_PER_MINUTE
 
-while time.time() < end_time:
-    cookie.click()
 
-    # time.sleep(SECONDS)
+def func1():
+    while time.time() < end_time:
+        cookie.click()
 
-store_ids = ['buyCursor', 'buyGrandma', 'buyFactory', 'buyMine', 'buyShipment', 'buyAlchemy lab', 'buyPortal', 'buyTime machine', 'buyElder Pledge']
-available_element = []
+def func():
 
-for store_id in store_ids:
-    element = driver.find_element(By.ID, value=store_id)
-    class_attribute = element.get_attribute('class')
-    if 'grayed' not in class_attribute:
-        available_element.append(element.get_attribute('id'))
+    store_ids = ['buyCursor', 'buyGrandma', 'buyFactory',
+                 'buyMine', 'buyShipment', 'buyAlchemy lab',
+                 'buyPortal', 'buyTime machine', 'buyElder Pledge']
+    available_element = {}
 
-money = int(driver.find_element(By.ID, value='money').text)
-print(money)
+    for store_id in store_ids:
+        element = driver.find_element(By.ID, value=store_id)
+        class_attribute = element.get_attribute('class')
+        if 'grayed' not in class_attribute:
+            available_element[element.get_attribute('id')] = int(re.search(r'\d+', element.text).group())
+            # available_element[int(re.search(r'\d+', element.text).group())] = element.get_attribute('id')
 
-# while money >= 0:
-#     money -= store_info.get(available_element[-1])
-#     print(money)
+    money = int(driver.find_element(By.ID, value='money').text)
+    sorted_available_element_keys = sorted(available_element.values(), reverse=True)
 
-print(store_info.get(available_element[-1]))
-# print(available_element[-1])
+
+
+    try:
+        # k = sorted_available_element_keys[0]
+        first_key, first_value = next(iter(available_element.items()))
+        i = store_ids.index(first_key)
+        k = first_key
+        for key in available_element:
+            if store_ids.index(key) > i:
+                k = key
+                i = store_ids.index(key)
+    except:
+        print('noneeeeeeeee')
+
+    while money >= available_element.get(k):
+        print(f'k = {k}')
+        el = driver.find_element(By.ID, value=k)
+        el.click()
+        # print(el)
+
+        # sorted_available_element_keys.remove(k)
+        # try:
+        #     k = sorted_available_element_keys[0]
+        # except:
+        #     print('none')
+        print(f'money = {money}')
+        # print(sorted_available_element_keys)
+        print(available_element)
+
+        for store_id in store_ids:
+            element = driver.find_element(By.ID, value=store_id)
+            class_attribute = element.get_attribute('class')
+            if 'grayed' not in class_attribute:
+                # available_element[element.get_attribute('id')] = int(re.search(r'\d+', element.text).group())
+                try:
+                    # available_element[int(re.search(r'\d+', element.text).group())] = element.get_attribute('id')
+                    available_element[element.get_attribute('id')] = int(re.search(r'\d+', element.text).group())
+                except:
+                    print('no id')
+        print('---', available_element)
+
+        sorted_available_element_keys = sorted(available_element.keys(), reverse=True)
+
+        money = int(driver.find_element(By.ID, value='money').text)
+
+        try:
+            # k = sorted_available_element_keys[0]
+            first_key, first_value = next(iter(available_element.items()))
+            i = store_ids.index(first_key)
+            k = first_key
+            for key in available_element:
+                if store_ids.index(key) > i:
+                    k = key
+                    i = store_ids.index(key)
+        except:
+            print('noneeeeeeeee2')
+
+
+def func2():
+    while time.time() < end_time:
+        time.sleep(5)
+        func()
+
+
+task1 = Thread(target=func1)
+task2 = Thread(target=func2)
+
+# while True:
+task1.start()
+task2.start()
+
+# task1.join()
+# task2.join()
