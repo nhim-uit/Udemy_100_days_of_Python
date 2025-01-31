@@ -34,40 +34,24 @@ def get_key_has_largest_value(available_element):
 
 def autobuy(driver, end_time):
     available_element = fill_available_element(driver)
-    try:
-        k = get_key_has_largest_value(available_element)
-        v = available_element.get(k)
-    except:
-        pass
-
     money = int(driver.find_element(By.ID, value='money').text)
 
+    if available_element:
+        k = get_key_has_largest_value(available_element)
+        v = available_element.get(k)
+
     while time.time() < end_time:
-        print(f'k = {k}')
         el = driver.find_element(By.ID, value=k)
 
-        try:
+        if v:
             if money >= v:
                 el.click()
-        except:
-            pass
 
-        print(f'money = {money}')
-        print(available_element)
+        available_element = fill_available_element(driver)
 
-        try:
-            available_element = fill_available_element(driver)
-            print('---', available_element)
-        except:
-            print('$available element$')
-
-        try:
+        if available_element:
             k = get_key_has_largest_value(available_element)
             v = available_element.get(k)
-        except:
-            print('$no key largest value$')
-
-        money = int(driver.find_element(By.ID, value='money').text)
 
 
 def run(driver, end_time):
