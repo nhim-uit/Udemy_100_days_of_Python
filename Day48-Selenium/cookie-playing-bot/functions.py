@@ -5,11 +5,22 @@ from selenium.webdriver.common.by import By
 
 
 def click_cookie(cookie, end_time):
+    """
+
+    :param cookie: cookie object
+    :param end_time:
+    :return: void
+    """
     while time.time() < end_time:
         cookie.click()
 
 
 def fill_available_element(driver):
+    """
+
+    :param driver:
+    :return: a list of available non-grayed elements (upgrades that can be bought)
+    """
     available_element = {}
     for store_id in STORE_IDS:
         element = driver.find_element(By.ID, value=store_id)
@@ -20,6 +31,11 @@ def fill_available_element(driver):
 
 
 def get_key_has_largest_value(available_element):
+    """
+
+    :param available_element:
+    :return: an upgrade element that can be bought (the highest valued element)
+    """
     first_key, first_value = next(iter(available_element.items()))
     i = STORE_IDS.index(first_key)
     k = first_key
@@ -33,6 +49,12 @@ def get_key_has_largest_value(available_element):
 
 
 def autobuy(driver, end_time):
+    """
+    autobuy the element that has the highest value
+    :param driver:
+    :param end_time:
+    :return: void
+    """
     available_element = fill_available_element(driver)
     money = int(driver.find_element(By.ID, value='money').text)
 
@@ -55,6 +77,12 @@ def autobuy(driver, end_time):
 
 
 def run(driver, end_time):
+    """
+    run the autobuy function in a time frame
+    :param driver:
+    :param end_time:
+    :return:
+    """
     while time.time() < end_time:
         time.sleep(SECONDS)
         autobuy(driver, end_time)
