@@ -57,7 +57,7 @@ def autobuy(driver, end_time):
     :return: void
     """
     available_element = fill_available_element(driver)
-    money = int(driver.find_element(By.ID, value='money').text)
+    money = int(driver.find_element(By.ID, value='money').text.replace(',', ''))
 
     if available_element:
         k = get_key_has_largest_value(available_element)
@@ -75,6 +75,8 @@ def autobuy(driver, end_time):
         if available_element:
             k = get_key_has_largest_value(available_element)
             v = available_element.get(k)
+
+        money = int(driver.find_element(By.ID, value='money').text.replace(',', ''))
 
 
 def run(driver, end_time):
