@@ -25,8 +25,9 @@ def fill_available_element(driver):
     for store_id in STORE_IDS:
         element = driver.find_element(By.ID, value=store_id)
         class_attribute = element.get_attribute('class')
+        b_tag = element.find_element(By.TAG_NAME, 'b')
         if 'grayed' not in class_attribute:
-            available_element[element.get_attribute('id')] = int(re.search(r'\d+', element.text).group())
+            available_element[element.get_attribute('id')] = int(re.search(r'\d+', b_tag.text).group())
     return available_element
 
 
