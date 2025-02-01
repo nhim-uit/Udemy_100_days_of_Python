@@ -1,6 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Jan 09, 2025
 # Cookie Clicker Automated Game Playing Bot
+# Created by Alex Mai (me)
 
 from threading import Thread
 from functions import *
