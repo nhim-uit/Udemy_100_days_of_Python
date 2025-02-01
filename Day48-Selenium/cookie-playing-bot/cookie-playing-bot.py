@@ -17,7 +17,6 @@ driver = webdriver.Chrome(options=chrome_option)
 driver.get('http://orteil.dashnet.org/experiments/cookie/')
 
 cookie = driver.find_element(By.ID, value='cookie')
-stores = driver.find_elements(By.CSS_SELECTOR, value='.grayed')
 
 end_time = time.time() + MINUTES * SECOND_PER_MINUTE
 
