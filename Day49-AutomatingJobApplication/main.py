@@ -39,4 +39,9 @@ time.sleep(5)
 apply_button = driver.find_element(by=By.CSS_SELECTOR, value=".jobs-s-apply button")
 apply_button.click()
 
+# If application requires phone number and the field is empty, then fill in the number.
+time.sleep(5)
+phone = driver.find_element(by=By.CSS_SELECTOR, value="input[id*=phoneNumber]")
+if phone.text == "":
+    phone.send_keys(PHONE)
 
