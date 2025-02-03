@@ -26,4 +26,12 @@ time.sleep(2)
 sign_in_button = driver.find_element(by=By.LINK_TEXT, value="Sign in")
 sign_in_button.click()
 
+# Sign in
+time.sleep(5)
+email = driver.find_element(by=By.ID, value='username')
+email.send_keys(ACCOUNT_EMAIL)
+password = driver.find_element(by=By.ID, value='password')
+password.send_keys(ACCOUNT_PASSWORD)
+password.send_keys(Keys.ENTER)
+
 
