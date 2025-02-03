@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Jan 09 - Feb 01, 2025
+# Jan 29 - Feb 01, 2025
 # Cookie Clicker Automated Game Playing Bot
 # Created by Alex Mai (me)
 
