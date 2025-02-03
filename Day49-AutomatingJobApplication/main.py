@@ -45,3 +45,6 @@ phone = driver.find_element(by=By.CSS_SELECTOR, value="input[id*=phoneNumber]")
 if phone.text == "":
     phone.send_keys(PHONE)
 
+# Submit the application
+submit_button = driver.find_element(by=By.CSS_SELECTOR, value="footer button")
+submit_button.click()
