@@ -34,4 +34,9 @@ password = driver.find_element(by=By.ID, value='password')
 password.send_keys(ACCOUNT_PASSWORD)
 password.send_keys(Keys.ENTER)
 
+# Locate the apply button
+time.sleep(5)
+apply_button = driver.find_element(by=By.CSS_SELECTOR, value=".jobs-s-apply button")
+apply_button.click()
+
 
