@@ -31,8 +31,6 @@ chrome_option.add_experimental_option('detach', True)
 
 driver = webdriver.Chrome(options=chrome_option)
 
-
-
 for i in range(len(addresses)):
     driver.get('https://forms.gle/t37jcURPRFmpxEH39')
 
