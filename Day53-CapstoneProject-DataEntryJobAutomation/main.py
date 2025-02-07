@@ -3,7 +3,6 @@
 # Day 53 - Capstone Project: Data Entry Job Automation
 # Created by me (Alex Mai)
 import re
-import time
 
 from bs4 import BeautifulSoup
 import requests
