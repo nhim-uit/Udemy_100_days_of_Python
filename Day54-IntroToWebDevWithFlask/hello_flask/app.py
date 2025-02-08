@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.route('/')     # decorator
 def hello_world():
-    return '<h1>Hello, World</h1>'
+    return '<h1 style="text-align: center">Hello, World</h1>' \
+           '<p>This is a paragraph.</p>'
 
 
 @app.route('/bye')
