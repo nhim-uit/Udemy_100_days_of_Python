@@ -7,6 +7,20 @@ from flask import Flask
 app = Flask(__name__)
 
 
+def make_bold(func):
+    def wrapper_function():
+        return '<b>' + func() + '</b>'
+
+    return wrapper_function
+
+
+def make_emphasis(func):
+    def wrapper_function():
+        return '<em>' + func() + '</em>'
+
+    return wrapper_function
+
+
 @app.route('/')     # decorator
 def hello_world():
     return '<h1 style="text-align: center">Hello, World</h1>' \
@@ -14,7 +28,10 @@ def hello_world():
 
 
 @app.route('/bye')
+@make_bold
+@make_emphasis
 def say_bye():
+    # return '<u><em><b>Bye</b></em></u>'
     return 'Bye'
 
 
