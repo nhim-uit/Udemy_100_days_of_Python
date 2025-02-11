@@ -1,6 +1,6 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Feb 10, 2025
-# Day 54 - Introduction to Web Development with Flask
+# Day 55 - Introduction to Web Development with Flask
 # Higher or lower game utilizing Flask
 # Created by me (Alex Mai)
 
