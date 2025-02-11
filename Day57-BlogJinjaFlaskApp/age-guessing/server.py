@@ -14,11 +14,10 @@ app = Flask(__name__)
 def get_results(name):
     agify_res = requests.get(f'https://api.agify.io?name={name}').json()
     age = agify_res['age']
-    print(agify_res, age)
 
     genderize_res = requests.get(f'https://api.genderize.io?name={name}').json()
     gender = genderize_res['gender']
-    print(genderize_res, gender)
+
     return render_template('guess.html', name=name.title(), gender=gender, age=age)
 
 
