@@ -16,7 +16,11 @@ def get_results(name):
     age = agify_res['age']
     print(agify_res, age)
 
-    return render_template('index.html', name=name.title(), gender=gender, age=age)
+    genderize_res = requests.get(f'https://api.genderize.io?name={name}').json()
+    gender = genderize_res['gender']
+    print(genderize_res, gender)
+    return render_template('guess.html', name=name.title(), gender=gender, age=age)
 
 
-
+if __name__ == '__main__':
+    app.run(debug=True)
