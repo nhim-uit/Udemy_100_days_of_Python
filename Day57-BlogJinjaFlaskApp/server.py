@@ -1,6 +1,9 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Feb 11, 2025
+# Feb 11-12, 2025
 # Day 57 - Templating with Jinja in Flask Application
+# multiline statements with Jinja
+# agify API, genderize API
+# npoint API
 
 from flask import Flask, render_template
 import random
@@ -28,8 +31,9 @@ def get_results(name):
     return render_template('guess.html', name=name.title(), gender=gender, age=age)
 
 
-@app.route('/blog')
-def get_blog():
+@app.route('/blog/<num>')
+def get_blog(num):
+    print(num)
     blog_url = 'https://api.npoint.io/c790b4d5cab58020d391'
 
     response = requests.get(blog_url)
