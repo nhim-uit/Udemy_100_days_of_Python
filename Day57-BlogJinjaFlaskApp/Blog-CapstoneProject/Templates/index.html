@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <header></header>
+    <div id="main">
+        <h1>My Blog</h1>
+        {% for blog in posts: %}
+            <div class="brief">
+                <h2>{{ blog['title'] }}</h2>
+                <h3>{{ blog['subtitle'] }}</h3>
+                <a href="{{ url_for('get_blog', blog_id=blog['id']) }}">Read</a>
+            </div>
+        {% endfor %}
+    </div>
+    <footer>
+        Made by Alex with ❤️
+    </footer>
+</body>
+</html>
