@@ -5,7 +5,7 @@ body {
     overflow-x: hidden;
 }
 
-#head_container {
+#title {
     background-image: url("/static/head_background.avif");
     background-size: cover;
     width: 100%;
@@ -13,12 +13,30 @@ body {
     margin: 0;
 }
 
+@media (max-width: 576px) {
+    #title {
+        height: 1140px;
+    }
+}
+
+@media (max-width: 768px) {
+    #title {
+        height: 1400px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #title {
+        height: 1300px;
+    }
+}
+
 #inner_container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 350px;
-    padding-right: 300px;
+}
+
+#description {
+    padding-top: 200px;
 }
 
 .btn-outline-secondary {
