@@ -52,3 +52,22 @@ body {
     font-size: 80%;
 }
 
+#testimony {
+    background-color: #ececec;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--bs-black);
+    --bs-btn-border-color: var(--bs-black);
+    --bs-btn-hover-bg: var(--bs-black);
+    --bs-btn-hover-border-color: var(--bs-white);
+    --bs-btn-hover-color: var(--bs-white);
+}
+
+.btn-primary {
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bs-black);
+    --bs-btn-border-color: var(--bs-black);
+    --bs-btn-hover-bg: grey;
+    --bs-btn-hover-border-color: grey;
+}
