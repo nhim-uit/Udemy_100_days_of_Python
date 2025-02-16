@@ -71,3 +71,8 @@ body {
     --bs-btn-hover-bg: grey;
     --bs-btn-hover-border-color: grey;
 }
+
+footer {
+    background-image: url("/static/head_background.avif");
+    background-size: cover;
+}
