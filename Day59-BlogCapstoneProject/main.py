@@ -28,7 +28,13 @@ def get_contact():
 
 @app.route('/post/<id>')
 def get_post(id):
-    return render_template('post.html', post=response[int(id) - 1])
+    requested_post = None
+
+    for i in response:
+        if i['id'] == int(id):
+            requested_post = i
+
+    return render_template('post.html', post=requested_post)
 
 
 if __name__ == '__main__':
