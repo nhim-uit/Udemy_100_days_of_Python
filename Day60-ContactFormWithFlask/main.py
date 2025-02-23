@@ -2,7 +2,7 @@
 # Feb 19-23, 2025
 # Day 60 - Contact Form with POST and Flask
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -11,9 +11,11 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('login', method=['POST'])
+
+@app.route('/login', methods=['POST'])
 def receive_data():
-    pass
+    return f"<h1>Email: {request.form['email1']}, password: {request.form['password1']}</h1>"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
