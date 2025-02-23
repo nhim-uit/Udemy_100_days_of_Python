@@ -1,5 +1,6 @@
+# Udemy: Master Python by building 100 projects in 100 days
 # Feb 19-23, 2025
-# Day 58 - Blog Capstone Project
+# Day 59 - Blog Capstone Project
 # Add upgrade to existing blog template
 # Created by me
 
