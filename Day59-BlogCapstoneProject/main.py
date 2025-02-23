@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 response = requests.get('https://api.npoint.io/5ab7588e98376bb9d4dc').json()
 
+
 @app.route('/')
 def home():
     return render_template('index.html',
