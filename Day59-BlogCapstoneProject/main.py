@@ -4,8 +4,16 @@
 # Add upgrade to existing blog template
 # Created by me
 
+import smtplib
 import requests
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+my_email = 'alex.test.app.7@gmail.com'
+my_password = os.getenv('EMAIL_PASSWORD')
+
 
 app = Flask(__name__)
 
@@ -27,10 +35,16 @@ def get_about():
 def get_contact():
     if request.method == 'POST':
         data = request.form
-        print(data['name'])
-        print(data['email'])
-        print(data['phone'])
-        print(data['message'])
+
+        with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=my_password)
+            connection.sendmail(from_addr=my_email,
+                                to_addrs='alexisfun065@gmail.com',
+                                msg=f'Subject:Hello\n\nThis is {data["name"]}\n'
+                                    f'Email: {data["email"]}\n'
+                                    f'Phone: {data["phone"]}\n'
+                                    f'Message: {data["message"]}.')
         return "<h1>Successfully sent your message</h1>"
     return render_template('contact.html')
 
