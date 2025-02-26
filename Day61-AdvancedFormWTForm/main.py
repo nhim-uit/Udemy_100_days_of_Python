@@ -4,7 +4,8 @@
 
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import EmailField, PasswordField
+from wtforms.fields.simple import SubmitField
 from wtforms.validators import DataRequired
 
 app = Flask(__name__)
@@ -12,8 +13,9 @@ app.secret_key = 'asdf213'
 
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired()])
-    password = StringField('password', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField(label='Log In')
 
 
 @app.route("/")
