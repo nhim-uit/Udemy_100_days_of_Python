@@ -14,7 +14,7 @@ app.secret_key = 'asdf213'
 
 class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     submit = SubmitField(label='Log In')
 
 
