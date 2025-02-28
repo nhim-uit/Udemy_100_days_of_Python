@@ -6,14 +6,14 @@ from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField
 from wtforms.fields.simple import SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email, Length
 
 app = Flask(__name__)
 app.secret_key = 'asdf213'
 
 
 class LoginForm(FlaskForm):
-    email = EmailField('Email', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField(label='Log In')
 
