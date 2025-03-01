@@ -3,10 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}{% endblock %}</title>
-	{{ bootstrap.load_css() }}
+
+	{% block styles %}
+		{{ bootstrap.load_css() }}
+	{% endblock %}
 </head>
 <body>
 	{% block content %}{% endblock %}
-	{{ bootstrap.load_js() }}
+
+	{% block scripts %}
+		{{ bootstrap.load_js() }}
+	{% endblock %}
 </body>
 </html>
