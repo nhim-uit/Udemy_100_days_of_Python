@@ -2,7 +2,7 @@
 # Feb 26 - Mar 01, 2025
 # Day 61 - Advanced form with WTForms (Flask)
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField
@@ -18,7 +18,7 @@ bootstrap = Bootstrap5(app)
 class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
-    submit = SubmitField(label='Log In')
+    submit = SubmitField(label='Log In', validators=[DataRequired('Submit credentials')])
 
 
 @app.route("/")
@@ -30,7 +30,10 @@ def home():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        return redirect(url_for('success'))
+        if request.form['email'] == 'abc@gmail.com':
+            if request.form['password'] == '12345678':
+                return redirect(url_for('success'))
+        return redirect(url_for('denied'))
 
     return render_template('login.html', form=login_form)
 
