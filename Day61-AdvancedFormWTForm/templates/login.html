@@ -1,18 +1,9 @@
 {% extends "base.html "%}
 {% block title %}Login{% endblock %}
 {% block content %}
-{% from 'bootstrap5/form.html' import render_field, render_hidden_errors %}
+{% from 'bootstrap5/form.html' import render_form %}
         <div class="container">
 		<h1>Login</h1>
         <!-- This is where our form will go. -->
-			<form method="POST" action="{{ url_for('login') }}" novalidate>
-				{{ form.hidden_tag() }}
-				{{ render_hidden_errors(form) }}
-
-				<p>	{{ render_field(form.email) }} <br>
-				</p>
-
-				<p>	{{ render_field(form.password) }} <br> </p>
-				{{ render_field(form.submit) }}
-			</form>
+			{{ render_form(form) }}
 {% endblock %}
