@@ -6,7 +6,8 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, TimeField
+from wtforms import StringField, SubmitField, SelectField
+from wtforms.fields import TimeField
 from wtforms.validators import DataRequired
 import csv
 
@@ -47,7 +48,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
