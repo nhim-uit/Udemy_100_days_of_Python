@@ -2,11 +2,17 @@
 {% block title %}My Library{% endblock %}
 
 {% block content %}
+    <div class="container">
     <h1>My Library</h1>
     <a href="{{ url_for('add') }}">Add New Book</a>
+    {% if all_books|length > 0 %}
     <ul>
         {% for book in all_books %}
         <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}/10</li>
         {% endfor %}
     </ul>
+    {% else %}
+        <p>Library is empty.</p>
+    {% endif %}
+    </div>
 {% endblock %}
