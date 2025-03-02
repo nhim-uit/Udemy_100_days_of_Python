@@ -6,17 +6,20 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms.fields.simple import StringField, SubmitField
+from wtforms.fields import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 
 app = Flask('__name__')
 app.config['SECRET_KEY'] = 'abcde'
 Bootstrap5(app)
 
+all_books = []
+
+
 class BookForm(FlaskForm):
     name = StringField('Book Name', validators=[DataRequired()])
     author = StringField('Book Author', validators=[DataRequired()])
-    rating = StringField('Rating', validators=[DataRequired()])
+    rating = IntegerField('Rating', validators=[DataRequired()])
     submit = SubmitField('Add Book', validators=[DataRequired()])
 
 
@@ -25,10 +28,17 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add():
     form = BookForm()
 
+    if form.validate_on_submit():
+        all_books.append({
+            'title': form.name.data,
+            'author': form.author.data,
+            'rating': form.rating.data,
+        })
+        print(all_books)
     return render_template('add.html', form=form)
 
 
