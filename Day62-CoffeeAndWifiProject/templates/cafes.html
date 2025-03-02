@@ -8,11 +8,23 @@
     <div class="col-sm-12">
 
       <h1>All Cafes</h1>
-
 	  <table class="table table-dark table-striped table-hover">
-          <!-- This is where you will write the code to render a Bootstrap 
-          Table that contains all the information from the 
-          cafe-data.csv file. -->
+<!--          &lt;!&ndash; This is where you will write the code to render a Bootstrap -->
+<!--          Table that contains all the information from the -->
+<!--          cafe-data.csv file. &ndash;&gt;-->
+        {% for cafe in cafes %}
+          <tr>
+            <td>{{ cafe.Name }}</td>
+              {% if cafe.is_link %}
+            <td><a href="{{ cafe.is_link }}">Maps Link</a></td>
+              {% endif %}
+            <td>{{ cafe.Open }}</td>
+            <td>{{ cafe.Close }}</td>
+            <td>{{ cafe.Coffee }}</td>
+            <td>{{ cafe.Wifi }}</td>
+            <td>{{ cafe.Power }}</td>
+          </tr>
+        {% endfor %}
   	  </table>
 
       <p><a href="{{ url_for('home') }}">Return to index page</a></p>
