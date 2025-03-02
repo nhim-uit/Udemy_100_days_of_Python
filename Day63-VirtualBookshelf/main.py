@@ -105,7 +105,7 @@ def edit(id):
     book = db.session.execute(db.select(Book).where(Book.id == id)).scalar()
 
     if form.validate_on_submit():
-        db.session.execute(db.update(Book).where(Book.id == id).values(rating=form.rating.data))
+        book.rating = request.form['rating']
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('edit.html', form=form, book=book)
