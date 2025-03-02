@@ -3,7 +3,7 @@
 # Day 63 - Virtual Bookshelf project
 # Created by me (Alex Mai)
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -69,6 +69,7 @@ def home():
     with app.app_context():
         result = db.session.execute(db.select(Book).order_by(Book.title))
         all_books = result.scalars().all()
+
     return render_template('index.html', all_books=all_books)
 
 
@@ -102,15 +103,23 @@ def add():
 @app.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
     form = RatingForm()
-    with app.app_context():
-        book = db.session.execute(db.select(Book).where(Book.id == id)).scalars().first()
+    book = db.session.execute(db.select(Book).where(Book.id == id)).scalar()
 
     if form.validate_on_submit():
-        with app.app_context():
-            db.session.execute(db.update(Book).where(Book.id == id).values(rating=form.rating.data))
-            db.session.commit()
+        db.session.execute(db.update(Book).where(Book.id == id).values(rating=form.rating.data))
+        db.session.commit()
         return redirect(url_for('home'))
     return render_template('edit.html', form=form, book=book)
+
+
+@app.route('/delete')
+def delete():
+    book_id = request.args.get('id')
+
+    book = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
