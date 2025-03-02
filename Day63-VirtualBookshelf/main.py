@@ -54,6 +54,11 @@ class BookForm(FlaskForm):
     submit = SubmitField('Add Book', validators=[DataRequired()])
 
 
+class RatingForm(FlaskForm):
+    rating = FloatField('New Rating', validators=[DataRequired()])
+    submit = SubmitField('Change Rating', validators=[DataRequired()])
+
+
 # create table schema in the db
 with app.app_context():
     db.create_all()
