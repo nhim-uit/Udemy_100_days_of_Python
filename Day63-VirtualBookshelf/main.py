@@ -99,5 +99,18 @@ def add():
     return render_template('add.html', form=form)
 
 
+@app.route('/edit/<id>', methods=['GET', 'POST'])
+def edit(id):
+    form = RatingForm()
+    with app.app_context():
+        book = db.session.execute(db.select(Book).where(Book.id == id)).scalars().first()
+
+    if form.validate_on_submit():
+        with app.app_context():
+            db.session.execute(db.update(Book).where(Book.id == id).values(rating=form.rating.data))
+            db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('edit.html', form=form, book=book)
+
 if __name__ == '__main__':
     app.run(debug=True)
