@@ -61,7 +61,10 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    with app.app_context():
+        result = db.session.execute(db.select(Book).order_by(Book.title))
+        all_books = result.scalars().all()
+    return render_template('index.html', all_books=all_books)
 
 
 @app.route('/add', methods=['GET', 'POST'])
