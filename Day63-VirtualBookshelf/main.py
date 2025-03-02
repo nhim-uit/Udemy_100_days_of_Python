@@ -99,10 +99,11 @@ def add():
     return render_template('add.html', form=form)
 
 
-@app.route('/edit/<id>', methods=['GET', 'POST'])
-def edit(id):
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    book_id = request.args.get('id')
     form = RatingForm()
-    book = db.session.execute(db.select(Book).where(Book.id == id)).scalar()
+    book = db.session.execute(db.select(Book).where(Book.id == book_id)).scalar()
 
     if form.validate_on_submit():
         book.rating = request.form['rating']
