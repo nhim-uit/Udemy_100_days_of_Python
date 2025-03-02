@@ -3,7 +3,7 @@
 # Day 63 - Virtual Bookshelf project
 # Created by me (Alex Mai)
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, IntegerField
@@ -25,7 +25,7 @@ class BookForm(FlaskForm):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', all_books=all_books)
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def add():
             'author': form.author.data,
             'rating': form.rating.data,
         })
-        print(all_books)
+        return redirect(url_for('home'))
     return render_template('add.html', form=form)
 
 
