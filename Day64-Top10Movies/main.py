@@ -51,15 +51,15 @@ def home():
 
 @app.route('/add')
 def add():
-    # new_movie = Movie(
-    #     title='Phone Both',
-    #     year=220,
-    #     description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-    #     rating=7.3,
-    #     ranking=10,
-    #     review="My favourite character was the caller.",
-    #     img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg",
-    # )
+    new_movie = Movie(
+        title='Phone Both',
+        year=2002,
+        description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+        rating=7.3,
+        ranking=10,
+        review="My favourite character was the caller.",
+        img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg",
+    )
 
     second_movie = Movie(
         title="Avatar The Way of Water",
@@ -70,7 +70,7 @@ def add():
         review="I liked the water.",
         img_url="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
     )
-
+    db.session.add(new_movie)
     db.session.add(second_movie)
     db.session.commit()
     return redirect(url_for('home'))
