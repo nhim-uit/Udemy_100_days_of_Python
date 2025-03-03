@@ -94,8 +94,8 @@ def edit():
     movie = db.session.execute(db.select(Movie).where(Movie.id == movie_id)).scalar()
 
     if form.validate_on_submit():
-        movie.rating = request.form['rating']
-        movie.review = request.form['review']
+        movie.rating = form.rating.data
+        movie.review = form.review.data
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('edit.html', form=form, movie=movie)
