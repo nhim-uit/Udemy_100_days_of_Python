@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1 class="heading">MY TOP 10 MOVIES</h1>
-    <p class="description">There are my all-time favourite movies</p>
+    <p class="description">These are my all-time favourite movies</p>
 
     {% for movie in movies %}
     <div class="card" >
@@ -22,7 +22,7 @@
             {{ movie.description }}
         </p>
 
-        <a href="{{ url_for('edit') }}" class="button">Update</a>
+        <a href="{{ url_for('edit', id=movie.id) }}" class="button">Update</a>
         <a href="#" class="button delete-button">Delete</a>
 
       </div>
