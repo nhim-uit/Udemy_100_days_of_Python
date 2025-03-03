@@ -3,11 +3,15 @@
 # Day 64 - My Top 10 Movies
 # Completed by me (Alex Mai)
 
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
 from sqlalchemy import Integer, Float
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from wtforms.fields.numeric import FloatField
+from wtforms.fields.simple import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 
 class Base(DeclarativeBase):
@@ -38,6 +42,12 @@ class Movie(db.Model):
     ranking: Mapped[int] = mapped_column(Integer, nullable=False)
     review: Mapped[str] = mapped_column(nullable=False)
     img_url: Mapped[str] = mapped_column(nullable=False)
+
+
+class RatingForm(FlaskForm):
+    rating = FloatField('Rating out of 10', validators=[DataRequired()])
+    review = StringField('Your Review', validators=[DataRequired()])
+    submit = SubmitField('Done')
 
 
 with app.app_context():
@@ -75,6 +85,20 @@ def add():
     db.session.add(second_movie)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    form = RatingForm()
+    movie_id = request.args.get('id')
+    movie = db.session.execute(db.select(Movie).where(Movie.id == movie_id)).scalar()
+
+    if form.validate_on_submit():
+        movie.rating = request.form['rating']
+        movie.review = request.form['review']
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('edit.html', form=form, movie=movie)
 
 
 if __name__ == '__main__':
