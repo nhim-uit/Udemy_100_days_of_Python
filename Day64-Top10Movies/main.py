@@ -41,7 +41,7 @@ class Movie(db.Model):
     description: Mapped[str] = mapped_column(nullable=False)
     rating: Mapped[float] = mapped_column(Float, nullable=True)
     ranking: Mapped[int] = mapped_column(Integer, nullable=True)
-    review: Mapped[str] = mapped_column(nullable=False)
+    review: Mapped[str] = mapped_column(nullable=True)
     img_url: Mapped[str] = mapped_column(nullable=False)
 
 
@@ -129,7 +129,26 @@ def add():
     return render_template('add.html', form=form)
 
 
+@app.route('/select')
+def select():
+    movie_id = request.args.get('id')
 
+    API_KEY = os.getenv('API_KEY')
+    response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}',
+                            params={'api_key': API_KEY}).json()
+
+    movie = Movie(
+        title=response['title'],
+        year=response['release_date'],
+        description=response['overview'],
+        img_url=f"https://image.tmdb.org/t/p/w500{response['backdrop_path']}"
+
+    )
+
+    db.session.add(movie)
+    db.session.commit()
+
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
