@@ -122,10 +122,10 @@ def add():
     form = MovieForm()
 
     if form.validate_on_submit():
-        API_BEARER = os.getenv('API_BEARER')
-        response = requests.get(f'https://api.themoviedb.org/3/search/movie?query={form.title.data}',
-                                headers={'Authorization': f'Bearer {API_BEARER}', 'accept': 'application/json'})
-        return redirect(url_for('select', response=response))
+        API_KEY = os.getenv('API_KEY')
+        response = requests.get('https://api.themoviedb.org/3/search/movie',
+                                params={'api_key': API_KEY, 'query': form.title.data}).json()['results']
+        return render_template('select.html', response=response)
     return render_template('add.html', form=form)
 
 
