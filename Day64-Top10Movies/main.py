@@ -2,7 +2,7 @@
 # Mar 02, 2025
 # Day 64 - My Top 10 Movies
 # Completed by me (Alex Mai)
-
+import requests
 from flask import Flask, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +12,7 @@ from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 from wtforms.fields.numeric import FloatField
 from wtforms.fields.simple import StringField, SubmitField
 from wtforms.validators import DataRequired
+import os
 
 
 class Base(DeclarativeBase):
@@ -50,6 +51,11 @@ class RatingForm(FlaskForm):
     submit = SubmitField('Done')
 
 
+class MovieForm(FlaskForm):
+    title = StringField('Movie Title', validators=[DataRequired()])
+    submit = SubmitField('Add Movie')
+
+
 with app.app_context():
     db.create_all()
 
@@ -60,8 +66,8 @@ def home():
     return render_template('index.html', movies=movies)
 
 
-@app.route('/add')
-def add():
+@app.route('/initial_add')
+def initial_add():
     new_movie = Movie(
         title='Phone Both',
         year=2002,
@@ -109,6 +115,18 @@ def delete():
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for('home'))
+
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    form = MovieForm()
+
+    if form.validate_on_submit():
+        API_BEARER = os.getenv('API_BEARER')
+        response = requests.get(f'https://api.themoviedb.org/3/search/movie?query={form.title.data}',
+                                headers={'Authorization': f'Bearer {API_BEARER}', 'accept': 'application/json'})
+        return redirect(url_for('select', response=response))
+    return render_template('add.html', form=form)
 
 
 if __name__ == '__main__':
