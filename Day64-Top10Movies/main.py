@@ -39,8 +39,8 @@ class Movie(db.Model):
     title: Mapped[str] = mapped_column(unique=True, nullable=False)
     year: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(nullable=False)
-    rating: Mapped[float] = mapped_column(Float, nullable=False)
-    ranking: Mapped[int] = mapped_column(Integer, nullable=False)
+    rating: Mapped[float] = mapped_column(Float, nullable=True)
+    ranking: Mapped[int] = mapped_column(Integer, nullable=True)
     review: Mapped[str] = mapped_column(nullable=False)
     img_url: Mapped[str] = mapped_column(nullable=False)
 
@@ -127,6 +127,9 @@ def add():
                                 params={'api_key': API_KEY, 'query': form.title.data}).json()['results']
         return render_template('select.html', response=response)
     return render_template('add.html', form=form)
+
+
+
 
 
 if __name__ == '__main__':
