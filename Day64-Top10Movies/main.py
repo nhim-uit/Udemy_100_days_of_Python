@@ -144,7 +144,7 @@ def select():
 
     movie = Movie(
         title=response['title'],
-        year=response['release_date'],
+        year=response['release_date'][:4],
         description=response['overview'],
         img_url=f"https://image.tmdb.org/t/p/w500{response['backdrop_path']}"
 
