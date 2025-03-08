@@ -2,6 +2,7 @@
 # Mar 02, 2025
 # Day 64 - My Top 10 Movies
 # Completed by me (Alex Mai)
+
 import requests
 from flask import Flask, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
