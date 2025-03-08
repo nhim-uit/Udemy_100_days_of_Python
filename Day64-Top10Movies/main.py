@@ -7,7 +7,7 @@ from flask import Flask, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from sqlalchemy import Integer, Float
+from sqlalchemy import Integer, Float, desc
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 from wtforms.fields.numeric import FloatField
 from wtforms.fields.simple import StringField, SubmitField
@@ -62,7 +62,12 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    movies = db.session.execute(db.select(Movie)).scalars().all()
+    movies = db.session.execute(db.select(Movie).order_by(desc(Movie.rating))).scalars().all()
+
+    for i in movies:
+        i.ranking = movies.index(i) + 1
+    db.session.commit()
+
     return render_template('index.html', movies=movies)
 
 
@@ -148,7 +153,7 @@ def select():
     db.session.add(movie)
     db.session.commit()
 
-    return redirect(url_for('home'))
+    return redirect(url_for('edit', id=movie.id))
 
 
 if __name__ == '__main__':
