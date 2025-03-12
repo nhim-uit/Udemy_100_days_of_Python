@@ -1,6 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Mar 12, 2025
 # Day 66 - Building RESTful API
+import random
 
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
@@ -59,6 +60,11 @@ def home():
 
 
 # HTTP GET - Read Record
+@app.route('/random')
+def get_random_cafe():
+    res = db.session.execute(db.select(Cafe))
+    all_cafes = res.scalars().all()
+    random_cafe = random.choice(all_cafes)
 
 # HTTP POST - Create Record
 
