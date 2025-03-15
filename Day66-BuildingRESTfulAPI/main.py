@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Mar 12, 2025
+# Mar 12-15, 2025
 # Day 66 - Building RESTful API
 import random
 
@@ -82,6 +82,15 @@ def get_random_cafe():
     #     'coffee_price': random_cafe.coffee_price,
     # })
     return jsonify(cafe=random_cafe.to_dict())
+
+
+@app.route('/all')
+def get_all_cafes():
+    res = db.session.execute(db.select(Cafe))
+    all_cafes = res.scalars().all()
+
+    return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
+
 
 # HTTP POST - Create Record
 
