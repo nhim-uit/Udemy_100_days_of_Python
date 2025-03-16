@@ -1,6 +1,7 @@
 # Udemy: Master Python by building 100 projects in 100 days
 # Mar 16, 2025
 # Day 67 - Blog Capstone - RESTful Routing
+# Completed by me (Alex Mai)
 
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
