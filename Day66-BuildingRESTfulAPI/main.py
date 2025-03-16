@@ -50,6 +50,7 @@ class Cafe(db.Model):
     coffee_price: Mapped[str] = mapped_column(String(250), nullable=True)
 
     def to_dict(self):
+        """Convert the Cafe object to a dictionary."""
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 
@@ -65,6 +66,7 @@ def home():
 # HTTP GET - Read Record
 @app.route('/random')
 def get_random_cafe():
+    """Get a random cafe from the database."""
     res = db.session.execute(db.select(Cafe))
     all_cafes = res.scalars().all()
     random_cafe = random.choice(all_cafes)
@@ -86,6 +88,7 @@ def get_random_cafe():
 
 @app.route('/all')
 def get_all_cafes():
+    """Get all cafes from the database."""
     res = db.session.execute(db.select(Cafe))
     all_cafes = res.scalars().all()
 
@@ -94,6 +97,7 @@ def get_all_cafes():
 
 @app.route('/search')
 def search_cafes_by_location():
+    """Search for cafe by location."""
     location = request.args.get('loc')
     res = db.session.execute(db.select(Cafe).where(Cafe.location == location))
     all_cafes = res.scalars().all()
@@ -107,6 +111,7 @@ def search_cafes_by_location():
 # HTTP POST - Create Record
 @app.route('/add', methods=['POST'])
 def add():
+    """Add a new cafe to the database."""
     new_cafe = Cafe(
         name=request.form.get('name'),
         map_url=request.form.get("map_url"),
@@ -128,6 +133,7 @@ def add():
 # HTTP PUT/PATCH - Update Record
 @app.route('/update-price/<int:cafe_id>', methods=['PATCH'])
 def update_price(cafe_id):
+    """Update the price of a cafe."""
     new_price = request.args.get('new_price')
     cafe_to_update = db.get_or_404(Cafe, cafe_id)
 
@@ -142,6 +148,7 @@ def update_price(cafe_id):
 # HTTP DELETE - Delete Record
 @app.route('/report-closed/<int:cafe_id>', methods=['DELETE'])
 def delete(cafe_id):
+    """Delete a cafe from the database."""
     api_key = request.args.get('api-key')
 
     if api_key == "TopSecretAPIKey":
