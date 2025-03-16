@@ -2,7 +2,7 @@
 # Mar 16, 2025
 # Day 67 - Blog Capstone - RESTful Routing
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_bootstrap import Bootstrap5
@@ -45,11 +45,12 @@ def get_all_posts():
 
 
 # TODO: Add a route so that you can click on individual posts.
-@app.route('/')
-def show_post(post_id):
-    # TODO: Retrieve a BlogPost from the database based on the post_id
-    requested_post = "Grab the post from your database"
-    return render_template("post.html", post=requested_post)
+@app.route('/post')
+def show_post():
+    post_id = request.args.get('id')
+    requested_post = db.get_or_404(blog_post, int(post_id))
+    if requested_post:
+        return render_template("post.html", post=requested_post)
 
 
 # TODO: add_new_post() to create a new blog post
@@ -70,4 +71,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    app.run(debug=True)
