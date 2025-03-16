@@ -23,7 +23,7 @@ db.init_app(app)
 
 
 # CONFIGURE TABLE
-class BlogPost(db.Model):
+class blog_post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=True, nullable=False)
     subtitle = db.Column(db.String(250), nullable=False)
@@ -40,8 +40,8 @@ with app.app_context():
 @app.route('/')
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
-    posts = db.session.execute(db.select(BlogPost)).scalars().all()
-    return render_template("index.html", all_posts=posts)
+    posts = db.session.execute(db.select(blog_post)).scalars().all()
+    return render_template("index.html", posts=posts)
 
 
 # TODO: Add a route so that you can click on individual posts.
