@@ -4,10 +4,14 @@
 # Completed by me (Alex Mai)
 
 from flask import Flask, render_template, request
+from flask_ckeditor import CKEditorField
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bootstrap import Bootstrap5
+from wtforms.fields.simple import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'asdsadkjgh976897asd'
@@ -39,6 +43,16 @@ with app.app_context():
     db.create_all()
 
 
+# FORM
+class PostForm(FlaskForm):
+    title = StringField('Blog Post Title', validators=[DataRequired()])
+    subtitle = StringField('Subtitle', validators=[DataRequired()])
+    name = StringField('Your Name', validators=[DataRequired()])
+    url = StringField('Blog Image URL', validators=[DataRequired()])
+    content = CKEditorField('Blog Content', validators=[DataRequired()])
+    submit = SubmitField('Submit Post')
+
+
 @app.route('/')
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
@@ -58,7 +72,8 @@ def show_post():
 # TODO: add_new_post() to create a new blog post
 @app.route('/new-post')
 def add_new_post():
-    return render_template('make-post.html')
+    form = PostForm()
+    return render_template('make-post.html', form=form)
 
 # TODO: edit_post() to change an existing blog post
 
