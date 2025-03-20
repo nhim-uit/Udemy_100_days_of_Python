@@ -2,8 +2,9 @@
 # Mar 16-20, 2025
 # Day 67 - Blog Capstone - RESTful Routing
 # Completed by me (Alex Mai)
+import datetime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -76,7 +77,17 @@ def add_new_post():
     form = PostForm()
 
     if form.validate_on_submit():
-        pass
+        post = blog_post(
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            date=datetime.datetime.now().strftime('%B %d, %Y'),
+            body=form.content.data,
+            author=form.name.data,
+            img_url=form.url.data
+        )
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('get_all_posts'))
     return render_template('make-post.html', form=form)
 
 # TODO: edit_post() to change an existing blog post
