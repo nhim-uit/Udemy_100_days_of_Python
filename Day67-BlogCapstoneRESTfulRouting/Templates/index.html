@@ -47,6 +47,7 @@
                             Posted by
                             <a href="#!">{{ post.author }}</a>
                             on {{ post.date }}
+                            <a href="{{ url_for('delete', id=post.id) }}">✘</a>
                         </p>
                     </div>
 
