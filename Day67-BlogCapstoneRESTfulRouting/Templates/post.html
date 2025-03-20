@@ -58,7 +58,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p>{{ post.body|safe }}</p>
                         <a href="#!"><img class="img-fluid" src="{{ post.img_url }}" alt="..." /></a>
-                        <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+                        <a class="btn btn-primary float-right" href="{{ url_for('edit', id=post.id) }}">Edit Post</a>
                     </div>
                 </div>
             </div>
