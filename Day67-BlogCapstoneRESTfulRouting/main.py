@@ -1,5 +1,5 @@
 # Udemy: Master Python by building 100 projects in 100 days
-# Mar 16, 2025
+# Mar 16-20, 2025
 # Day 67 - Blog Capstone - RESTful Routing
 # Completed by me (Alex Mai)
 
@@ -56,12 +56,15 @@ def show_post():
 
 
 # TODO: add_new_post() to create a new blog post
+@app.route('/new-post')
+def add_new_post():
+    return render_template('make-post.html')
 
 # TODO: edit_post() to change an existing blog post
 
 # TODO: delete_post() to remove a blog post from the database
 
-# Below is the code from previous lessons. No changes needed.
+
 @app.route("/about")
 def about():
     return render_template("about.html")
