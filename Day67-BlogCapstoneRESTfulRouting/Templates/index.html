@@ -55,7 +55,12 @@
                     {% endfor %}
 
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    <div class=" justify-content-end mb-4">
+                                <a class="btn btn-primary text-uppercase" href="{{ url_for('add_new_post') }}">Create New Post</a>
+
+                                <a class="btn btn-primary text-uppercase float-left ms-5" href="#!">Older Posts →</a>
+
+                    </div>
                 </div>
             </div>
         </div>
