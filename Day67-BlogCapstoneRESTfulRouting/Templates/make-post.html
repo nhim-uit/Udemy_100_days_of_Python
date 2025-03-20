@@ -28,7 +28,7 @@
         <!-- TODO:-Add CKEditor and render the form here -->
 
         {{ ckeditor.load() }}
-        {{ ckeditor.config(name='body') }}
+        {{ ckeditor.config(name='body')|safe}}
         {{ render_form(form, novalidate=True) }}
       </div>
     </div>
