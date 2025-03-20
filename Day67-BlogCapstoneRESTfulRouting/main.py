@@ -4,7 +4,7 @@
 # Completed by me (Alex Mai)
 
 from flask import Flask, render_template, request
-from flask_ckeditor import CKEditorField
+from flask_ckeditor import CKEditorField, CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
@@ -15,6 +15,7 @@ from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'asdsadkjgh976897asd'
+ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 
@@ -70,9 +71,12 @@ def show_post():
 
 
 # TODO: add_new_post() to create a new blog post
-@app.route('/new-post')
+@app.route('/new-post', methods=['GET', 'POST'])
 def add_new_post():
     form = PostForm()
+
+    if form.validate_on_submit():
+        pass
     return render_template('make-post.html', form=form)
 
 # TODO: edit_post() to change an existing blog post
