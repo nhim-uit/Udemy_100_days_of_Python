@@ -51,8 +51,10 @@
         {{ ckeditor.load() }}
         {{ ckeditor.config(name='body')}}
         {{ render_form(form, novalidate=True) }}
+        <a class="btn btn-primary float-right" href="{{ url_for('get_all_posts') }}">Cancel</a>
       </div>
     </div>
+
   </div>
 </main>
 {% include "footer.html" %} {% endblock %}
