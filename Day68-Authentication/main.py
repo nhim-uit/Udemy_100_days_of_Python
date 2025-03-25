@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
+from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -38,8 +39,19 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        new_user = User(
+            email=request.form.get('email'),
+            password=request.form.get('password'),
+            name=request.form.get('name')
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return render_template('secrets.html', name=request.form.get('name'))
+
     return render_template("register.html")
 
 
