@@ -1,3 +1,4 @@
+import werkzeug
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -44,7 +45,7 @@ def register():
     if request.method == 'POST':
         new_user = User(
             email=request.form.get('email'),
-            password=request.form.get('password'),
+            password=werkzeug.security.generate_password_hash(request.form.get('password'), method='pbkdf2', salt_length=8),
             name=request.form.get('name')
         )
 
