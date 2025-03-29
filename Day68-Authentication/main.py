@@ -2,7 +2,6 @@
 # Mar 26-29, 2025
 # Day 68 - Authentication
 # Completed by me (Alex Mai)
-
 import werkzeug
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -56,20 +55,27 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        new_user = User(
-            email=request.form.get('email'),
-            password=werkzeug.security.generate_password_hash(
-                request.form.get('password'),
-                method='pbkdf2:sha256',
-                salt_length=8),
-            name=request.form.get('name')
-        )
+        email = request.form.get('email')
+        res = db.session.execute(db.select(User).where(User.email == email)).scalar()
 
-        db.session.add(new_user)
-        db.session.commit()
+        if res:
+            flash('Account is already registered, please log in!')
+            # return redirect(url_for('login'))
+        else:
+            new_user = User(
+                email=email,
+                password=werkzeug.security.generate_password_hash(
+                    request.form.get('password'),
+                    method='pbkdf2:sha256',
+                    salt_length=8),
+                name=request.form.get('name')
+            )
 
-        login_user(new_user)
-        return redirect(url_for('secrets'))
+            db.session.add(new_user)
+            db.session.commit()
+
+            login_user(new_user)
+            return redirect(url_for('secrets'))
     return render_template("register.html")
 
 
