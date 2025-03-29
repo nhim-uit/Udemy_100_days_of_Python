@@ -2,9 +2,9 @@
 # Mar 26-29, 2025
 # Day 68 - Authentication
 # Completed by me (Alex Mai)
-
+import flask
 import werkzeug
-from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory, abort
+from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -87,9 +87,9 @@ def login():
                 return redirect(url_for('secrets'))
             else:
                 flash('Invalid email or password')
+                return redirect(url_for('register', wrong_cred=True))
         except Exception as e:
-            flash('An error occurred while trying to log in', e)
-            return redirect(url_for('register'))
+            flash('An error occurred while trying to log in', str(e))
 
     return render_template("login.html")
 
