@@ -87,7 +87,7 @@ def login():
                 return redirect(url_for('secrets'))
             else:
                 flash('Invalid email or password')
-                return redirect(url_for('register', acc_not_foundd=True))
+                return redirect(url_for('register', not_found=True))
         except Exception as e:
             flash('An error occurred while trying to log in', str(e))
 
