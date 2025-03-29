@@ -12,6 +12,10 @@
         {% endif %}
     {% endwith %}
 
+    {% if redirect_to_login %}
+        <p>Redirecting to login in <span id="countdown">3</span> seconds...</p>
+    {% endif %}
+
     <form action="{{ url_for('register') }}" method="post">
     	<input type="text" name="name" placeholder="Name" required="required" />
 		<input type="email" name="email" placeholder="Email" required="required" />
@@ -19,5 +23,20 @@
         <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up.</button>
     </form>
 </div>
+
+{% if redirect_to_login %}
+<script>
+    let countdown = 3;
+    const countdownElement = document.getElementById('countdown');
+    const interval = setInterval(() => {
+        countdown--;
+        countdownElement.textContent = countdown;
+        if (countdown === 0) {
+            clearInterval(interval);
+            window.location.href = "{{ url_for('login') }}";
+        }
+    }, 1000);
+</script>
+{% endif %}
 
 {% endblock %}
