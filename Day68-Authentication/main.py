@@ -28,6 +28,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# Create a user_loader callback
+@login_manager.user_loader
+def load_user(user_id):
+    return db.get_or_404(User, user_id)
+
+
 # CREATE TABLE IN DB
 class User(db.Model, UserMixin):
     id: Mapped[str] = mapped_column(String(10), primary_key=True)
