@@ -2,7 +2,7 @@
 # Mar 26-29, 2025
 # Day 68 - Authentication
 # Completed by me (Alex Mai)
-import flask
+
 import werkzeug
 from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -70,7 +70,7 @@ def register():
 
         login_user(new_user)
         return redirect(url_for('secrets'))
-    return render_template("register.html", not_found=False)
+    return render_template("register.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -82,12 +82,14 @@ def login():
         try:
             res = db.session.execute(db.select(User).where(User.email == email))
             user = res.scalar()
-            if user and check_password_hash(user.password, password):
-                login_user(user)
-                return redirect(url_for('secrets'))
+            if not user:
+                flash('Invalid email, please try again!')
             else:
-                flash('Invalid email or password')
-                return render_template('register.html', not_found=True)
+                if not check_password_hash(user.password, password):
+                    flash('Invalid password, please try again!')
+                else:
+                    login_user(user)
+                    return redirect(url_for('secrets'))
         except Exception as e:
             flash('An error occurred while trying to log in', str(e))
 
