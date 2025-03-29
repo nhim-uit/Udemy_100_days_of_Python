@@ -70,7 +70,7 @@ def register():
 
         login_user(new_user)
         return redirect(url_for('secrets'))
-    return render_template("register.html")
+    return render_template("register.html", not_found=False)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -87,7 +87,7 @@ def login():
                 return redirect(url_for('secrets'))
             else:
                 flash('Invalid email or password')
-                return redirect(url_for('register', not_found=True))
+                return render_template('register.html', not_found=True)
         except Exception as e:
             flash('An error occurred while trying to log in', str(e))
 
