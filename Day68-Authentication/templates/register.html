@@ -2,7 +2,12 @@
 {% block content %}
 
 <div class="box">
-	<h1>Register</h1>
+    {% if acc_not_found %}
+    <h1>Your account cannot be found, please re-register!</h1>
+    {% else %}
+    <h1>Register</h1>
+    {% endif %}
+
     <form action="{{ url_for('register') }}" method="post">
     	<input type="text" name="name" placeholder="Name" required="required" />
 		<input type="email" name="email" placeholder="Email" required="required" />
