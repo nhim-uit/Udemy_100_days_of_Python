@@ -12,7 +12,7 @@ from sqlalchemy import Integer, String
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'befeb4f249f52574ae2592c0c2f193420026fc8004ab66c654edd6255778a4f6'
+app.config['SECRET_KEY'] = 'befeb4f249f52574ae24f6'
 
 
 # CREATE DATABASE
@@ -60,7 +60,7 @@ def register():
             email=request.form.get('email'),
             password=werkzeug.security.generate_password_hash(
                 request.form.get('password'),
-                method='pbkdf2',
+                method='pbkdf2:sha256',
                 salt_length=8),
             name=request.form.get('name')
         )
@@ -69,7 +69,7 @@ def register():
         db.session.commit()
 
         login_user(new_user)
-        return redirect('secrets.html')
+        return redirect(url_for('secrets'))
     return render_template("register.html")
 
 
@@ -82,13 +82,14 @@ def login():
         try:
             res = db.session.execute(db.select(User).where(User.email == email))
             user = res.scalar()
-            if check_password_hash(user.password, password):
+            if user and check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for('secrets'))
             else:
                 flash('Invalid email or password')
         except Exception as e:
             flash('An error occurred while trying to log in', e)
+            return redirect(url_for('register'))
 
     return render_template("login.html")
 
