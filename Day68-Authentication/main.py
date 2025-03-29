@@ -60,7 +60,7 @@ def register():
 
         if res:
             flash('Account is already registered, please log in!')
-            # return redirect(url_for('login'))
+            return render_template("register.html", redirect_to_login=True)
         else:
             new_user = User(
                 email=email,
