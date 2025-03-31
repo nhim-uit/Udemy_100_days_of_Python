@@ -350,6 +350,7 @@ label {
 
 button {
   border-radius: 0;
+  width: 100%;
 }
 
 button:focus:not(:focus-visible) {
