@@ -7,6 +7,7 @@ import datetime
 
 from flask import Flask, render_template, request, redirect, url_for
 from flask_ckeditor import CKEditorField, CKEditor
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
@@ -21,6 +22,7 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 
+# Create database
 class Base(DeclarativeBase):
     pass
 
@@ -29,6 +31,17 @@ class Base(DeclarativeBase):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+
+
+# Login Manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+# Create a user_loader callback
+@login_manager.user_loader
+def load_user(blog_id):
+    return db.get_or_404(blog_post, blog_id)
 
 
 # CONFIGURE TABLE
@@ -132,6 +145,11 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 if __name__ == "__main__":
