@@ -5,14 +5,15 @@
 
 import datetime
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_ckeditor import CKEditorField, CKEditor
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, UserMixin, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_bootstrap import Bootstrap5
+from werkzeug.security import check_password_hash
 from wtforms.fields.simple import StringField, SubmitField
 from wtforms.validators import DataRequired
 
@@ -45,6 +46,7 @@ def load_user(blog_id):
 
 
 # CONFIGURE TABLE
+# TABLE blog_post
 class blog_post(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
@@ -53,6 +55,13 @@ class blog_post(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+
+
+# TABLE User
+class User(UserMixin, db.Model):
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(100), unique=True)
+    password: Mapped[str] = mapped_column(String(100))
 
 
 with app.app_context():
@@ -147,9 +156,54 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.args.get('email')
+        password = request.args.get('password')
+
+        try:
+            user = db.session.execute(db.select(User).where(User.email == email)).scalar()
+
+            if not user:
+                flash('Invalid email, please try again!')
+            else:
+                if not check_password_hash(user.password, password):
+                    flash('Invalid password, please try again!')
+                else:
+                    login_user(user)
+                    return redirect(url_for('get_all_posts'))
+
+        except Exception as e:
+            flash('An error occurred while trying to log in', str(e))
+
     return render_template('login.html')
+
+
+@app.route('register')
+def register():
+    if request.method == 'POST':
+        email = request.args.get('email')
+        res = db.session.execute(db.select(User).where(User.email == email)).scalar()
+
+        if res:
+            flash('Account is already registered, please log in!')
+            return render_template("login.html", redirect_to_login=True)
+        else:
+            new_user = User(
+                email=email,
+                password=werkzeug.security.generate_password_hash(
+                    request.form.get('password'),
+                    method='pbkdf2:sha256',
+                    salt_length=8)
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            login_user(new_user)
+            return redirect(url_for('get_all_posts'))
+    return render_template("register.html", logged_in=current_user.is_authenticated)
 
 
 if __name__ == "__main__":
