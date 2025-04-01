@@ -5,6 +5,7 @@
 
 import datetime
 
+import werkzeug
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_login import LoginManager, login_user, UserMixin, current_user
@@ -62,6 +63,7 @@ class User(UserMixin, db.Model):
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(100))
 
 
 with app.app_context():
@@ -159,8 +161,8 @@ def contact():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.args.get('email')
-        password = request.args.get('password')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         try:
             user = db.session.execute(db.select(User).where(User.email == email)).scalar()
@@ -180,22 +182,22 @@ def login():
     return render_template('login.html')
 
 
-@app.route('register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.args.get('email')
+        email = request.form.get('email')
         res = db.session.execute(db.select(User).where(User.email == email)).scalar()
 
         if res:
-            flash('Account is already registered, please log in!')
-            return render_template("login.html", redirect_to_login=True)
+            flash('Account with that email already exists, please log in or use different email!')
         else:
             new_user = User(
                 email=email,
                 password=werkzeug.security.generate_password_hash(
                     request.form.get('password'),
                     method='pbkdf2:sha256',
-                    salt_length=8)
+                    salt_length=8),
+                name=request.form.get('name')
             )
 
             db.session.add(new_user)
@@ -203,7 +205,7 @@ def register():
 
             login_user(new_user)
             return redirect(url_for('get_all_posts'))
-    return render_template("register.html", logged_in=current_user.is_authenticated)
+    return render_template("register.html")
 
 
 if __name__ == "__main__":
