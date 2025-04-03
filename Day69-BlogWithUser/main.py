@@ -199,6 +199,10 @@ def delete_comment():
     post_id = request.args.get('id')
     # requested_post = db.get_or_404(blog_post, post_id)
 
+    # TODO
+    # only delete if user id match user currently logged in
+    # user = request.args.get('user')
+
     comment = db.get_or_404(Comment, comment_id)
     db.session.delete(comment)
     db.session.commit()
