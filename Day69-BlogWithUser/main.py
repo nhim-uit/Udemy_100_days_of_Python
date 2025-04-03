@@ -49,7 +49,7 @@ def load_user(user_id):
 # CONFIGURE FLASK-WTF FORM
 # TABLE blog_post
 class blog_post(db.Model):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     date: Mapped[str] = mapped_column(String(250), nullable=False)
@@ -60,7 +60,7 @@ class blog_post(db.Model):
 
 # TABLE User
 class User(UserMixin, db.Model):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
@@ -69,7 +69,7 @@ class User(UserMixin, db.Model):
 
 # TABLE Comment
 class Comment(db.Model):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
     comment: Mapped[str] = mapped_column(String(1000))
     user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('user.name'))
     user = db.relationship('User', back_populates='comments')
@@ -105,7 +105,7 @@ def get_all_posts():
 @app.route('/post', methods=['GET', 'POST'])
 def show_post():
     post_id = request.args.get('id')
-    requested_post = db.get_or_404(blog_post, int(post_id))
+    requested_post = db.get_or_404(blog_post, post_id)
     comment_ = CommentForm()
 
     if comment_.validate_on_submit():
@@ -191,6 +191,20 @@ def delete(id):
     db.session.commit()
     return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
 
+
+@app.route('/delete-comment')
+@login_required
+def delete_comment():
+    comment_id = request.args.get('comment_id')
+    post_id = request.args.get('id')
+    # requested_post = db.get_or_404(blog_post, post_id)
+
+    comment = db.get_or_404(Comment, comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+
+    # if requested_post:
+    return redirect(url_for('show_post', id=post_id))
 
 @app.route("/about")
 def about():
