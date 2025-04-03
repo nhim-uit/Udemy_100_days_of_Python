@@ -64,13 +64,22 @@ class User(UserMixin, db.Model):
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
+    comments = db.relationship('Comment', back_populates='user')
+
+
+# TABLE Comment
+class Comment(db.Model):
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
+    comment: Mapped[str] = mapped_column(String(1000))
+    user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('user.name'))
+    user = db.relationship('User', back_populates='comments')
 
 
 with app.app_context():
     db.create_all()
 
 
-# FORM
+# POST FORM
 class PostForm(FlaskForm):
     title = StringField('Blog Post Title', validators=[DataRequired()])
     subtitle = StringField('Subtitle', validators=[DataRequired()])
