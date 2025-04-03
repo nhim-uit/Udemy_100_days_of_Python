@@ -8,7 +8,7 @@ import datetime
 import werkzeug
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_ckeditor import CKEditorField, CKEditor
-from flask_login import LoginManager, login_user, UserMixin, current_user
+from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
@@ -42,8 +42,8 @@ login_manager.init_app(app)
 
 # Create a user_loader callback
 @login_manager.user_loader
-def load_user(blog_id):
-    return db.get_or_404(blog_post, blog_id)
+def load_user(user_id):
+    return db.get_or_404(User, user_id)
 
 
 # CONFIGURE TABLE
@@ -84,7 +84,7 @@ class PostForm(FlaskForm):
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
     posts = db.session.execute(db.select(blog_post)).scalars().all()
-    return render_template("index.html", posts=posts)
+    return render_template("index.html", posts=posts, logged_in=current_user.is_authenticated)
 
 
 # TODO: Add a route so that you can click on individual posts.
@@ -93,7 +93,7 @@ def show_post():
     post_id = request.args.get('id')
     requested_post = db.get_or_404(blog_post, int(post_id))
     if requested_post:
-        return render_template("post.html", post=requested_post)
+        return render_template("post.html", post=requested_post, logged_in=current_user.is_authenticated)
 
 
 # TODO: add_new_post() to create a new blog post
@@ -113,7 +113,7 @@ def add_new_post():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('get_all_posts'))
-    return render_template('make-post.html', form=form)
+    return render_template('make-post.html', form=form, logged_in=current_user.is_authenticated)
 
 
 # TODO: edit_post() to change an existing blog post
@@ -136,26 +136,27 @@ def edit(id):
         post.author = edit_form.name.data
         db.session.commit()
         return redirect(url_for('show_post', id=post.id))
-    return render_template('make-post.html', form=edit_form, is_edit=True)
+    return render_template('make-post.html', form=edit_form, is_edit=True, logged_in=current_user.is_authenticated)
 
 
 # TODO: delete_post() to remove a blog post from the database
 @app.route('/delete/<id>')
+@login_required
 def delete(id):
     post = db.get_or_404(blog_post, id)
     db.session.delete(post)
     db.session.commit()
-    return redirect(url_for('get_all_posts'))
+    return redirect(url_for('get_all_posts'), logged_in=current_user.is_authenticated)
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", logged_in=current_user.is_authenticated)
 
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -179,7 +180,7 @@ def login():
         except Exception as e:
             flash('An error occurred while trying to log in', str(e))
 
-    return render_template('login.html')
+    return render_template('login.html', logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -204,9 +205,14 @@ def register():
             db.session.commit()
 
             login_user(new_user)
-            return redirect(url_for('get_all_posts'))
-    return render_template("register.html")
+            return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
+    return render_template("register.html", logged_in=current_user.is_authenticated)
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
 
 if __name__ == "__main__":
     app.run(debug=True)
