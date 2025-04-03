@@ -46,9 +46,15 @@
                         <a href="#!"><img class="img-fluid" src="{{ post.img_url }}" alt="..." /></a>
                         <a class="btn btn-primary float-right" href="{{ url_for('edit', id=post.id) }}">Edit Post</a>
                         <hr>
-                        {{ ckeditor.load() }}
+                        {{ ckeditor.load()}}
                         {{ ckeditor.config(name='body')}}
                         {{ render_form(comment_, novalidate=True) }}
+
+                        {% for comment in comments %}
+                        <span>{{ comment.user_name }}</span>
+                        <p>{{ comment.comment|safe }}</p>
+                        <hr>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
