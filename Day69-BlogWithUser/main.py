@@ -80,6 +80,11 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit Post')
 
 
+class CommentForm(FlaskForm):
+    comment_ = CKEditorField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
 @app.route('/')
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
@@ -92,8 +97,15 @@ def get_all_posts():
 def show_post():
     post_id = request.args.get('id')
     requested_post = db.get_or_404(blog_post, int(post_id))
+    comment_ = CommentForm()
+    if comment_.validate_on_submit():
+        render_template('post.html', comment_=comment_, logged_in=current_user.is_authenticated)
+
     if requested_post:
-        return render_template("post.html", post=requested_post, logged_in=current_user.is_authenticated)
+        return render_template("post.html",
+                               post=requested_post,
+                               comment_=comment_,
+                               logged_in=current_user.is_authenticated)
 
 
 # TODO: add_new_post() to create a new blog post
@@ -114,6 +126,7 @@ def add_new_post():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('get_all_posts'))
+
     return render_template('make-post.html', form=form, logged_in=current_user.is_authenticated)
 
 
@@ -122,6 +135,7 @@ def add_new_post():
 @login_required
 def edit(id):
     post = db.get_or_404(blog_post, id)
+
     edit_form = PostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -138,7 +152,11 @@ def edit(id):
         post.author = edit_form.name.data
         db.session.commit()
         return redirect(url_for('show_post', id=post.id))
-    return render_template('make-post.html', form=edit_form, is_edit=True, logged_in=current_user.is_authenticated)
+
+    return render_template('make-post.html',
+                           form=edit_form,
+                           is_edit=True,
+                           logged_in=current_user.is_authenticated)
 
 
 # TODO: delete_post() to remove a blog post from the database
