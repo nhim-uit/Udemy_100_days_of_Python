@@ -43,10 +43,10 @@ login_manager.init_app(app)
 # Create a user_loader callback
 @login_manager.user_loader
 def load_user(user_id):
-    return db.get_or_404(User, user_id)
+    return db.session.get(User, user_id)
 
 
-# CONFIGURE TABLE
+# CONFIGURE FLASK-WTF FORM
 # TABLE blog_post
 class blog_post(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -60,7 +60,7 @@ class blog_post(db.Model):
 
 # TABLE User
 class User(UserMixin, db.Model):
-    id: Mapped[str] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
@@ -69,7 +69,7 @@ class User(UserMixin, db.Model):
 
 # TABLE Comment
 class Comment(db.Model):
-    id: Mapped[str] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     comment: Mapped[str] = mapped_column(String(1000))
     user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('user.name'))
     user = db.relationship('User', back_populates='comments')
@@ -102,18 +102,32 @@ def get_all_posts():
 
 
 # TODO: Add a route so that you can click on individual posts.
-@app.route('/post')
+@app.route('/post', methods=['GET', 'POST'])
 def show_post():
     post_id = request.args.get('id')
     requested_post = db.get_or_404(blog_post, int(post_id))
     comment_ = CommentForm()
+
     if comment_.validate_on_submit():
-        render_template('post.html', comment_=comment_, logged_in=current_user.is_authenticated)
+        cmt = Comment(
+            comment=comment_.comment_.data,
+            user_name=current_user.name,
+        )
+        db.session.add(cmt)
+        db.session.commit()
+        comments = db.session.execute(db.select(Comment)).scalars().all()
+        return render_template('post.html',
+                               post=requested_post,
+                               comment_=comment_,
+                               comments=comments,
+                               logged_in=current_user.is_authenticated)
 
     if requested_post:
+        comments = db.session.execute(db.select(Comment)).scalars().all()
         return render_template("post.html",
                                post=requested_post,
                                comment_=comment_,
+                               comments=comments,
                                logged_in=current_user.is_authenticated)
 
 
