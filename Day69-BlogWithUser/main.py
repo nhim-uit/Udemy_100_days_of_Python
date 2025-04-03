@@ -98,6 +98,7 @@ def show_post():
 
 # TODO: add_new_post() to create a new blog post
 @app.route('/new-post', methods=['GET', 'POST'])
+@login_required
 def add_new_post():
     form = PostForm()
 
@@ -118,6 +119,7 @@ def add_new_post():
 
 # TODO: edit_post() to change an existing blog post
 @app.route('/edit-post/<id>', methods=['GET', 'POST'])
+@login_required
 def edit(id):
     post = db.get_or_404(blog_post, id)
     edit_form = PostForm(
@@ -146,7 +148,7 @@ def delete(id):
     post = db.get_or_404(blog_post, id)
     db.session.delete(post)
     db.session.commit()
-    return redirect(url_for('get_all_posts'), logged_in=current_user.is_authenticated)
+    return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
 
 
 @app.route("/about")
@@ -212,7 +214,8 @@ def register():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
+    return redirect(url_for('get_all_posts',logged_in=current_user.is_authenticated))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
