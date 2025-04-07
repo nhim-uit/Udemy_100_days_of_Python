@@ -7,13 +7,14 @@ import datetime
 from functools import wraps
 
 import werkzeug
+from django.db.models import ForeignKey
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from sqlalchemy import Integer, String, Text
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from flask_bootstrap import Bootstrap5
 from werkzeug.security import check_password_hash
 from wtforms.fields.simple import StringField, SubmitField
@@ -65,8 +66,10 @@ class blog_post(db.Model):
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     date: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
-    author: Mapped[str] = mapped_column(String(250), nullable=False)
+    # author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
+    author_id: Mapped[str] = mapped_column(db.ForeignKey('User.id'))
+    author: Mapped['User'] = relationship(back_populates='blogs')
 
 
 # TABLE User
@@ -75,7 +78,8 @@ class User(UserMixin, db.Model):
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
     name: Mapped[str] = mapped_column(String(100))
-    comments = db.relationship('Comment', back_populates='user')
+    comments = relationship('Comment', back_populates='user')
+    blogs: Mapped['blog_post'] = relationship(back_populates='author')
 
 
 # TABLE Comment
@@ -83,7 +87,7 @@ class Comment(db.Model):
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     comment: Mapped[str] = mapped_column(String(1000))
     user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('user.name'))
-    user = db.relationship('User', back_populates='comments')
+    user = relationship('User', back_populates='comments')
 
 
 with app.app_context():
