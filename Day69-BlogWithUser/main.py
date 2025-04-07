@@ -4,9 +4,10 @@
 # Completed by me (Alex Mai)
 
 import datetime
+from functools import wraps
 
 import werkzeug
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -44,6 +45,16 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, user_id)
+
+
+# admin only
+def admin_only(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if current_user.id != 1:
+            return abort(403)
+        return f(*args, *kwargs)
+    return wrapper
 
 
 # CONFIGURE FLASK-WTF FORM
@@ -134,50 +145,48 @@ def show_post():
 
 # TODO: add_new_post() to create a new blog post
 @app.route('/new-post', methods=['GET', 'POST'])
-@login_required
+@admin_only
 def add_new_post():
-    if current_user.id == 1:
-        form = PostForm()
+    form = PostForm()
 
-        if form.validate_on_submit():
-            post = blog_post(
+    if form.validate_on_submit():
+        post = blog_post(
                 title=form.title.data,
                 subtitle=form.subtitle.data,
                 date=datetime.datetime.now().strftime('%B %d, %Y'),
                 body=form.content.data,
                 author=form.name.data,
                 img_url=form.url.data
-            )
-            db.session.add(post)
-            db.session.commit()
-            return redirect(url_for('get_all_posts'))
+        )
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('get_all_posts'))
 
     return render_template('make-post.html', form=form, logged_in=current_user.is_authenticated)
 
 
 # TODO: edit_post() to change an existing blog post
 @app.route('/edit-post/<id>', methods=['GET', 'POST'])
-@login_required
+@admin_only
 def edit(id):
-    if current_user.id == 1:
-        post = db.get_or_404(blog_post, id)
+    post = db.get_or_404(blog_post, id)
 
-        edit_form = PostForm(
+    edit_form = PostForm(
             title=post.title,
             subtitle=post.subtitle,
             url=post.img_url,
             author=post.author,
             content=post.body,
             name=post.author,
-        )
-        if edit_form.validate_on_submit():
-            post.title = edit_form.title.data
-            post.subtitle = edit_form.subtitle.data
-            post.img_url = edit_form.url.data
-            post.body = edit_form.content.data
-            post.author = edit_form.name.data
-            db.session.commit()
-            return redirect(url_for('show_post', id=post.id))
+    )
+    if edit_form.validate_on_submit():
+        post.title = edit_form.title.data
+        post.subtitle = edit_form.subtitle.data
+        post.img_url = edit_form.url.data
+        post.body = edit_form.content.data
+        post.author = edit_form.name.data
+        db.session.commit()
+        return redirect(url_for('show_post', id=post.id))
 
     return render_template('make-post.html',
                            form=edit_form,
@@ -187,12 +196,11 @@ def edit(id):
 
 # TODO: delete_post() to remove a blog post from the database
 @app.route('/delete/<id>')
-@login_required
+@admin_only
 def delete(id):
-    if current_user.id == 1:
-        post = db.get_or_404(blog_post, id)
-        db.session.delete(post)
-        db.session.commit()
+    post = db.get_or_404(blog_post, id)
+    db.session.delete(post)
+    db.session.commit()
     return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
 
 
