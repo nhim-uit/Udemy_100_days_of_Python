@@ -152,7 +152,7 @@ def show_post():
 @admin_only
 def add_new_post():
     form = PostForm(
-        name=current_user.name,
+        name=current_user,
     )
 
     if form.validate_on_submit():
