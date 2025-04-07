@@ -7,7 +7,6 @@ import datetime
 from functools import wraps
 
 import werkzeug
-from django.db.models import ForeignKey
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_ckeditor import CKEditorField, CKEditor
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
@@ -54,8 +53,19 @@ def admin_only(f):
     def wrapper(*args, **kwargs):
         if current_user.id != 1:
             return abort(403)
-        return f(*args, *kwargs)
+        return f(*args, **kwargs)
     return wrapper
+
+
+# TABLE User
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id: Mapped[str] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(100), unique=True)
+    password: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(100))
+    comments = relationship('Comment', back_populates='user')
+    blogs = relationship('blog_post', back_populates='author')
 
 
 # CONFIGURE FLASK-WTF FORM
@@ -68,25 +78,15 @@ class blog_post(db.Model):
     body: Mapped[str] = mapped_column(Text, nullable=False)
     # author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
-    author_id: Mapped[str] = mapped_column(db.ForeignKey('User.id'))
-    author: Mapped['User'] = relationship(back_populates='blogs')
-
-
-# TABLE User
-class User(UserMixin, db.Model):
-    id: Mapped[str] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String(100), unique=True)
-    password: Mapped[str] = mapped_column(String(100))
-    name: Mapped[str] = mapped_column(String(100))
-    comments = relationship('Comment', back_populates='user')
-    blogs: Mapped['blog_post'] = relationship(back_populates='author')
+    author_id: Mapped[str] = mapped_column(Integer, db.ForeignKey('users.id'))
+    author = relationship('User', back_populates='blogs')
 
 
 # TABLE Comment
 class Comment(db.Model):
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     comment: Mapped[str] = mapped_column(String(1000))
-    user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('user.name'))
+    user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('users.name'))
     user = relationship('User', back_populates='comments')
 
 
@@ -151,16 +151,18 @@ def show_post():
 @app.route('/new-post', methods=['GET', 'POST'])
 @admin_only
 def add_new_post():
-    form = PostForm()
+    form = PostForm(
+        name=current_user.name,
+    )
 
     if form.validate_on_submit():
         post = blog_post(
-                title=form.title.data,
-                subtitle=form.subtitle.data,
-                date=datetime.datetime.now().strftime('%B %d, %Y'),
-                body=form.content.data,
-                author=form.name.data,
-                img_url=form.url.data
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            date=datetime.datetime.now().strftime('%B %d, %Y'),
+            body=form.content.data,
+            img_url=form.url.data,
+            author_id=current_user.id,
         )
         db.session.add(post)
         db.session.commit()
@@ -176,12 +178,12 @@ def edit(id):
     post = db.get_or_404(blog_post, id)
 
     edit_form = PostForm(
-            title=post.title,
-            subtitle=post.subtitle,
-            url=post.img_url,
-            author=post.author,
-            content=post.body,
-            name=post.author,
+        title=post.title,
+        subtitle=post.subtitle,
+        url=post.img_url,
+        author=post.author,
+        content=post.body,
+        name=post.author,
     )
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
