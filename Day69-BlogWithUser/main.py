@@ -135,20 +135,21 @@ def show_post():
 @app.route('/new-post', methods=['GET', 'POST'])
 @login_required
 def add_new_post():
-    form = PostForm()
+    if current_user.id == 1:
+        form = PostForm()
 
-    if form.validate_on_submit():
-        post = blog_post(
-            title=form.title.data,
-            subtitle=form.subtitle.data,
-            date=datetime.datetime.now().strftime('%B %d, %Y'),
-            body=form.content.data,
-            author=form.name.data,
-            img_url=form.url.data
-        )
-        db.session.add(post)
-        db.session.commit()
-        return redirect(url_for('get_all_posts'))
+        if form.validate_on_submit():
+            post = blog_post(
+                title=form.title.data,
+                subtitle=form.subtitle.data,
+                date=datetime.datetime.now().strftime('%B %d, %Y'),
+                body=form.content.data,
+                author=form.name.data,
+                img_url=form.url.data
+            )
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for('get_all_posts'))
 
     return render_template('make-post.html', form=form, logged_in=current_user.is_authenticated)
 
@@ -157,24 +158,25 @@ def add_new_post():
 @app.route('/edit-post/<id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
-    post = db.get_or_404(blog_post, id)
+    if current_user.id == 1:
+        post = db.get_or_404(blog_post, id)
 
-    edit_form = PostForm(
-        title=post.title,
-        subtitle=post.subtitle,
-        url=post.img_url,
-        author=post.author,
-        content=post.body,
-        name=post.author,
-    )
-    if edit_form.validate_on_submit():
-        post.title = edit_form.title.data
-        post.subtitle = edit_form.subtitle.data
-        post.img_url = edit_form.url.data
-        post.body = edit_form.content.data
-        post.author = edit_form.name.data
-        db.session.commit()
-        return redirect(url_for('show_post', id=post.id))
+        edit_form = PostForm(
+            title=post.title,
+            subtitle=post.subtitle,
+            url=post.img_url,
+            author=post.author,
+            content=post.body,
+            name=post.author,
+        )
+        if edit_form.validate_on_submit():
+            post.title = edit_form.title.data
+            post.subtitle = edit_form.subtitle.data
+            post.img_url = edit_form.url.data
+            post.body = edit_form.content.data
+            post.author = edit_form.name.data
+            db.session.commit()
+            return redirect(url_for('show_post', id=post.id))
 
     return render_template('make-post.html',
                            form=edit_form,
@@ -186,9 +188,10 @@ def edit(id):
 @app.route('/delete/<id>')
 @login_required
 def delete(id):
-    post = db.get_or_404(blog_post, id)
-    db.session.delete(post)
-    db.session.commit()
+    if current_user.id == 1:
+        post = db.get_or_404(blog_post, id)
+        db.session.delete(post)
+        db.session.commit()
     return redirect(url_for('get_all_posts', logged_in=current_user.is_authenticated))
 
 
@@ -209,6 +212,7 @@ def delete_comment():
 
     # if requested_post:
     return redirect(url_for('show_post', id=post_id))
+
 
 @app.route("/about")
 def about():
