@@ -33,7 +33,7 @@
                             Posted by
                             <a href="#!">{{ post.author }}</a>
                             on {{ post.date }}
-                            {% if logged_in %}
+                            {% if admin %}
                             <a href="{{ url_for('delete', id=post.id) }}">✘</a>
                             {% endif %}
                         </p>
