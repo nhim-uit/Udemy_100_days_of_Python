@@ -98,7 +98,8 @@ class CommentForm(FlaskForm):
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
     posts = db.session.execute(db.select(blog_post)).scalars().all()
-    return render_template("index.html", posts=posts, logged_in=current_user.is_authenticated)
+    admin = current_user.is_authenticated and current_user.id == 1
+    return render_template("index.html", posts=posts, logged_in=current_user.is_authenticated, admin=admin)
 
 
 # TODO: Add a route so that you can click on individual posts.
