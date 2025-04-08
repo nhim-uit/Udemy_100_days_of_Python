@@ -55,7 +55,7 @@
                         {% for comment in comments %}
                         <p>{{ comment.comment|safe }}
 
-                            <span class="subheading">{{ comment.user_name }}</span>
+                            <span class="subheading">{{ comment.user.name }}</span>
                             {% if logged_in %}
                         <span class="meta"><a href="{{ url_for('delete_comment', comment_id=comment.id, id=post.id) }}">✘</a>
                         </span>
