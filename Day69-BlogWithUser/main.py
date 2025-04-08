@@ -9,6 +9,7 @@ from functools import wraps
 import werkzeug
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_ckeditor import CKEditorField, CKEditor
+from flask_gravatar import Gravatar
 from flask_login import LoginManager, login_user, UserMixin, current_user, login_required, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -55,6 +56,17 @@ def admin_only(f):
             return abort(403)
         return f(*args, **kwargs)
     return wrapper
+
+
+# gravatar
+gravatar = Gravatar(app,
+                    size=100,
+                    rating='g',
+                    default='retro',
+                    force_default=False,
+                    force_lower=False,
+                    use_ssl=False,
+                    base_url=None)
 
 
 # TABLE User
