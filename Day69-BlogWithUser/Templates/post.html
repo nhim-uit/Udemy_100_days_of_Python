@@ -52,20 +52,26 @@
                             {{ render_form(comment_, novalidate=True) }}
                         {% endif %}
 
-                        {% for comment in comments %}
-                        <p>{{ comment.comment|safe }}
-
-                            <span class="subheading">{{ comment.user.name }}</span>
+                        <div class="comment">
+                            <ul class="list-unstyled">
+                            {% for comment in comments %}
+                            <li>
+                                <div class="commenterImage float-start mb-5 me-3">
+                                    <img class="rounded-circle" src="{{ comment.user.name | gravatar(size=50, rating='x') }}"/>
+                                </div>
+                            <div class="commentText">
+                                <span>{{ comment.comment|safe }}</span>
+                                <span class="text-secondary small">{{ comment.user.name }}</span>
                             {% if logged_in %}
-                        <span class="meta"><a href="{{ url_for('delete_comment', comment_id=comment.id, id=post.id) }}">✘</a>
-                        </span>
+                            <span class="meta"><a href="{{ url_for('delete_comment', comment_id=comment.id, id=post.id) }}">✘</a></span>
                             {% endif %}
+                            </div>
+                            </li>
+                                <hr>
+                                {% endfor %}
+                            <ul>
+                        </div>
 
-                        </p>
-
-
-                        <hr>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
