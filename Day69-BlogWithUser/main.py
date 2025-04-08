@@ -71,23 +71,28 @@ class User(UserMixin, db.Model):
 # CONFIGURE FLASK-WTF FORM
 # TABLE blog_post
 class blog_post(db.Model):
+    __tablename__ = 'blog_post'
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     date: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
-    # author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
     author_id: Mapped[str] = mapped_column(Integer, db.ForeignKey('users.id'))
     author = relationship('User', back_populates='blogs')
+    comments = relationship('Comment', back_populates='blog')
 
 
 # TABLE Comment
 class Comment(db.Model):
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     comment: Mapped[str] = mapped_column(String(1000))
-    user_name: Mapped[str] = mapped_column(String(100), db.ForeignKey('users.name'))
+
+    user_id: Mapped[str] = mapped_column(Integer, db.ForeignKey('users.id'))
     user = relationship('User', back_populates='comments')
+
+    blog_id: Mapped[str] = mapped_column(Integer, db.ForeignKey('blog_post.id'))
+    blog = relationship('blog_post', back_populates='comments')
 
 
 with app.app_context():
@@ -127,7 +132,8 @@ def show_post():
     if comment_.validate_on_submit():
         cmt = Comment(
             comment=comment_.comment_.data,
-            user_name=current_user.name,
+            user_id=current_user.id,
+            blog_id=post_id,
         )
         db.session.add(cmt)
         db.session.commit()
@@ -152,7 +158,7 @@ def show_post():
 @admin_only
 def add_new_post():
     form = PostForm(
-        name=current_user,
+        name=current_user.name,
     )
 
     if form.validate_on_submit():
