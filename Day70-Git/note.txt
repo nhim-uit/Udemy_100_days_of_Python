@@ -1,0 +1,12 @@
+# Udemy: Master Python by building 100 projects in 100 days
+# Apr 12, 2025
+
+%git init
+%git add .
+%git status
+
+# to remove last added files
+%git rm --cached -r .
+
+# clone
+%git clone <url>
