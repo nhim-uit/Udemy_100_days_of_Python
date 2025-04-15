@@ -10,3 +10,18 @@
 
 # clone
 %git clone <url>
+
+# check which branch
+%git branch
+
+# create new branch
+%git branch <branch-name>
+
+# to change branch
+%git checkout <branch-name>
+
+%git merge <brand-name>
+
+# to contribute to another github repository
+=> use 'folk' to copy repository to our own github
+=> use 'pull request'
