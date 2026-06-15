@@ -243,6 +243,9 @@ def delete_comment():
     # user = request.args.get('user')
 
     comment = db.get_or_404(Comment, comment_id)
+    if comment.user_id != current_user.id:
+        return redirect(url_for('show_post', id=post_id))
+
     db.session.delete(comment)
     db.session.commit()
 
