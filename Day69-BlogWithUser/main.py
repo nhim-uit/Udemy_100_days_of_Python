@@ -140,6 +140,7 @@ def show_post():
     post_id = request.args.get('id')
     requested_post = db.get_or_404(blog_post, post_id)
     comment_ = CommentForm()
+    admin = current_user.is_authenticated and current_user.id == 1
 
     if comment_.validate_on_submit():
         cmt = Comment(
@@ -154,7 +155,8 @@ def show_post():
                                post=requested_post,
                                comment_=comment_,
                                comments=comments,
-                               logged_in=current_user.is_authenticated)
+                               logged_in=current_user.is_authenticated,
+                               admin=admin)
 
     if requested_post:
         comments = db.session.execute(db.select(Comment)).scalars().all()
@@ -162,7 +164,8 @@ def show_post():
                                post=requested_post,
                                comment_=comment_,
                                comments=comments,
-                               logged_in=current_user.is_authenticated)
+                               logged_in=current_user.is_authenticated,
+                               admin=admin)
 
 
 # TODO: add_new_post() to create a new blog post
